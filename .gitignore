@@ -1,3 +1,6 @@
 *.log
 .htaccess
+*.pyc
+*.db
 venv/
+
