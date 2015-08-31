@@ -113,5 +113,16 @@
     <script src="../static/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="../static/js/ie10-viewport-bug-workaround.js"></script>
+
+       <script>
+         //On <select> elements, the Android stock browser will not display the side controls if there is a border-radius and/or border applied. Use the snippet of code below to remove the offending CSS and render the <select> as an unstyled element on the Android stock broswer. The useragent sniffing avoids interfernece with Chrome, Safari, and Mozilla browsers.
+        $(function () {
+          var nua = navigator.userAgent
+          var isAndroid = (nua.indexOf('Mozilla/5.0') > -1 && nua.indexOf('Android ') > -1 && nua.indexOf('AppleWebKit') > -1 && nua.indexOf('Chrome') === -1)
+          if (isAndroid) {
+            $('select.form-control').removeClass('form-control').css('width', '100%')
+          }
+        })
+    </script>
   </body>
 </html>
