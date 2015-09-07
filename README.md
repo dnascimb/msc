@@ -25,8 +25,20 @@ Application Initialization
 * $ flask --app=msc initdb
 
 
-Start the Application
----------------------
+Start the Application (Development)
+-----------------------------------
 
 * $ flask --app=msc run
 * Open a browser to http://localhost:5000/
+
+
+Start the Application (Non-Development)
+-----------------------------------
+
+* edit **msc.wsgi** appropriately
+* edit **msc.conf** appropriately
+* make sure both apache and mod_wsgi are installed
+* mv msc.wsgi /var/www/msc/
+* mv msc.conf /etc/httpd/conf.d/
+* apachectl restart
+* Open a browser to http://yourhost.com
