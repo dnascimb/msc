@@ -165,9 +165,9 @@ def saveRequest(request):
     updated_at = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
     provider = 'Advantage'
 
-    #db.execute('insert into service_requests (id, number, type, status, updated_at, provider) values (?, ?)',
-    #           [i, number, rtype, status, udpated_at, provider])
-    #db.commit()
+    db.execute('insert into service_requests (id, number, type, status, updated_at, provider) values (?, ?, ?, ?, ?, ?)',
+               [i, number, rtype, status, updated_at, provider])
+    db.commit()
     flash('New request was successfully submitted')
 
     return True
