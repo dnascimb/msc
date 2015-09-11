@@ -6,4 +6,17 @@ create table service_requests (
   'status' text not null,
   'updated_at' text not null,
   'provider' text not null
+ );
+ drop table if exists user_profiles;
+ create table user_profiles (
+  id text primary key,
+  'user_name' text not null,
+  'email' text not null,
+  'phone' int not null,
+  'address1' text not null,
+  'address2' text not null,
+  'city' text not null,
+  'state' text not null,
+  'zip' integer not null,
+  'updated_at' text not null
 );

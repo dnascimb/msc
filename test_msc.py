@@ -41,5 +41,6 @@ def login(client, username, password):
 def logout(client):
     return client.get('/logout', follow_redirects=True)
 
-
+def new_user_request(client):
+    return client.get('/new_user_request', follow_redirects=True)
 
