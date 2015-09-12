@@ -132,7 +132,6 @@ def validServiceRequest(request):
     # TODO
     return True
 
-
 def saveRequest(request):
     warranty = request.form.getlist('checkboxes')
     #print("warranty: " + warranty)
@@ -165,13 +164,65 @@ def saveRequest(request):
     updated_at = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
     provider = 'Advantage'
 
-    #db.execute('insert into service_requests (id, number, type, status, updated_at, provider) values (?, ?)',
-    #           [i, number, rtype, status, udpated_at, provider])
-    #db.commit()
+    db.execute('insert into service_requests (id, number, type, status, updated_at, provider) values (?, ?, ?, ?, ?, ?)',
+               [i, number, rtype, status, updated_at, provider])
+    db.commit()
     flash('New request was successfully submitted')
 
     return True
 
+@app.route('/new_user_request', methods=['GET'])
+def new_user_request():
 
+    if not session.get('logged_in'):
+        abort(401)
+    return render_template('profile_manager.html')
+
+@app.route('/create_user_request', methods=['POST'])
+def create_user_request():
+    if not session.get('logged_in'):
+        abort(401)
+
+    error = None
+    if not validUserRequest(request):
+        error = 'Invalid data entered'
+        return render_template('profile_manager.html', error=error)
+
+    saveProfile(request)
+    return render_template('profile_manager.html', error=error)
+
+def validUserRequest(request):
+    # TODO
+    return True
+	
+def saveProfile(request):
+    user_name = request.form['inputName']
+    print("name: " + user_name)
+    phone = request.form['inputPhone']
+    print("phone: " + phone)
+    email = request.form['inputEmail']
+    print("email: " + email)
+    streetAddress1 = request.form['inputStreetAddress1']
+    print("street address 1: " + streetAddress1)
+    streetAddress2 = request.form['inputStreetAddress2']
+    print("street address 2: " + streetAddress2)
+    city = request.form['inputCity']
+    print("city: " + city)
+    state = request.form['inputState']
+    print("State: " + state)
+    zip = request.form['inputZip']
+    print("zip: " + zip)
+
+    db = get_db()
+    i = str(uuid.uuid4())
+    updated_at = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
+
+    db.execute('insert into user_profiles (id, user_name, email, phone, address1, address2, city, state, zip, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+               [i, user_name, email, phone, streetAddress1, streetAddress2, city, state, zip, updated_at])
+    db.commit()
+    flash('New user was successfully added')
+
+    return True
+	
 if __name__ == "__main__":
   app.run()
