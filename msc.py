@@ -173,23 +173,17 @@ def saveRequest(request):
 
 @app.route('/new_user_request', methods=['GET'])
 def new_user_request():
-
-    if not session.get('logged_in'):
-        abort(401)
-    return render_template('profile_manager.html')
+    return render_template('signup.html')
 
 @app.route('/create_user_request', methods=['POST'])
 def create_user_request():
-    if not session.get('logged_in'):
-        abort(401)
-
     error = None
     if not validUserRequest(request):
         error = 'Invalid data entered'
-        return render_template('profile_manager.html', error=error)
+        return render_template('signup.html', error=error)
 
     saveProfile(request)
-    return render_template('profile_manager.html', error=error)
+    return redirect(url_for('index'))
 
 def validUserRequest(request):
     # TODO
@@ -223,6 +217,7 @@ def saveProfile(request):
     flash('New user was successfully added')
 
     return True
+
 	
 if __name__ == "__main__":
   app.run()
