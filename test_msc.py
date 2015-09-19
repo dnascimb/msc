@@ -43,4 +43,7 @@ def logout(client):
 
 def new_user_request(client):
     return client.get('/new_user_request', follow_redirects=True)
+	
+def view_user_request(client):
+    return client.get('/view_user_request', follow_redirects=True)
 

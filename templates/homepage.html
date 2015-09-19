@@ -48,7 +48,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             {% if session.logged_in %}
-            <li><a href="#">Profile</a></li>
+            <li><a href="{{ url_for('view_user_request') }}">Profile</a></li>
             <li><a href="{{ url_for('logout') }}">Logout</a></li>
             {% endif %}
           </ul>
