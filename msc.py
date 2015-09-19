@@ -183,7 +183,8 @@ def create_user_request():
         return render_template('signup.html', error=error)
 
     saveProfile(request)
-    return redirect(url_for('index'))
+
+    return redirect(url_for('home'))
 
 def validUserRequest(request):
     # TODO
@@ -191,7 +192,9 @@ def validUserRequest(request):
 	
 def saveProfile(request):
     user_name = request.form['inputName']
-    print("name: " + user_name)
+    print("name is: " + user_name)
+    user_company = request.form['inputCompanyName']
+    print("company: " + user_company)
     phone = request.form['inputPhone']
     print("phone: " + phone)
     email = request.form['inputEmail']
@@ -203,21 +206,101 @@ def saveProfile(request):
     city = request.form['inputCity']
     print("city: " + city)
     state = request.form['inputState']
-    print("State: " + state)
+    print("State: " + state)    
+    country = request.form['inputCountry']
+    print("Country: " + country)
     zip = request.form['inputZip']
     print("zip: " + zip)
 
     db = get_db()
     i = str(uuid.uuid4())
+
     updated_at = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
 
-    db.execute('insert into user_profiles (id, user_name, email, phone, address1, address2, city, state, zip, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-               [i, user_name, email, phone, streetAddress1, streetAddress2, city, state, zip, updated_at])
-    db.commit()
+    try:
+        db.execute('insert into user_profiles (id, user_name, user_company, email, phone, address1, address2, city, state, zip, country, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [i, user_name, user_company, email, phone, streetAddress1, streetAddress2, city, state, zip, country, updated_at])
+        db.commit()
+    except sqlite3.Error as e:
+        print "An error occurred:", e.args[0]
+
     flash('New user was successfully added')
 
     return True
 
-	
+@app.route('/view_user_request', methods=['GET'])
+def view_user_request():
+
+    print("in view_user_request function - request method: " + request.method)
+
+    db = get_db()
+
+    user_profile = db.cursor()
+ 
+    the_user = 'blian'
+    sql = "select * from user_profiles where user_name = ?"
+    user_profile.execute(sql, [the_user])
+    
+    # print 'return from call:  ', user_profile.fetchone()  # or use fetchall()
+    
+    id, user_name, user_company, email, phone, streetAddress1, streetAddress2, city, state, zip, country, updated_at = user_profile.fetchone()
+
+    #print("name: " + user_name)
+    #print("company: " + user_company)
+    #print("phone: " + phone)
+    #print("email: " + email)
+    print("street address 1: " + streetAddress1)
+    print("street address 2: " + streetAddress2)
+    #print("city: " + city)
+    #print("State: " + state)    
+    #print("Country: " + country)
+    #print("zip: " + zip)
+    
+    fromProfile = True
+    return render_template('customer_profile.html', fromProfile=fromProfile, retUserName=user_name, retCompany=user_company, retEmail=email, retPhone=phone, retStreet1=streetAddress1, retStreet2=streetAddress2, retCity=city, retState=state, retZip=zip, retCountry=country)
+	   
+@app.route('/view_user_request', methods=['post'])
+def update_user_request():
+
+    print("in update_user_request function - request method: " + request.method)
+
+    user_name = request.form['inputName']
+    print("name is: " + user_name)
+    user_company = request.form['inputCompanyName']
+    print("company: " + user_company)
+    phone = request.form['inputPhone']
+    print("phone: " + phone)
+    email = request.form['inputEmail']
+    print("email: " + email)
+    streetAddress1 = request.form['inputStreetAddress1']
+    print("street address 1: " + streetAddress1)
+    streetAddress2 = request.form['inputStreetAddress2']
+    print("street address 2: " + streetAddress2)
+    city = request.form['inputCity']
+    print("city: " + city)
+    state = request.form['inputState']
+    print("State: " + state)    
+    country = request.form['inputCountry']
+    print("Country: " + country)
+    zip = request.form['inputZip']
+    print("zip: " + zip)
+
+    db = get_db()
+
+    updated_at = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
+
+    try:
+        db.execute('update user_profiles set user_company=?, email=?, phone=?, address1=?, address2=?, city=?, state=?, zip=?, country=?, updated_at=? where user_name=?', [user_company, email, phone, streetAddress1, streetAddress2, city, state, zip, country, updated_at, user_name])
+        db.commit()
+    except sqlite3.Error as e:
+        print "An error occurred:", e.args[0]
+
+    flash('User was successfully updated')
+    
+    # print 'return from call:  ', user_profile.fetchone()  # or use fetchall()
+   
+    fromProfile = True
+    return render_template('customer_profile.html', fromProfile=fromProfile, retUserName=user_name, retCompany=user_company, retEmail=email, retPhone=phone, retStreet1=streetAddress1, retStreet2=streetAddress2, retCity=city, retState=state, retZip=zip, retCountry=country)
+
+
 if __name__ == "__main__":
-  app.run()
+    app.run(debug=True)

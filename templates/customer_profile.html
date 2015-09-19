@@ -1,56 +1,37 @@
 {% extends "homepage.html" %}
 {% block body %}
-        <h2 class="sub-header">Sign Up</h2>
+		{% if fromProfile %}
+		   <h2 class="sub-header">Manage My Profile</h2>
+		{% else %}
+		   <h2 class="sub-header">Sign Up</h2>
+		{% endif %}
+
         <div class="container">
         {% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div> {% endif %}
 
-
-
+        {% for message in get_flashed_messages() %}
+      	<div class="alert alert-success">{{ message }}</div>
+    	{% endfor %}
 
         <div class="form-group">
-          <form class="form-horizontal" action="{{ url_for('create_user_request') }}" method="post">
+          <form class="form-horizontal" action="{{ url_for('view_user_request') }}" method="post">
           	<fieldset>
 
-			<!-- Multiple Checkboxes 
-			<div class="form-group">
-			  <label class="col-md-4 control-label" for="checkboxes">Options</label>
-			  <div class="col-md-4">
-			  <div class="checkbox">
-			    <label for="checkboxes-0">
-			      <input type="checkbox" name="checkboxes-1" id="checkboxes-1" value="1">
-			      Warranty
-			    </label>
-			  </div>
-			  <div class="checkbox">
-			    <label for="checkboxes-2">
-			      <input type="checkbox" name="checkboxes-2" id="checkboxes-2" value="2">
-			      Request certified company for your area
-			    </label>
-			   </div>
-			   <div class="checkbox">
-			    <label for="checkboxes-3">
-			      <input type="checkbox" name="checkboxes-3" id="checkboxes-3" value="3">
-			      Request to come out to troubleshoot
-			    </label>
-			   </div>
-			  </div>
-			</div>
-			-->
-			
+      
 			<!-- Text input-->
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="inputName">Name</label>  
 			  <div class="col-md-4">
-			  <input id="inputName" name="inputName" type="text" placeholder="John Doe" class="form-control input-md" required>
+			  <input id="inputName" name="inputName" type="text" placeholder="John Doe" class="form-control input-md" required value="{{ retUserName }}">
 			  <!--<span class="help-block">help</span>  -->
 			  </div>
-			</div>			
-			
+			</div>				
+
 			<!-- Text input-->
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="inputCompanyName">Company Name</label>  
 			  <div class="col-md-4">
-			  <input id="inputCompanyName" name="inputCompanyName" type="text" placeholder="Company Name" class="form-control input-md" required>
+			  <input id="inputCompanyName" name="inputCompanyName" type="text" placeholder="Company Name" class="form-control input-md" requied value="{{ retCompany }}">
 			  <!--<span class="help-block">help</span>  -->
 			  </div>
 			</div>
@@ -59,7 +40,7 @@
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="inputEmail">Email</label>  
 			  <div class="col-md-4">
-			  <input id="inputEmail" name="inputEmail" type="email" placeholder="john@gym.com" class="form-control input-md" required>
+			  <input id="inputEmail" name="inputEmail" type="email" placeholder="john@gym.com" class="form-control input-md" required value="{{ retEmail }}">
 			  <!--<span class="help-block">help</span>  -->
 			  </div>
 			</div>
@@ -68,7 +49,7 @@
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="inputPhone">Phone</label>  
 			  <div class="col-md-4">
-			  <input id="inputPhone" name="inputPhone" type="tel" placeholder="555-555-5555" class="form-control input-md" required>
+			  <input id="inputPhone" name="inputPhone" type="tel" placeholder="555-555-5555" class="form-control input-md" required value="{{ retPhone }}">
 			  <!--<span class="help-block">help</span>  -->
 			  </div>
 			</div>
@@ -77,7 +58,7 @@
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="inputStreetAddress1">Street Address 1</label>  
 			  <div class="col-md-4">
-			  <input id="inputStreetAddress1" name="inputStreetAddress1" type="text" placeholder="Street Address 1" class="form-control input-md" required>
+			  <input id="inputStreetAddress1" name="inputStreetAddress1" type="text" placeholder="Street Address 1" class="form-control input-md" required value="{{ retStreet1 }}">
 			  <!--<span class="help-block">help</span>  -->
 			  </div>
 			</div>			
@@ -86,7 +67,7 @@
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="inputStreetAddress2">Street Address 2</label>  
 			  <div class="col-md-4">
-			  <input id="inputStreetAddress2" name="inputStreetAddress2" type="text" placeholder="Street Address 2" class="form-control input-md">
+			  <input id="inputStreetAddress2" name="inputStreetAddress2" type="text" placeholder="Street Address 2" class="form-control input-md" value="{{ retStreet2 }}">
 			  <!--<span class="help-block">help</span>  -->
 			  </div>
 			</div>			
@@ -95,7 +76,7 @@
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="inputCity">City</label>  
 			  <div class="col-md-4">
-			  <input id="inputCity" name="inputCity" type="text" placeholder="City" class="form-control input-md" required>
+			  <input id="inputCity" name="inputCity" type="text" placeholder="City" class="form-control input-md" required value="{{ retCity }}">
 			  <!--<span class="help-block">help</span>  -->
 			  </div>
 			</div>
@@ -104,7 +85,7 @@
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="inputState">State/Prefecture/Province</label>  
 			  <div class="col-md-4">
-			  <input id="inputState" name="inputState" type="text" placeholder="state" class="form-control input-md" required>
+			  <input id="inputState" name="inputState" type="text" placeholder="state" class="form-control input-md" required value="{{ retState }}">
 			  <!--<span class="help-block">help</span>  -->
 			  </div>
 			</div>
@@ -113,7 +94,7 @@
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="inputZip">Zip/Postal Code</label>  
 			  <div class="col-md-4">
-			  <input id="inputZip" name="inputZip" type="text" placeholder="zip" class="form-control input-md" required>
+			  <input id="inputZip" name="inputZip" type="text" placeholder="zip" class="form-control input-md" required value="{{ retZip }}">
 			  <!--<span class="help-block">help</span>  -->
 			  </div>
 			</div>
@@ -122,11 +103,11 @@
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="inputCountry">Country</label>  
 			  <div class="col-md-4">
-			  <input id="inputCountry" name="inputCountry" type="text" placeholder="country" class="form-control input-md" required>
+			  <input id="inputCountry" name="inputCountry" type="text" placeholder="country" class="form-control input-md" required value="{{ retCountry }}">
 			  <!--<span class="help-block">help</span>  -->
 			  </div>
 			</div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit" method="post">Submit</button>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" formmethod="post">Submit</button>
 			</fieldset>
           </form>
          </div>
