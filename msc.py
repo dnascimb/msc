@@ -221,7 +221,7 @@ def saveProfile(request):
         db.execute('insert into user_profiles (id, user_name, user_company, email, phone, address1, address2, city, state, zip, country, updated_at) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [i, user_name, user_company, email, phone, streetAddress1, streetAddress2, city, state, zip, country, updated_at])
         db.commit()
     except sqlite3.Error as e:
-        print "An error occurred:", e.args[0]
+        print("An error occurred:", e.args[0])
 
     flash('New user was successfully added')
 
@@ -292,7 +292,7 @@ def update_user_request():
         db.execute('update user_profiles set user_company=?, email=?, phone=?, address1=?, address2=?, city=?, state=?, zip=?, country=?, updated_at=? where user_name=?', [user_company, email, phone, streetAddress1, streetAddress2, city, state, zip, country, updated_at, user_name])
         db.commit()
     except sqlite3.Error as e:
-        print "An error occurred:", e.args[0]
+        print("An error occurred:", e.args[0])
 
     flash('User was successfully updated')
     
