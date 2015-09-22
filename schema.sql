@@ -20,5 +20,6 @@ create table service_requests (
   'state' text not null,
   'zip' text not null,
   'country' text not null,
-  'updated_at' text not null
+  'updated_at' text not null,
+  'password' text not null
 );
