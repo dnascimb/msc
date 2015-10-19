@@ -1,10 +1,9 @@
 import os
-from msc import app
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-engine = create_engine('sqlite:///' + os.path.join(app.root_path, 'msc2.db'), echo=True, convert_unicode=True)
+engine = create_engine('mysql+pymysql://root:34Jellon@localhost/msc?charset=utf8', echo=True, convert_unicode=True)
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=engine))

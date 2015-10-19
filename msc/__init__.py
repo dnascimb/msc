@@ -9,16 +9,12 @@
 
 """
 
-import uuid
-from datetime import datetime
-from sqlite3 import dbapi2 as sqlite3
-from flask import Flask, request, session, g, redirect, url_for, abort, \
-     render_template, flash
-
-
+from flask import Flask
+from msc.database import db_session
 
 # create the application
 app = Flask(__name__)
+app.secret_key = 'sipPinOnGinAndJuice'
 
 import msc.views
 

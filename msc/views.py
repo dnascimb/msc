@@ -1,8 +1,12 @@
+import uuid
 from msc import app
 from msc.database import db_session
 from msc.models import User
+from datetime import datetime
 from flask import request, session, redirect, url_for, abort, \
-     render_template
+     render_template, flash
+from sqlalchemy import func
+
 
 @app.route('/')
 def index():
@@ -112,10 +116,9 @@ def create_user_request():
     print('session ID in USER ADD--', session['userid'])
 
     if password == password2:
-        hashedPassword = hashAPassword(i, password)
+        hashedPassword = User(i, password)
         updated_at = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
-        u = User(i, user_name, hashedPassword, user_company, email, phone, streetAddress1, streetAddress2, \ 
-            city, state, zipc, country, updated_at)
+        u = User(i, user_name, hashedPassword, user_company, email, phone, streetAddress1, streetAddress2, city, state, zipc, country, updated_at)
 
         #db.execute('insert into user_profiles (id, user_name, user_company, email, phone, address1, address2, city, state, zip, country, updated_at, password) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [i, user_name, user_company, email, phone, streetAddress1, streetAddress2, city, state, zip, country, updated_at, hashedPassword])
         #db.commit()
@@ -277,33 +280,27 @@ def checkUserExists(request):
     else:
         return True
 
+#
+# determines if a user with the specified email exists
+#
 def checkEmailAvailable(request):
     
-    db = get_db()
+    _inputEmail = request.form['inputEmail']
 
-    email_available = db.cursor()
- 
-    the_user =  request.form['inputEmail']
-    sql = "select count(*) from user_profiles where email = ?"
+    result = User.query.filter(func.lower(User.email) == func.lower(_inputEmail)).first()
 
-    dbError=False
-
-    try:
-        email_available.execute(sql, [the_user])
-    except sqlite3.Error as e:
-        print("An error occurred:", e.args[0])
-        dbError=True
-        return False
-
-    numberOfRows = email_available.fetchone()[0]
-
-    #print('record count is:' , numberOfRows)
-
-    if numberOfRows == 0:
+    if not result:
         return True
     else:
+        print("User email query result: " + result)
         return False
 
+#
+# Hashes a password
+#
+def hashAPassword(userID, passToHash):
+
+    return passToHash
 
 
 def validServiceRequest(request):

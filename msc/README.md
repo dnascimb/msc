@@ -15,19 +15,24 @@ Mac
 * $ virtualenv venv
 * $ . venv/bin/activate
 * $ pip install Flask (or for latest) pip install https://github.com/mitsuhiko/flask/tarball/master
-* download and install sqlite
+* $ pip install PyMySQL
+* download and install mysql
+* adjust the database username and password in msc/database.py
 
 
 Application Initialization
 --------------------------
 
-* Change settings in msc.py
+* $ python init_db.py
+or
 * $ flask --app=msc initdb
 
 
 Start the Application (Development)
 -----------------------------------
 
+* $ python runserver.py
+or
 * $ flask --app=msc run
 * Open a browser to http://localhost:5000/
 
