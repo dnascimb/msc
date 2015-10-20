@@ -5,10 +5,10 @@ from werkzeug.security import generate_password_hash, \
 
 class User(Base):
     __tablename__ = 'users'
-    id = Column(String(32), primary_key=True)
+    id = Column(String(36), primary_key=True)
     name = Column(String(120), nullable=False)
     email = Column(String(120), unique=True, nullable=False)
-    password = Column(String(32), nullable=False)
+    password = Column(String(100), nullable=False)
     company = Column(String(120), nullable=False)
     phone = Column(String(32), nullable=False)
     address1 = Column(String(120), nullable=False)
@@ -41,9 +41,6 @@ class User(Base):
     def __repr__(self):
         return 'User' + self.__dict__
 
-    def set_password(self, password):
-        self.pw_hash = generate_password_hash(password)
-
     def check_password(self, password):
-        return check_password_hash(self.pw_hash, password)
+        return check_password_hash(self.password, password)
 

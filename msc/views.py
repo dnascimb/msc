@@ -79,8 +79,8 @@ def create_user_request():
         return render_template('signup.html', error=error)
 
     print('start add proces...')
-    user_name = request.form['inputName']
-    print("name is: " + user_name)
+    name = request.form['inputName']
+    print("name is: " + name)
     password = request.form['inputPassword']
     print("password is: " + password)
     password2 = request.form['inputPassword2']
@@ -101,13 +101,15 @@ def create_user_request():
     print("State: " + state)    
     country = request.form['inputCountry']
     print("Country: " + country)
-    zipc = request.form['inputZip']
-    print("zip: " + zipc)
+    postal = request.form['inputZip']
+    print("zip: " + postal)
 
     if not checkEmailAvailable(request):
         error = 'Sorry, that email is already taken'
         print('email in use')
-        return render_template('signup.html',  retUserName=user_name, retCompany=user_company, retEmail=email, retPhone=phone, retStreet1=streetAddress1, retStreet2=streetAddress2, retCity=city, retState=state, retZip=zip, retCountry=country, error=error)
+        return render_template('signup.html',  retUserName=name, retCompany=user_company, \
+            retEmail=email, retPhone=phone, retStreet1=streetAddress1, retStreet2=streetAddress2, \
+            retCity=city, retState=state, retZip=postal, retCountry=country, error=error)
     
     i = str(uuid.uuid4())
 
@@ -116,18 +118,21 @@ def create_user_request():
     print('session ID in USER ADD--', session['userid'])
 
     if password == password2:
-        hashedPassword = User(i, password)
         updated_at = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
-        u = User(i, user_name, hashedPassword, user_company, email, phone, streetAddress1, streetAddress2, city, state, zipc, country, updated_at)
+        u = User(i, name, email, password, user_company, phone, streetAddress1, \
+            streetAddress2, city, state, postal, country, updated_at)
 
-        #db.execute('insert into user_profiles (id, user_name, user_company, email, phone, address1, address2, city, state, zip, country, updated_at, password) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', [i, user_name, user_company, email, phone, streetAddress1, streetAddress2, city, state, zip, country, updated_at, hashedPassword])
-        #db.commit()
+        db_session.add(u)
+        db_session.commit()
+
         flash('New user was successfully added')
         return redirect(url_for('home'))
     else:
         print('unsuccessful add')
         error="passwords do not match"
-        return render_template('signup.html', retUserName=user_name, retCompany=user_company, retEmail=email, retPhone=phone, retStreet1=streetAddress1, retStreet2=streetAddress2, retCity=city, retState=state, retZip=zip, retCountry=country, error=error)
+        return render_template('signup.html', retUserName=name, retCompany=user_company, \
+            retEmail=email, retPhone=phone, retStreet1=streetAddress1, retStreet2=streetAddress2, \
+            retCity=city, retState=state, retZip=postal, retCountry=country, error=error)
 
     
 
@@ -135,32 +140,17 @@ def create_user_request():
 def view_user_request():
 
     print("in view_user_request function - request method: " + request.method)
-
-    db = get_db()
-
-    user_profile = db.cursor()
  
     the_user =  session['userid']
-    sql = "select id, user_name, user_company, email, phone, address1, address2, city, state, zip, country from user_profiles where id = ?"
-    user_profile.execute(sql, [the_user])
+    result = User.query.filter(func.lower(User.id) == func.lower(the_user)).first()
     
-    # print 'return from call:  ', user_profile.fetchone()  # or use fetchall()
-    
-    id, user_name, user_company, email, phone, streetAddress1, streetAddress2, city, state, zip, country = user_profile.fetchone()
+    if result: 
+        return render_template('customer_profile.html', fromProfile=True, retUserName=result.name, \
+            retCompany=result.company, retEmail=result.email, retPhone=result.phone, retStreet1=result.address1, \
+            retStreet2=result.address2, retCity=result.city, retState=result.state, retZip=result.postal, retCountry=result.country)
+    else:
+        return render_template('customer_profile.html', fromProfile=False)
 
-    #print("name: " + user_name)
-    #print("company: " + user_company)
-    #print("phone: " + phone)
-    #print("email: " + email)
-    #print("street address 1: " + streetAddress1)
-    #rint("street address 2: " + streetAddress2)
-    #print("city: " + city)
-    #print("State: " + state)    
-    #print("Country: " + country)
-    #print("zip: " + zip)
-    
-    fromProfile = True
-    return render_template('customer_profile.html', fromProfile=fromProfile, retUserName=user_name, retCompany=user_company, retEmail=email, retPhone=phone, retStreet1=streetAddress1, retStreet2=streetAddress2, retCity=city, retState=state, retZip=zip, retCountry=country)
        
 @app.route('/view_user_request', methods=['post'])
 def update_user_request():
@@ -169,8 +159,8 @@ def update_user_request():
 
     fromProfile = True
 
-    user_name = request.form['inputName']
-    print("name is: " + user_name)
+    name = request.form['inputName']
+    print("name is: " + name)
     user_company = request.form['inputCompanyName']
     print("company: " + user_company)
     phone = request.form['inputPhone']
@@ -191,63 +181,80 @@ def update_user_request():
     print("State: " + state)    
     country = request.form['inputCountry']
     print("Country: " + country)
-    zip = request.form['inputZip']
-    print("zip: " + zip)
+    postal = request.form['inputZip']
+    print("zip: " + postal)
 
-    getUser =  session['userid']
+    uid =  session['userid']
     print('session ID in UPDATE--', session['userid'])
 
     updated_at = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
-    db = get_db()
 
     if len(password) != 0:
         if password != password2:
             error = 'passwords do not match'
-            return render_template('customer_profile.html', fromProfile=fromProfile, retUserName=user_name, retCompany=user_company, retEmail=email, retPhone=phone, retStreet1=streetAddress1, retStreet2=streetAddress2, retCity=city, retState=state, retZip=zip, retCountry=country, error=error)
+            return render_template('customer_profile.html', fromProfile=fromProfile, retUserName=name, \
+                retCompany=user_company, retEmail=email, retPhone=phone, retStreet1=streetAddress1, \
+                retStreet2=streetAddress2, retCity=city, retState=state, retZip=postal, retCountry=country, \
+                error=error)
         else:
+            # update password
             hashedPassword = hashAPassword(getUser, password)
-            try:
-                db.execute('update user_profiles set password=?, updated_at=? where id=?', [hashedPassword, updated_at, getUser])
-                db.commit()
-            except sqlite3.Error as e:
-                print("An error occurred:", e.args[0])
+            result = User.query.filter(func.lower(User.id) == func.lower(uid)).first()
+            if result:
+                result.password = hashedPassword
+                result.updated_at = updated_at
+                db_session.update(result)
+                db_session.commit()
+            else:
+                error = 'no user record found'
+                return render_template('customer_profile.html', fromProfile=fromProfile, retUserName=name, \
+                    retCompany=user_company, retEmail=email, retPhone=phone, retStreet1=streetAddress1, \
+                    retStreet2=streetAddress2, retCity=city, retState=state, retZip=postal, retCountry=country, \
+                    error=error)
+    
+    # update user record
+    result = User.query.filter(func.lower(User.id) == func.lower(uid)).first()
+    if result:
+        result.name = name
+        result.company = user_company
+        result.email = email
+        result.phone = phone
+        result.address1 = streetAddress1
+        result.address2 = streetAddress2
+        result.city = city
+        result.state = state
+        result.postal = postal
+        result.country = country
+        result.updated_at = updated_at
+        #db_session.update(result)
+        db_session.commit()
+    else:
+        error = 'no user record found'
+        return render_template('customer_profile.html', fromProfile=fromProfile, retUserName=name, \
+            retCompany=user_company, retEmail=email, retPhone=phone, retStreet1=streetAddress1, \
+            retStreet2=streetAddress2, retCity=city, retState=state, retZip=postal, retCountry=country, \
+            error=error)
 
-    try:
-        db.execute('update user_profiles set user_name=?, user_company=?, email=?, phone=?, address1=?, address2=?, city=?, state=?, zip=?, country=?, updated_at=? where id=?', [user_name, user_company, email, phone, streetAddress1, streetAddress2, city, state, zip, country, updated_at, getUser])
-        db.commit()
-    except sqlite3.Error as e:
-        print("An error occurred:", e.args[0])
 
     flash('User was successfully updated')
     
     # print 'return from call:  ', user_profile.fetchone()  # or use fetchall()
    
-    return render_template('customer_profile.html', fromProfile=fromProfile, retUserName=user_name, retCompany=user_company, retEmail=email, retPhone=phone, retStreet1=streetAddress1, retStreet2=streetAddress2, retCity=city, retState=state, retZip=zip, retCountry=country)
+    return render_template('customer_profile.html', fromProfile=fromProfile, retUserName=name, \
+        retCompany=user_company, retEmail=email, retPhone=phone, retStreet1=streetAddress1, \
+        retStreet2=streetAddress2, retCity=city, retState=state, retZip=postal, retCountry=country)
 
 
 def checkCredentials(request):
-
-    db = get_db()
-
-    user_login = db.cursor()
  
-    the_user =  request.form['inputEmail']
-    sql = "select id, password from user_profiles where email = ?"
-
-    dbError=False
-
-    try:
-        user_login.execute(sql, [the_user])
-    except sqlite3.Error as e:
-        print("An error occurred:", e.args[0])
-        dbError=True
+    _inputEmail =  request.form['inputEmail']
     
-    if dbError:
+    result = User.query.filter(func.lower(User.email) == func.lower(_inputEmail)).first()
+    if not result:
         return False
     else:
-        id, password = user_login.fetchone()
-        if check_password_hash(password, request.form['inputPassword']):
-            session['userid'] = id
+        if result.check_password(request.form['inputPassword']):
+            session['userid'] = result.id
             print('session ID in CHECK CREDENTIALS--', session['userid'])
             return True
         else:
@@ -255,27 +262,11 @@ def checkCredentials(request):
                 
 def checkUserExists(request):
     
-    db = get_db()
+    _inputEmail = request.form['inputEmail']
 
-    user_exist = db.cursor()
- 
-    the_user =  request.form['inputEmail']
-    sql = "select count(*) from user_profiles where email = ?"
+    result = User.query.filter(func.lower(User.email) == func.lower(_inputEmail)).first()
 
-    dbError=False
-
-    try:
-        user_exist.execute(sql, [the_user])
-    except sqlite3.Error as e:
-        print("An error occurred:", e.args[0])
-        dbError=True
-        return False
-
-    numberOfRows = user_exist.fetchone()[0]
-
-    #print('record count is:' , numberOfRows)
-
-    if numberOfRows == 0:
+    if not result:
         return False
     else:
         return True
@@ -331,7 +322,6 @@ def saveRequest(request):
     description = request.form['inputDescription']
     print("description: " + description)
 
-    db = get_db()
     i = str(uuid.uuid4())
     number = 3830238
     rtype = 'Service'
@@ -339,9 +329,9 @@ def saveRequest(request):
     updated_at = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
     provider = 'Advantage'
 
-    db.execute('insert into service_requests (id, number, type, status, updated_at, provider) values (?, ?, ?, ?, ?, ?)',
-               [i, number, rtype, status, updated_at, provider])
-    db.commit()
+
+    #**** TODO SAVE RECORD
+
     flash('New request was successfully submitted')
 
     return True
