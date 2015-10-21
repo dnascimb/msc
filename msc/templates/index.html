@@ -33,8 +33,8 @@
       {% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div> {% endif %}
       <form class="form-signin" action="{{ url_for('login') }}" method="post">
         <h2 class="form-signin-heading">Please sign in</h2>
-        <label for="inputEmail" class="sr-only">email</label>
-        <input type="text" id="inputEmail" name="inputEmail" class="form-control" placeholder="email" required autofocus>
+        <label for="inputEmail" class="sr-only">Username</label>
+        <input type="text" id="inputEmail" name="inputEmail" class="form-control" placeholder="Username" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required>
         <div class="checkbox">
