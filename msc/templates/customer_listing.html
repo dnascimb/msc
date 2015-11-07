@@ -1,0 +1,15 @@
+{% extends "homepage.html" %}
+{% block body %}
+        <h2 class="sub-header">Customers</h2>
+        <form class="form-signin" action="{{ url_for('list_customer_request') }}" method="get">
+          <button class="btn btn-lg btn-primary btn-block" type="submit">+ New</button>
+        </form>
+          <div class="table-responsive">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+{% endblock %}

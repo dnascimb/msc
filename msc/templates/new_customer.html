@@ -1,0 +1,230 @@
+
+{% extends "homepage.html" %}
+{% block body %}
+
+<script src="../static/js/AddressCopy.js" type="text/javascript"></script>
+
+        <h2 class="sub-header">New Customer</h2>
+        <div class="container">
+        {% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div> {% endif %}
+
+
+
+
+        <div class="form-group">
+          <form class="form-horizontal" action="{{ url_for('create_customer_request') }}" method="post">
+          	<fieldset>
+
+
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="inputCustomerID">Customer ID</label>  
+			  <div class="col-md-4">
+			  <input id="inputCustomerID" name="inputCustomerID" type="text" placeholder="Customer ID" class="form-control input-md" required>
+			  <!--<span class="help-block">help</span>  -->
+			  </div>
+			</div>		
+
+			<!-- Select Basic -->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="inputCustomerType">Customer Type</label>
+			  <div class="col-md-4">
+			    <select id="inputCustomerType" name="inputCustomerType" class="form-control">
+			      <option value="1">Commerical</option>
+			      <option value="2">Corp/Leisure</option>
+			      <option value="3">Not For Profit</option>
+			      <option value="4">Residential</option>
+			    </select>
+			  </div>
+			</div>
+
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="inputCustomerName">Customer Name</label>  
+			  <div class="col-md-4">
+			  <input id="inputCustomerName" name="inputCustomerName" type="text" placeholder="Customer Name" class="form-control input-md" required>
+			  <!--<span class="help-block">help</span>  -->
+			  </div>
+			</div>
+
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="inputCustomerContact">Customer Contact</label>  
+			  <div class="col-md-4">
+			  <input id="inputCustomerContactd" name="inputCustomerContact" type="text" placeholder="Customer Contact" class="form-control input-md">
+			  <!--<span class="help-block">help</span>  -->
+			  </div>
+			</div>
+
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="inputCustomerEmail">Customer Email</label>  
+			  <div class="col-md-4">
+			  <input id="inputCustomerEmail" name="inputCustomerEmail" type="email" placeholder="john@gym.com" class="form-control input-md" required>
+			  <!--<span class="help-block">help</span>  -->
+			  </div>
+			</div>
+
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="inputCustomerPhone1">Customer Phone 1</label>  
+			  <div class="col-md-4">
+			  <input id="inputCustomerPhone1" name="inputCustomerPhone1" type="tel" placeholder="555-555-5555" class="form-control input-md" required>
+			  <!--<span class="help-block">help</span>  -->
+			  </div>
+			</div>
+
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="inputCustomerPhone2">Customer Phone 2</label>  
+			  <div class="col-md-4">
+			  <input id="inputCustomerPhone2" name="inputCustomerPhone2" type="tel" placeholder="555-555-5555" class="form-control input-md">
+			  <!--<span class="help-block">help</span>  -->
+			  </div>
+			</div>
+
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="inputCustomerFax">Customer Fax</label>  
+			  <div class="col-md-4">
+			  <input id="inputCustomerFax" name="inputCustomerFax" type="tel" placeholder="555-555-5555" class="form-control input-md">
+			  <!--<span class="help-block">help</span>  -->
+			  </div>
+			</div>
+
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="inputCustomerWebsite">Customer Website</label>  
+			  <div class="col-md-4">
+			  <input id="inputCustomerWebsite" name="inputCustomerWebsite" type="text" placeholder="wwww.thecustomersite.com" class="form-control input-md">
+			  <!--<span class="help-block">help</span>  -->
+			  </div>
+			</div>
+
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="inputCustomerAddress1">Customer Address 1</label>  
+			  <div class="col-md-4">
+			  <input id="inputCustomerAddress1" name="inputCustomerAddress1" type="text" placeholder="Customer Address 1" class="form-control input-md" required value="{{ retCustomer1 }}">
+			  <!--<span class="help-block">help</span>  -->
+			  </div>
+			</div>			
+			
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="inputCustomerAddress2">Customer Address 2</label>  
+			  <div class="col-md-4">
+			  <input id="inputCustomerAddress2" name="inputCustomerAddress2" type="text" placeholder="Customer Address 2" class="form-control input-md" value="{{ retCustomer2 }}">
+			  <!--<span class="help-block">help</span>  -->
+			  </div>
+			</div>			
+			
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="inputCustomerCity">City</label>  
+			  <div class="col-md-4">
+			  <input id="inputCustomerCity" name="inputCustomerCity" type="text" placeholder="City" class="form-control input-md" required value="{{ retCity }}">
+			  <!--<span class="help-block">help</span>  -->
+			  </div>
+			</div>
+
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="inputCustomerState">State/Prefecture/Province</label>  
+			  <div class="col-md-4">
+			  <input id="inputCustomerState" name="inputCustomerState" type="text" placeholder="state" class="form-control input-md" required value="{{ retState }}">
+			  <!--<span class="help-block">help</span>  -->
+			  </div>
+			</div>
+			
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="inputCustomerZip">Zip/Postal Code</label>  
+			  <div class="col-md-4">
+			  <input id="inputCustomerZip" name="inputCustomerZip" type="text" placeholder="zip" class="form-control input-md" required value="{{ retZip }}">
+			  <!--<span class="help-block">help</span>  -->
+			  </div>
+			</div>
+			
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="inputCustomerCountry">Country</label>  
+			  <div class="col-md-4">
+			  <input id="inputCustomerCountry" name="inputCustomerCountry" type="text" placeholder="country" class="form-control input-md" required value="{{ retCountry }}">
+			  <!--<span class="help-block">help</span>  -->
+			  </div>
+			</div>
+
+			<!-- Single checkboxes -->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="checkboxes">Same Address</label>
+			  <div class="col-md-4">
+			  <div class="checkbox">
+			    <label for="checkboxes-0">
+			      <input type="checkbox" name="billingCheckbox" id="billingCheckbox" value="1" onclick="FillBilling(this.form)">
+			      Billing address is the same as customer address
+			    </label>
+			   </div>
+			  </div>
+			</div>
+
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="inputCustomerBillAddress1">Customer Address 1</label>  
+			  <div class="col-md-4">
+			  <input id="inputCustomerBillAddress1" name="inputCustomerBillAddress1" type="text" placeholder="Customer Address 1" class="form-control input-md" required value="{{ retCustomer1 }}">
+			  <!--<span class="help-block">help</span>  -->
+			  </div>
+			</div>			
+			
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="inputCustomerBillAddress2">Customer Address 2</label>  
+			  <div class="col-md-4">
+			  <input id="inputCustomerBillAddress2" name="inputCustomerBillAddress2" type="text" placeholder="Customer Address 2" class="form-control input-md" value="{{ retCustomer2 }}">
+			  <!--<span class="help-block">help</span>  -->
+			  </div>
+			</div>			
+			
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="inputCustomerBillCity">City</label>  
+			  <div class="col-md-4">
+			  <input id="inputCustomerBillCity" name="inputCustomerBillCity" type="text" placeholder="City" class="form-control input-md" required value="{{ retCity }}">
+			  <!--<span class="help-block">help</span>  -->
+			  </div>
+			</div>
+
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="inputCustomerBillState">State/Prefecture/Province</label>  
+			  <div class="col-md-4">
+			  <input id="inputCustomerBillState" name="inputCustomerBillState" type="text" placeholder="state" class="form-control input-md" required value="{{ retState }}">
+			  <!--<span class="help-block">help</span>  -->
+			  </div>
+			</div>
+			
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="inputCustomerBillZip">Zip/Postal Code</label>  
+			  <div class="col-md-4">
+			  <input id="inputCustomerBillZip" name="inputCustomerBillZip" type="text" placeholder="zip" class="form-control input-md" required value="{{ retZip }}">
+			  <!--<span class="help-block">help</span>  -->
+			  </div>
+			</div>
+			
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="inputCustomerBillCountry">Country</label>  
+			  <div class="col-md-4">
+			  <input id="inputCustomerBillCountry" name="inputCustomerBillCountry" type="text" placeholder="country" class="form-control input-md" required value="{{ retCountry }}">
+			  <!--<span class="help-block">help</span>  -->
+			  </div>
+			</div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit" formmethod="post">Submit</button>
+			</fieldset>
+          </form>
+         </div>
+        </div>
+     
+{% endblock %}
