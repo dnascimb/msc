@@ -140,7 +140,7 @@ def create_user_request():
 @app.route('/view_user_request', methods=['GET'])
 def view_user_request():
 
-    print("in view_user_request function - request method: " + request.method)
+   # print("in view_user_request function - request method: " + request.method)
  
     the_user =  session['userid']
     result = User.query.filter(func.lower(User.id) == func.lower(the_user)).first()
@@ -156,37 +156,37 @@ def view_user_request():
 @app.route('/view_user_request', methods=['post'])
 def update_user_request():
 
-    print("in update_user_request function - request method: " + request.method)
+   # print("in update_user_request function - request method: " + request.method)
 
     fromProfile = True
 
     name = request.form['inputName']
-    print("name is: " + name)
+   # print("name is: " + name)
     user_company = request.form['inputCompanyName']
-    print("company: " + user_company)
+   # print("company: " + user_company)
     phone = request.form['inputPhone']
-    print("phone: " + phone)
+   # print("phone: " + phone)
     email = request.form['inputEmail']
-    print("email: " + email)   
+   # print("email: " + email)   
     password = request.form['inputPassword']
-    print("password1: " + password)
+   # print("password1: " + password)
     password2 = request.form['inputPassword2']
-    print("password2: " + password2)    
+   # print("password2: " + password2)    
     streetAddress1 = request.form['inputStreetAddress1']
-    print("street address 1: " + streetAddress1)
+   # print("street address 1: " + streetAddress1)
     streetAddress2 = request.form['inputStreetAddress2']
-    print("street address 2: " + streetAddress2)
+   # print("street address 2: " + streetAddress2)
     city = request.form['inputCity']
-    print("city: " + city)
+   # print("city: " + city)
     state = request.form['inputState']
-    print("State: " + state)    
+   # print("State: " + state)    
     country = request.form['inputCountry']
-    print("Country: " + country)
+   # print("Country: " + country)
     postal = request.form['inputZip']
-    print("zip: " + postal)
+   # print("zip: " + postal)
 
     uid =  session['userid']
-    print('session ID in UPDATE--', session['userid'])
+   # print('session ID in UPDATE--', session['userid'])
 
     updated_at = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
 
@@ -256,7 +256,7 @@ def checkCredentials(request):
     else:
         if result.check_password(request.form['inputPassword']):
             session['userid'] = result.id
-            print('session ID in CHECK CREDENTIALS--', session['userid'])
+           # print('session ID in CHECK CREDENTIALS--', session['userid'])
             return True
         else:
             return False
@@ -284,7 +284,6 @@ def checkEmailAvailable(request):
     if not result:
         return True
     else:
-        print("User email query result: " + result)
         return False
 
 #
@@ -303,25 +302,25 @@ def saveRequest(request):
     warranty = request.form.getlist('checkboxes')
     #print("warranty: " + warranty)
     vendor = ''
-    print("vendor: " + vendor)
+   # print("vendor: " + vendor)
     troubleshoot = ''
-    print("troubleshoot: " + troubleshoot)
+   # print("troubleshoot: " + troubleshoot)
     contact_name = request.form['inputContactName']
-    print("contact_name: " + contact_name)
+   # print("contact_name: " + contact_name)
     contact_phone = request.form['inputContactPhone']
-    print("contact_phone: " + contact_phone)
+   # print("contact_phone: " + contact_phone)
     contact_email = request.form['inputContactEmail']
-    print("contact_email: " + contact_email)
+   # print("contact_email: " + contact_email)
     manufacturer = request.form['inputEquipmentManufacturer']
-    print("manufacturer: " + manufacturer)
+   # print("manufacturer: " + manufacturer)
     model = request.form['inputEquipmentModel']
-    print("model: " + model)
+   # print("model: " + model)
     date_purchased = request.form['inputEquipmentDatePurchased']
-    print("date_purchased: " + date_purchased)
+   # print("date_purchased: " + date_purchased)
     appointment = request.form['inputTimeframe']
-    print("appointment: " + appointment)
+   # print("appointment: " + appointment)
     description = request.form['inputDescription']
-    print("description: " + description)
+   # print("description: " + description)
 
     i = str(uuid.uuid4())
     number = 3830238
@@ -358,52 +357,52 @@ def create_customer_request():
     error = None
     if not validCustomerAdd(request):
         error = 'Invalid data entered'
-        print('invalid data entered')
+       # print('invalid data entered')
         return render_template('new_customer.html', error=error)
 
-    print('start add process...')
+   # print('start add process...')
     customerID = request.form['inputCustomerID']
-    print("customerID is: " + customerID)
+   # print("customerID is: " + customerID)
     customerName = request.form['inputCustomerName']
-    print("customer: " + customerName)
+   # print("customer: " + customerName)
     customerType = request.form['inputCustomerType']
-    print("customer type: " + customerType)
+   # print("customer type: " + customerType)
     customerContact = request.form['inputCustomerContact']
-    print("contact: " + customerContact)
+   # print("contact: " + customerContact)
     phone1 = request.form['inputCustomerPhone1']
-    print("phone1: " + phone1)
+   # print("phone1: " + phone1)
     phone2 = request.form['inputCustomerPhone2']
-    print("phone2: " + phone2)
+   # print("phone2: " + phone2)
     fax = request.form['inputCustomerFax']
-    print("fax: " + fax)
+   # print("fax: " + fax)
     webAddy = request.form['inputCustomerWebsite']
-    print("website: " + webAddy)
+   # print("website: " + webAddy)
     email = request.form['inputCustomerEmail']
-    print("email: " + email)
+   # print("email: " + email)
     streetAddress1 = request.form['inputCustomerAddress1']
-    print("street address 1: " + streetAddress1)
+   # print("street address 1: " + streetAddress1)
     streetAddress2 = request.form['inputCustomerAddress2']
-    print("street address 2: " + streetAddress2)
+   # print("street address 2: " + streetAddress2)
     city = request.form['inputCustomerCity']
-    print("city: " + city)
+   # print("city: " + city)
     state = request.form['inputCustomerState']
-    print("State: " + state)
+   # print("State: " + state)
     postal = request.form['inputCustomerZip']
-    print("zip: " + postal)
+   # print("zip: " + postal)
     country = request.form['inputCustomerCountry']
-    print("Country: " + country)
+   # print("Country: " + country)
     streetAddress1Bill = request.form['inputCustomerBillAddress1']
-    print("street address 1: " + streetAddress1Bill)
+   # print("street address 1: " + streetAddress1Bill)
     streetAddress2Bill = request.form['inputCustomerBillAddress2']
-    print("street address 2: " + streetAddress2Bill)
+   # print("street address 2: " + streetAddress2Bill)
     cityBill = request.form['inputCustomerBillCity']
-    print("city: " + cityBill)
+   # print("city: " + cityBill)
     stateBill = request.form['inputCustomerBillState']
-    print("State: " + stateBill)    
+   # print("State: " + stateBill)    
     postalBill = request.form['inputCustomerBillZip']
-    print("zip: " + postalBill)
+   # print("zip: " + postalBill)
     countryBill = request.form['inputCustomerBillCountry']
-    print("Country: " + countryBill)
+   # print("Country: " + countryBill)
 
 
 #    May not be required for customer add
@@ -442,7 +441,7 @@ def list_customer_request():
    customers = Customer.query.all()
 
    for customer in customers:
-    print("customer " + customer.name)
+    #print("customer " + customer.name)
 
    return render_template('customer_listing.html')
 
