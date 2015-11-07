@@ -1,4 +1,4 @@
-function FillBilling(f) {
+function fillBilling(f) {
   if(f.billingCheckbox.checked == true) {
     f.inputCustomerBillAddress1.value = f.inputCustomerAddress1.value;
     f.inputCustomerBillAddress2.value = f.inputCustomerAddress2.value;
