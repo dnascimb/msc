@@ -48,9 +48,8 @@ class User(Base):
 class Customer(Base):
     __tablename__ = 'customers'
     id = Column(String(36), primary_key=True)
-    user_ID = Column(String(36), ForeignKey(User.id),primary_key=True)
-    client_ID = Column(String(20), nullable=False)
-    client_type = Column(SmallInteger, nullable=False)
+    user = Column(String(36), ForeignKey(User.id),primary_key=True)
+    type = Column(SmallInteger, nullable=False)
     name = Column(String(120), nullable=False)
     contact_name = Column(String(120), nullable=False)
     email = Column(String(120), unique=True, nullable=False)
@@ -72,15 +71,14 @@ class Customer(Base):
     bill_country = Column(String(120), nullable=False)
     updated_at = Column(DateTime, nullable=False)
 
-    def __init__(self, uid=None, userID=None, clientID=None, clientType=None, customerName=None, \
+    def __init__(self, uid=None, user=None, ctype=None, customerName=None, \
         contactName=None, email=None, phone1=None, phone2=None, fax=None, website=None, \
         address1=None, address2=None, city=None, state=None, postal=None, country=None, \
         billAddress1=None, billAddress2=None, billCity=None, billState=None, billPostal=None, billCountry=None, \
         updated_at=None):
         self.id = uid
-        self.user_ID = userID
-        self.client_ID = clientID
-        self.client_type = clientType
+        self.user = user
+        self.type = ctype
         self.name = customerName
         self.contact_name = contactName
         self.email = email

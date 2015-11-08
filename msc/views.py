@@ -1,7 +1,5 @@
 import uuid
 from msc import app
-from msc.database import db_session
-from msc.models import Customer
 from datetime import datetime
 from flask import request, session, redirect, url_for, abort, \
      render_template, flash
@@ -11,6 +9,9 @@ from sqlalchemy import func
 import msc.view_service_request
 import msc.view_user
 import msc.view_customer
+
+#import models
+from msc.models import User
 
 @app.route('/')
 def index():

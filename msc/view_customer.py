@@ -26,8 +26,6 @@ def create_customer_request():
         return render_template('new_customer.html', error=error)
 
    # print('start add process...')
-    customerID = request.form['inputCustomerID']
-   # print("customerID is: " + customerID)
     customerName = request.form['inputCustomerName']
    # print("customer: " + customerName)
     customerType = request.form['inputCustomerType']
@@ -82,7 +80,7 @@ def create_customer_request():
     updated_at = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
     user_ID =  session['userid']
 
-    c = Customer(i, user_ID, customerID, customerType, customerName, customerContact, email, \
+    c = Customer(i, user_ID, customerType, customerName, customerContact, email, \
         phone1, phone2, fax, webAddy, streetAddress1, streetAddress2, city, state, postal, country, \
         streetAddress1Bill, streetAddress2Bill, cityBill, stateBill, postalBill, countryBill, updated_at)
 
