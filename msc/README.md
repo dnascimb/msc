@@ -14,8 +14,9 @@ Mac
 * $ sudo pip install virtualenv
 * $ virtualenv venv
 * $ . venv/bin/activate
-* $ pip install Flask (or for latest) pip install https://github.com/mitsuhiko/flask/tarball/master
-* $ pip install PyMySQL
+* $ sudo pip install Flask (or for latest) pip install https://github.com/mitsuhiko/flask/tarball/master
+* $ sudo pip install sqlalchemy
+* $ sudo pip install PyMySQL
 * download and install mysql
 * adjust the database username and password in msc/database.py
 
