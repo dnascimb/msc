@@ -8,13 +8,9 @@
         <div class="container">
         {% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div> {% endif %}
 
-
-
-
         <div class="form-group">
           <form class="form-horizontal" action="{{ url_for('create_customer_request') }}" method="post">
           	<fieldset>	
-
 
 			<!-- Select Basic -->
 			<div class="form-group">
@@ -29,36 +25,43 @@
 			  </div>
 			</div>
 
+
 			<!-- Text input-->
 			<div class="form-group">
-			  <label class="col-md-4 control-label" for="inputCustomerName">Customer Name</label>  
+			  <label class="col-md-4 control-label" for="inputCompanyName">Company Name</label>  
 			  <div class="col-md-4">
-			  <input id="inputCustomerName" name="inputCustomerName" type="text" placeholder="Customer Name" class="form-control input-md" required>
+			  <input id="inputCompanyName" name="inputCompanyName" type="text" placeholder="Loyality, Inc" class="form-control input-md">
 			  <!--<span class="help-block">help</span>  -->
 			  </div>
 			</div>
 			
 			<!-- Text input-->
 			<div class="form-group">
-			  <label class="col-md-4 control-label" for="inputCustomerContact">Customer Contact</label>  
+		      <h4 class="col-md-4 control-label" for="inputCustomerLastName">Customer/Contact Name</h4>  
+			  <label class="col-md-4 control-label" for="inputCustomerLastName">Last Name</label>  
 			  <div class="col-md-4">
-			  <input id="inputCustomerContactd" name="inputCustomerContact" type="text" placeholder="Customer Contact" class="form-control input-md">
+			  <input id="inputCustomerLastName" name="inputCustomerLastName" type="text" placeholder="Customer" class="form-control input-md" required>
+			  <!--<span class="help-block">help</span>  -->
+			  </div>
+			  <label class="col-md-4 control-label" for="inputCustomerFirstName">First Name</label>  
+			  <div class="col-md-4">
+			  <input id="inputCustomerFirstName" name="inputCustomerFirstName" type="text" placeholder="Loyal" class="form-control input-md" required>
 			  <!--<span class="help-block">help</span>  -->
 			  </div>
 			</div>
 
 			<!-- Text input-->
 			<div class="form-group">
-			  <label class="col-md-4 control-label" for="inputCustomerEmail">Customer Email</label>  
+			  <label class="col-md-4 control-label" for="inputCustomerEmail">Email</label>  
 			  <div class="col-md-4">
-			  <input id="inputCustomerEmail" name="inputCustomerEmail" type="email" placeholder="john@gym.com" class="form-control input-md" required>
+			  <input id="inputCustomerEmail" name="inputCustomerEmail" type="email" placeholder="loyalcustomer@loyality.com" class="form-control input-md" required>
 			  <!--<span class="help-block">help</span>  -->
 			  </div>
 			</div>
 
 			<!-- Text input-->
 			<div class="form-group">
-			  <label class="col-md-4 control-label" for="inputCustomerPhone1">Customer Phone 1</label>  
+			  <label class="col-md-4 control-label" for="inputCustomerPhone1">Phone 1</label>  
 			  <div class="col-md-4">
 			  <input id="inputCustomerPhone1" name="inputCustomerPhone1" type="tel" placeholder="555-555-5555" class="form-control input-md" required>
 			  <!--<span class="help-block">help</span>  -->
@@ -67,7 +70,7 @@
 
 			<!-- Text input-->
 			<div class="form-group">
-			  <label class="col-md-4 control-label" for="inputCustomerPhone2">Customer Phone 2</label>  
+			  <label class="col-md-4 control-label" for="inputCustomerPhone2">Phone 2</label>  
 			  <div class="col-md-4">
 			  <input id="inputCustomerPhone2" name="inputCustomerPhone2" type="tel" placeholder="555-555-5555" class="form-control input-md">
 			  <!--<span class="help-block">help</span>  -->
@@ -76,7 +79,7 @@
 
 			<!-- Text input-->
 			<div class="form-group">
-			  <label class="col-md-4 control-label" for="inputCustomerFax">Customer Fax</label>  
+			  <label class="col-md-4 control-label" for="inputCustomerFax">Fax</label>  
 			  <div class="col-md-4">
 			  <input id="inputCustomerFax" name="inputCustomerFax" type="tel" placeholder="555-555-5555" class="form-control input-md">
 			  <!--<span class="help-block">help</span>  -->
@@ -85,27 +88,27 @@
 
 			<!-- Text input-->
 			<div class="form-group">
-			  <label class="col-md-4 control-label" for="inputCustomerWebsite">Customer Website</label>  
+			  <label class="col-md-4 control-label" for="inputCustomerWebsite">Website</label>  
 			  <div class="col-md-4">
-			  <input id="inputCustomerWebsite" name="inputCustomerWebsite" type="text" placeholder="wwww.thecustomersite.com" class="form-control input-md">
+			  <input id="inputCustomerWebsite" name="inputCustomerWebsite" type="text" placeholder="wwww.loyalcustomersite.com" class="form-control input-md">
 			  <!--<span class="help-block">help</span>  -->
 			  </div>
 			</div>
 
 			<!-- Text input-->
 			<div class="form-group">
-			  <label class="col-md-4 control-label" for="inputCustomerAddress1">Customer Address 1</label>  
+			  <label class="col-md-4 control-label" for="inputCustomerAddress1">Address 1</label>  
 			  <div class="col-md-4">
-			  <input id="inputCustomerAddress1" name="inputCustomerAddress1" type="text" placeholder="Customer Address 1" class="form-control input-md" required value="{{ retCustomer1 }}">
+			  <input id="inputCustomerAddress1" name="inputCustomerAddress1" type="text" placeholder="Address 1" class="form-control input-md" required value="{{ retCustomer1 }}">
 			  <!--<span class="help-block">help</span>  -->
 			  </div>
 			</div>			
 			
 			<!-- Text input-->
 			<div class="form-group">
-			  <label class="col-md-4 control-label" for="inputCustomerAddress2">Customer Address 2</label>  
+			  <label class="col-md-4 control-label" for="inputCustomerAddress2">Address 2</label>  
 			  <div class="col-md-4">
-			  <input id="inputCustomerAddress2" name="inputCustomerAddress2" type="text" placeholder="Customer Address 2" class="form-control input-md" value="{{ retCustomer2 }}">
+			  <input id="inputCustomerAddress2" name="inputCustomerAddress2" type="text" placeholder="Address 2" class="form-control input-md" value="{{ retCustomer2 }}">
 			  <!--<span class="help-block">help</span>  -->
 			  </div>
 			</div>			
@@ -121,9 +124,9 @@
 
 			<!-- Text input-->
 			<div class="form-group">
-			  <label class="col-md-4 control-label" for="inputCustomerState">State/Prefecture/Province</label>  
+			  <label class="col-md-4 control-label" for="inputCustomerState">State/Province</label>  
 			  <div class="col-md-4">
-			  <input id="inputCustomerState" name="inputCustomerState" type="text" placeholder="state" class="form-control input-md" required value="{{ retState }}">
+			  <input id="inputCustomerState" name="inputCustomerState" type="text" placeholder="State" class="form-control input-md" required value="{{ retState }}">
 			  <!--<span class="help-block">help</span>  -->
 			  </div>
 			</div>
@@ -132,7 +135,7 @@
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="inputCustomerZip">Zip/Postal Code</label>  
 			  <div class="col-md-4">
-			  <input id="inputCustomerZip" name="inputCustomerZip" type="text" placeholder="zip" class="form-control input-md" required value="{{ retZip }}">
+			  <input id="inputCustomerZip" name="inputCustomerZip" type="text" placeholder="06042" class="form-control input-md" required value="{{ retZip }}">
 			  <!--<span class="help-block">help</span>  -->
 			  </div>
 			</div>
@@ -141,7 +144,7 @@
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="inputCustomerCountry">Country</label>  
 			  <div class="col-md-4">
-			  <input id="inputCustomerCountry" name="inputCustomerCountry" type="text" placeholder="country" class="form-control input-md" required value="{{ retCountry }}">
+			  <input id="inputCustomerCountry" name="inputCustomerCountry" type="text" placeholder="Country" class="form-control input-md" required value="{{ retCountry }}">
 			  <!--<span class="help-block">help</span>  -->
 			  </div>
 			</div>
@@ -153,7 +156,7 @@
 			  <div class="checkbox">
 			    <label for="checkboxes-0">
 			      <input type="checkbox" name="billingCheckbox" id="billingCheckbox" value="1" onclick="fillBilling(this.form)">
-			      Billing address is the same as customer address
+			      billing address is the same as customer address
 			    </label>
 			   </div>
 			  </div>
@@ -161,18 +164,18 @@
 
 			<!-- Text input-->
 			<div class="form-group">
-			  <label class="col-md-4 control-label" for="inputCustomerBillAddress1">Customer Address 1</label>  
+			  <label class="col-md-4 control-label" for="inputCustomerBillAddress1">Billing Address 1</label>  
 			  <div class="col-md-4">
-			  <input id="inputCustomerBillAddress1" name="inputCustomerBillAddress1" type="text" placeholder="Customer Address 1" class="form-control input-md" required value="{{ retCustomer1 }}">
+			  <input id="inputCustomerBillAddress1" name="inputCustomerBillAddress1" type="text" placeholder="Billing Address 1" class="form-control input-md" required value="{{ retCustomer1 }}">
 			  <!--<span class="help-block">help</span>  -->
 			  </div>
 			</div>			
 			
 			<!-- Text input-->
 			<div class="form-group">
-			  <label class="col-md-4 control-label" for="inputCustomerBillAddress2">Customer Address 2</label>  
+			  <label class="col-md-4 control-label" for="inputCustomerBillAddress2">Billing Address 2</label>  
 			  <div class="col-md-4">
-			  <input id="inputCustomerBillAddress2" name="inputCustomerBillAddress2" type="text" placeholder="Customer Address 2" class="form-control input-md" value="{{ retCustomer2 }}">
+			  <input id="inputCustomerBillAddress2" name="inputCustomerBillAddress2" type="text" placeholder="Billing Address 2" class="form-control input-md" value="{{ retCustomer2 }}">
 			  <!--<span class="help-block">help</span>  -->
 			  </div>
 			</div>			
@@ -188,9 +191,9 @@
 
 			<!-- Text input-->
 			<div class="form-group">
-			  <label class="col-md-4 control-label" for="inputCustomerBillState">State/Prefecture/Province</label>  
+			  <label class="col-md-4 control-label" for="inputCustomerBillState">State/Province</label>  
 			  <div class="col-md-4">
-			  <input id="inputCustomerBillState" name="inputCustomerBillState" type="text" placeholder="state" class="form-control input-md" required value="{{ retState }}">
+			  <input id="inputCustomerBillState" name="inputCustomerBillState" type="text" placeholder="State" class="form-control input-md" required value="{{ retState }}">
 			  <!--<span class="help-block">help</span>  -->
 			  </div>
 			</div>
@@ -199,7 +202,7 @@
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="inputCustomerBillZip">Zip/Postal Code</label>  
 			  <div class="col-md-4">
-			  <input id="inputCustomerBillZip" name="inputCustomerBillZip" type="text" placeholder="zip" class="form-control input-md" required value="{{ retZip }}">
+			  <input id="inputCustomerBillZip" name="inputCustomerBillZip" type="text" placeholder="06042" class="form-control input-md" required value="{{ retZip }}">
 			  <!--<span class="help-block">help</span>  -->
 			  </div>
 			</div>

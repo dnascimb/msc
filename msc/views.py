@@ -77,5 +77,16 @@ def checkUserExists(request):
     else:
         return True
 
+#
+# determines if a user with the specified email exists
+#
+def checkEmailAvailable(request):
+    
+    _inputEmail = request.form['inputEmail']
 
+    result = User.query.filter(func.lower(User.email) == func.lower(_inputEmail)).first()
 
+    if not result:
+        return True
+    else:
+        return False

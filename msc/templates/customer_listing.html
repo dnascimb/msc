@@ -2,12 +2,21 @@
 {% block body %}
         <h2 class="sub-header">Customers</h2>
         <form class="form-signin" action="{{ url_for('list_customer_request') }}" method="get">
-          <button class="btn btn-lg btn-primary btn-block" type="submit">+ New</button>
+          <button class="btn btn-lg btn-primary btn-block" type="submit">Add Customer</button>
         </form>
           <div class="table-responsive">
             <table class="table table-hover">
               <thead>
                 <tr>
+                  <div>
+                    <script>
+                    customers = {{retCustomers}}
+                    for (customer in customers) {
+                     document.write(customer.company_name);
+                     document.write("<br />");
+                    }
+                    </script>
+                  </div>
                 </tr>
               </tbody>
             </table>

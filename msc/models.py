@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, SmallInteger, String, DateTime, ForeignKey
+from sqlalchemy.orm import mapper
 from msc.database import Base
 from werkzeug.security import generate_password_hash, \
      check_password_hash
@@ -49,9 +50,10 @@ class Customer(Base):
     __tablename__ = 'customers'
     id = Column(String(36), primary_key=True)
     user = Column(String(36), ForeignKey(User.id),primary_key=True)
-    type = Column(SmallInteger, nullable=False)
-    name = Column(String(120), nullable=False)
-    contact_name = Column(String(120), nullable=False)
+    client_type = Column(SmallInteger, nullable=False)
+    company_name = Column(String(120), nullable=False)
+    contact_last_name = Column(String(120), nullable=False)    
+    contact_first_name = Column(String(120), nullable=False)
     email = Column(String(120), unique=True, nullable=False)
     phone1 = Column(String(32), nullable=False)    
     phone2 = Column(String(32), nullable=True)
@@ -71,16 +73,17 @@ class Customer(Base):
     bill_country = Column(String(120), nullable=False)
     updated_at = Column(DateTime, nullable=False)
 
-    def __init__(self, uid=None, user=None, ctype=None, customerName=None, \
-        contactName=None, email=None, phone1=None, phone2=None, fax=None, website=None, \
+    def __init__(self, uid=None, user=None, clientType=None,  companyName=None, customerLastName=None, \
+        customerFirstName=None, email=None, phone1=None, phone2=None, fax=None, website=None, \
         address1=None, address2=None, city=None, state=None, postal=None, country=None, \
         billAddress1=None, billAddress2=None, billCity=None, billState=None, billPostal=None, billCountry=None, \
         updated_at=None):
         self.id = uid
         self.user = user
-        self.type = ctype
-        self.name = customerName
-        self.contact_name = contactName
+        self.client_type = clientType
+        self.company_name = companyName
+        self.contact_last_name = customerLastName
+        self.contact_first_name = customerFirstName
         self.email = email
         self.phone1 = phone1
         self.phone2 = phone2
@@ -101,4 +104,4 @@ class Customer(Base):
         self.updated_at = updated_at      
         
     def __repr__(self):
-        return 'Customer' + self.__dict__
+        return 'Customer' + self.__dict__        
