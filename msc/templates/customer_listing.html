@@ -8,16 +8,31 @@
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <div>
-                    <script>
-                    customers = {{retCustomers}}
-                    for (customer in customers) {
-                     document.write(customer.company_name);
-                     document.write("<br />");
-                    }
-                    </script>
-                  </div>
+                  <th>Company Name</th>
+                  <th>Type</th>
+                  <th>Contact</th>
+                  <th>Address</th>
+                  <th>Last Updated</th>
                 </tr>
+              </thead>
+              <tbody>
+                {% for customer in retCustomers %}
+                <tr>
+                  <td>{{ customer.company_name }}</td>
+                  <td>{{ customer.client_type }}</td>
+                  <td>{{ customer.contact_first_name }} {{ customer.contact_last_name }}</td>
+                  <td>{{ customer.address1 }}, {{ customer.city }}, {{customer.state}}, {{customer.country}}</td>
+                  <td>{{customer.updated_at}}</td>
+                </tr>
+                {% else %}
+                <tr>
+                  <td> </td>
+                  <td> </td>
+                  <td>No Customers</td>
+                  <td> </td>
+                  <td> </td>
+                </tr>
+                {% endfor %}
               </tbody>
             </table>
           </div>
