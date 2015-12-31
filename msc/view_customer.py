@@ -25,13 +25,14 @@ def create_customer_request():
        # print('invalid data entered')
         return render_template('new_customer.html', error=error)
 
-   # print('start add process...')
-    customerName = request.form['inputCustomerName']
-   # print("customer: " + customerName)
+    companyName = request.form['inputCompanyName']
+   # print("company: " + companyName)
     customerType = request.form['inputCustomerType']
    # print("customer type: " + customerType)
-    customerContact = request.form['inputCustomerContact']
-   # print("contact: " + customerContact)
+    customerLastName = request.form['inputCustomerLastName']
+   # print("customer last name: " + customerLastName)
+    customerFirstName = request.form['inputCustomerFirstName']
+   # print("customer first name: " + customerFirstName)
     phone1 = request.form['inputCustomerPhone1']
    # print("phone1: " + phone1)
     phone2 = request.form['inputCustomerPhone2']
@@ -80,7 +81,7 @@ def create_customer_request():
     updated_at = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
     user_ID =  session['userid']
 
-    c = Customer(i, user_ID, customerType, customerName, customerContact, email, \
+    c = Customer(i, user_ID, customerType, companyName, customerLastName, customerFirstName, email, \
         phone1, phone2, fax, webAddy, streetAddress1, streetAddress2, city, state, postal, country, \
         streetAddress1Bill, streetAddress2Bill, cityBill, stateBill, postalBill, countryBill, updated_at)
 
@@ -104,6 +105,7 @@ def list_customer_request():
    customers = Customer.query.all()
 
    for customer in customers:
-    print("customer " + customer.name)
+    print("customer company:  " + customer.company_name)
+    print("customer last name:  " + customer.contact_last_name)
 
-   return render_template('customer_listing.html')
+   return render_template('customer_listing.html', retCustomers=customers)
