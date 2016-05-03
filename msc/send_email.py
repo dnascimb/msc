@@ -6,7 +6,7 @@ from email.mime.text import MIMEText
 def send(sender,receiver,subject,message):
 
 	if not sender:
-		sender = "support@myservicecompany.com"
+		sender = "admin@dannascimbeni.com"
 	if not receiver:
 		return "no receiver specified"
 	if not subject:
@@ -27,9 +27,9 @@ def send(sender,receiver,subject,message):
 	<html>
 	  <head></head>
 	  <body>
-	    <p>Hi!<br>
-	       How are you?<br>
-	       Here is the <a href="https://www.python.org">link</a> you wanted.
+	    <p>Hello,<br>
+	       Thanks for signing up with MyServiceCompany.com!<br>
+	       Here is a link to Google, cause that's always helpful, <a href="http://www.google.com">google link</a> ...enjoy!
 	    </p>
 	  </body>
 	</html>
@@ -45,8 +45,11 @@ def send(sender,receiver,subject,message):
 	msg.attach(part1)
 	msg.attach(part2)
 
-	# Send the message via local SMTP server.
-	s = smtplib.SMTP('localhost', 8081)
+	# Send the message via SMTP server.
+	s = smtplib.SMTP('mail.privateemail.com', 26)
+	s.ehlo()
+	s.starttls()
+	s.login("admin@dannascimbeni.com","%FkdsuXc7FaD4")
 	# sendmail function takes 3 arguments: sender's address, recipient's address
 	# and message to send - here it is sent as one string.
 	s.sendmail(sender, receiver, msg.as_string())

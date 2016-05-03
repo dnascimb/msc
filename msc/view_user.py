@@ -65,7 +65,7 @@ def create_user_request():
         db_session.add(u)
         db_session.commit()
 
-        result = send(None, "vlew325@gmail.com", "Registration Confirmation", "Thanks for registering with MyServiceCompany.com")
+        result = send(None, email, "Registration Confirmation", "Thanks for registering with MyServiceCompany.com")
         if(result != 1):
             #couldn't send email
             print("error when sending email: " + result)
