@@ -6,6 +6,7 @@ from flask import request, session, redirect, url_for, abort, \
 from msc.models import User
 from sqlalchemy import func
 from msc.database import db_session
+from msc.send_email import send
 
 @app.route('/new_user_request', methods=['GET'])
 def new_user_request():
@@ -56,8 +57,6 @@ def create_user_request():
 
     session['userid'] = i
     
-    # print('session ID in USER ADD--', session['userid'])
-
     if password == password2:
         updated_at = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
         u = User(i, name, email, password, user_company, phone, streetAddress1, \
@@ -66,8 +65,12 @@ def create_user_request():
         db_session.add(u)
         db_session.commit()
 
-        flash('New user was successfully added')
-        return redirect(url_for('home'))
+        result = send(None, "vlew325@gmail.com", "Registration Confirmation", "Thanks for registering with MyServiceCompany.com")
+        if(result != 1):
+            #couldn't send email
+            print("error when sending email: " + result)
+        else:
+            return redirect(url_for('home'))
     else:
         #print('unsuccessful add')
         error="passwords do not match"
