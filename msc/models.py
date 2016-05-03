@@ -50,7 +50,7 @@ class Customer(Base):
     __tablename__ = 'customers'
     id = Column(String(36), primary_key=True)
     user = Column(String(36), ForeignKey(User.id),primary_key=True)
-    client_type = Column(SmallInteger, nullable=False)
+    customer_type = Column(SmallInteger, nullable=False)
     company_name = Column(String(120), nullable=False)
     contact_last_name = Column(String(120), nullable=False)    
     contact_first_name = Column(String(120), nullable=False)
@@ -73,14 +73,14 @@ class Customer(Base):
     bill_country = Column(String(120), nullable=False)
     updated_at = Column(DateTime, nullable=False)
 
-    def __init__(self, uid=None, user=None, clientType=None,  companyName=None, customerLastName=None, \
+    def __init__(self, uid=None, user=None, customerType=None,  companyName=None, customerLastName=None, \
         customerFirstName=None, email=None, phone1=None, phone2=None, fax=None, website=None, \
         address1=None, address2=None, city=None, state=None, postal=None, country=None, \
         billAddress1=None, billAddress2=None, billCity=None, billState=None, billPostal=None, billCountry=None, \
         updated_at=None):
         self.id = uid
         self.user = user
-        self.client_type = clientType
+        self.customer_type = customerType
         self.company_name = companyName
         self.contact_last_name = customerLastName
         self.contact_first_name = customerFirstName
