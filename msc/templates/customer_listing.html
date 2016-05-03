@@ -19,7 +19,7 @@
                 {% for customer in retCustomers %}
                 <tr>
                   <td>{{ customer.company_name }}</td>
-                  <td>{{ customer.client_type }}</td>
+                  <td>{{ customer.customer_type }}</td>
                   <td>{{ customer.contact_first_name }} {{ customer.contact_last_name }}</td>
                   <td>{{ customer.address1 }}, {{ customer.city }}, {{customer.state}}, {{customer.country}}</td>
                   <td>{{customer.updated_at}}</td>
