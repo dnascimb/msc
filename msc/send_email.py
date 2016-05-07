@@ -6,7 +6,7 @@ from email.mime.text import MIMEText
 def send(sender,receiver,subject,message):
 
 	if not sender:
-		sender = "admin@dannascimbeni.com"
+		sender = "MyServiceCompany.com <admin@dannascimbeni.com>"
 	if not receiver:
 		return "no receiver specified"
 	if not subject:
@@ -27,10 +27,9 @@ def send(sender,receiver,subject,message):
 	<html>
 	  <head></head>
 	  <body>
-	    <p>Hello,<br>
-	       Thanks for signing up with MyServiceCompany.com!<br>
-	       Here is a link to Google, cause that's always helpful, <a href="http://www.google.com">google link</a> ...enjoy!
-	    </p>
+	    <p>Hello,<br><br>
+       Thanks for signing up with <a href="http://www.myservicecompany.com">MyServiceCompany.com</a><br>
+    </p>
 	  </body>
 	</html>
 	"""
