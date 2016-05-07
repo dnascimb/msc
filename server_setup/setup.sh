@@ -55,6 +55,9 @@ sed -i -e 's/password/ZfbX2yPcZ!W3P*wRk/' msc/database.py
 #change configuration of wsgi
 sed -i -e 's|pathToCode|/repos/msc|g' msc/msc.wsgi
 
+#install the application database
+python /repos/msc/init_db.py
+
 #copy code to apache
 #cp -R ../msc /var/www
 mkdir /var/www/msc
