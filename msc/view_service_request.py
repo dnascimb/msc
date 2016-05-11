@@ -30,28 +30,17 @@ def validServiceRequest(request):
 
 def saveRequest(request):
     warranty = request.form.getlist('checkboxes')
-    #print("warranty: " + warranty)
     vendor = ''
-   # print("vendor: " + vendor)
     troubleshoot = ''
-   # print("troubleshoot: " + troubleshoot)
     contact_name = request.form['inputContactName']
-   # print("contact_name: " + contact_name)
     contact_phone = request.form['inputContactPhone']
-   # print("contact_phone: " + contact_phone)
     contact_email = request.form['inputContactEmail']
-   # print("contact_email: " + contact_email)
     manufacturer = request.form['inputEquipmentManufacturer']
-   # print("manufacturer: " + manufacturer)
     model = request.form['inputEquipmentModel']
-   # print("model: " + model)
     date_purchased = request.form['inputEquipmentDatePurchased']
-   # print("date_purchased: " + date_purchased)
     appointment = request.form['inputTimeframe']
-   # print("appointment: " + appointment)
     description = request.form['inputDescription']
-   # print("description: " + description)
-
+ 
     i = str(uuid.uuid4())
     number = 3830238
     rtype = 'Service'

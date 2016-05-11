@@ -20,35 +20,21 @@ def create_user_request():
         print('invalid data entered')
         return render_template('signup.html', error=error)
 
-    # print('start add process...')
     name = request.form['inputName']
-    # print("name is: " + name)
     password = request.form['inputPassword']
-    # print("password is: " + password)
     password2 = request.form['inputPassword2']
-    # print("password2 is: " + password2)
     user_company = request.form['inputCompanyName']
-    # print("company: " + user_company)
     phone = request.form['inputPhone']
-    # print("phone: " + phone)
     email = request.form['inputEmail']
-    # print("email: " + email)
     streetAddress1 = request.form['inputStreetAddress1']
-    # print("street address 1: " + streetAddress1)
     streetAddress2 = request.form['inputStreetAddress2']
-    # print("street address 2: " + streetAddress2)
     city = request.form['inputCity']
-    # print("city: " + city)
     state = request.form['inputState']
-    # print("State: " + state)    
     country = request.form['inputCountry']
-    # print("Country: " + country)
     postal = request.form['inputZip']
-    # print("zip: " + postal)
 
     if not checkEmailAvailable(request):
         error = 'Sorry, that email is already taken'
-        # print('email in use')
         return render_template('signup.html',  retUserName=name, retCompany=user_company, \
             retEmail=email, retPhone=phone, retStreet1=streetAddress1, retStreet2=streetAddress2, \
             retCity=city, retState=state, retZip=postal, retCountry=country, error=error)
@@ -70,7 +56,8 @@ def create_user_request():
             #couldn't send email
             print("error when sending email: " + result)
         else:
-            return redirect(url_for('home'))
+            session['logged_in'] = True
+            return redirect(url_for('new_service_request'))
     else:
         #print('unsuccessful add')
         error="passwords do not match"
@@ -83,8 +70,6 @@ def create_user_request():
 @app.route('/view_user_request', methods=['GET'])
 def view_user_request():
 
-   # print("in view_user_request function - request method: " + request.method)
- 
     the_user =  session['userid']
     result = User.query.filter(func.lower(User.id) == func.lower(the_user)).first()
     
@@ -99,38 +84,22 @@ def view_user_request():
 @app.route('/view_user_request', methods=['post'])
 def update_user_request():
 
-   # print("in update_user_request function - request method: " + request.method)
-
     fromProfile = True
 
     name = request.form['inputName']
-   # print("name is: " + name)
     user_company = request.form['inputCompanyName']
-   # print("company: " + user_company)
     phone = request.form['inputPhone']
-   # print("phone: " + phone)
     email = request.form['inputEmail']
-   # print("email: " + email)   
     password = request.form['inputPassword']
-   # print("password1: " + password)
     password2 = request.form['inputPassword2']
-   # print("password2: " + password2)    
     streetAddress1 = request.form['inputStreetAddress1']
-   # print("street address 1: " + streetAddress1)
     streetAddress2 = request.form['inputStreetAddress2']
-   # print("street address 2: " + streetAddress2)
     city = request.form['inputCity']
-   # print("city: " + city)
     state = request.form['inputState']
-   # print("State: " + state)    
     country = request.form['inputCountry']
-   # print("Country: " + country)
     postal = request.form['inputZip']
-   # print("zip: " + postal)
 
     uid =  session['userid']
-   # print('session ID in UPDATE--', session['userid'])
-
     updated_at = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
 
     if len(password) != 0:
@@ -156,7 +125,6 @@ def update_user_request():
                     retStreet2=streetAddress2, retCity=city, retState=state, retZip=postal, retCountry=country, \
                     error=error)
     
-    # update user record
     result = User.query.filter(func.lower(User.id) == func.lower(uid)).first()
     if result:
         result.name = name
@@ -181,9 +149,7 @@ def update_user_request():
 
 
     flash('User was successfully updated')
-    
-    # print 'return from call:  ', user_profile.fetchone()  # or use fetchall()
-   
+
     return render_template('customer_profile.html', fromProfile=fromProfile, retUserName=name, \
         retCompany=user_company, retEmail=email, retPhone=phone, retStreet1=streetAddress1, \
         retStreet2=streetAddress2, retCity=city, retState=state, retZip=postal, retCountry=country)
