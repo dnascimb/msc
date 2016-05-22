@@ -12,7 +12,9 @@
           	<fieldset>
 				
 				<br>&nbsp;<br>
-				<div class="col-md-12">
+
+
+				<div id="section1" class="col-md-12">
 					<div class="col-md-4">
 			          	<!-- Item Selection -->
 			          	<label class="control-label" for="item_type">What type of service do you need?</label>
@@ -62,19 +64,91 @@
 					</div>
 					
 					<br>&nbsp;<br>
+					
+					<div class="col-md-12">
+			          	<!-- Item Selection -->
+			          	<label class="control-label" for="description">What seems to be the issue?</label>
+						<textarea id="description" rows="3" class="col-md-12 form-control"></textarea>
+					</div>
+
+				</div>
+
+				<div id="section2" class="col-md-12" style="display:none">
+					<div class="col-md-4">
+			          	<!-- Item Selection -->
+			          	<label class="control-label" for="date_requested">When would you like the service?</label>
+						<input id="date_requested" name="date_requested" type="date" placeholder="" class="form-control input-md" required>
+					</div>
+
+					<div class="col-md-4">
+			          	<!-- Item Selection -->
+			          	<label class="control-label" for="timeframe">What timeframe is better?</label>
+						<select id="timeframe" class="col-md-6 form-control">
+						    <option value="1" default>8 AM - noon</option>
+						    <option value="2">10 AM - 2 PM</option>
+						    <option value="3">noon - 5 PM</option>
+						</select>
+					</div>
+
+				
+					
 					<br>&nbsp;<br>
 					
+				</div>
+
+				<div id="section3" class="col-md-12" style="display:none">
+					<div class="col-md-12">
+			          	<!-- Item Selection -->
+			          	<h3 class="sub-header">Items</h3>
+					</div>
+
+
+					<div class="col-md-12">
+			          	<!-- Item Selection -->
+			          	<div class="col-md-2">
+			          		<label id="counter" class="control-label">1</label>
+						</div>
+						<div class="col-md-6">
+							<dl>
+							  <dt id="title">Elliptical Service</dt>
+							  <dd id="description" >description</dd>
+							</dl>
+			          	<!--<label id="title" class="control-label">Elliptical Service</label>
+			          		<br>
+			          		<label id="description" class="control-label">description</label>
+			          	-->
+						</div>
+						<div class="col-md-2">
+			          		<label id="quantity" class="control-label">1</label>
+						</div>
+						<div class="col-md-2">
+			          		<label id="price" class="control-label">$175.00</label>
+						</div>
+					</div>
+
+				
+					
+					<br>&nbsp;<br>
+					
+				</div>
+
+				<br>&nbsp;<br>
+				<br>&nbsp;<br>
+
+				<div class="col-md-12">
 					<!-- Buttons -->
 					<div class="col-md-4">
 					</div>
 					<div class="col-md-2">
-						<button class="btn btn-default btn-block" type="submit">Cancel</button>
+						<button id="cancelButton" class="btn btn-default btn-block" type="button">Cancel</button>
 					</div>
 					<div class="col-md-2">
-						<button class="btn btn-primary btn-block" type="submit">Next</button>
+						<button id="nextButton" class="btn btn-primary btn-block" type="button">Next</button>
 					</div>
 
 				</div>
+
+
 				
 				
 				
@@ -82,5 +156,80 @@
           </form>
          </div>
         </div>
+
+        <script>
+
+        	var step = 1; // holds page state; 1=type,2=date,3=confirm
+        	var data = {};
+
+			$( document ).ready(function() {
+				// initialize page
+			    showStep1();
+			});
+
+			// button transitions
+			$('#nextButton').click(function() {
+				switch(step) {
+				    case 1:
+				        showStep2();
+						step = 2;
+				        break;
+				    case 2:
+				    	showStep3();
+				    	step = 3;
+				        break;
+					case 3:
+						createTicket();
+				}
+				
+			});
+			$('#cancelButton').click(function() {
+				switch(step) {
+				    case 1:
+				        window.location.href = '/home';
+				        break;
+				    case 2:
+				    	showStep1();
+				    	step = 1;
+				        break;
+				    case 3:
+				    	showStep2();
+				    	step = 2;
+				}
+			});
+
+
+			function showStep1() {
+				saveDataLocally();
+				$('#section1').show();
+			    $('#section2').hide();
+			    $('#section3').hide();
+			    $('#cancelButton').text("Cancel");
+			    $('#nextButton').text("Next >>");
+			}
+			function showStep2() {
+				saveDataLocally();
+				$('#section1').hide();
+			    $('#section2').show();
+			    $('#section3').hide();
+			    $('#cancelButton').text("<< Back");
+			    $('#nextButton').text("Next >>");
+			}
+			function showStep3() {
+				saveDataLocally();
+				$('#section1').hide();
+			    $('#section2').hide();
+			    $('#section3').show();
+			    $('#cancelButton').text("<< Back");
+			    $('#nextButton').text("Approve");
+			}
+			function createTicket() {
+
+			}
+			function saveDataLocally() {
+
+			}
+
+        </script>
      
 {% endblock %}
