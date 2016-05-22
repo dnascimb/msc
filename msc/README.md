@@ -9,15 +9,17 @@ Project and Dependencies
 
 Mac
 
+* install python3
 * $ git clone https://github.com/dnascimb/msc.git
 * $ cd msc
-* $ sudo pip install virtualenv
+* $ sudo pip3 install virtualenv
 * $ virtualenv venv
 * $ . venv/bin/activate
-* $ sudo pip install Flask (or for latest) pip install https://github.com/mitsuhiko/flask/tarball/master
-* $ sudo pip install sqlalchemy
-* $ sudo pip install PyMySQL
+* $ sudo pip3 install Flask (or for latest) pip install https://github.com/mitsuhiko/flask/tarball/master
+* $ sudo pip3 install sqlalchemy
+* $ sudo pip3 install PyMySQL
 * download and install mysql
+* create a database named msc
 * adjust the database username and password in msc/database.py
 
 
