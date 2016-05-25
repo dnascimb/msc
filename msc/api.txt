@@ -1,84 +1,84 @@
 # Users
-GET		/users
-GET		/users/{id}
-POST	/users
-PUT		/users/{id}
-DELETE	/users/{id}		(admin only)
+GET     /users
+GET     /users/{id}
+POST    /users
+PUT     /users/{id}
+DELETE  /users/{id}     (admin only)
 
 # User Contracts
-GET		/users/{id}/contracts
-GET		/users/{id}/contracts/{id}
-POST	/users/{id}/contracts
-PUT		/users/{id}/contracts/{id}
-DELETE	/users/{id}/contracts/{id}
+GET     /users/{id}/contracts
+GET     /users/{id}/contracts/{id}
+POST    /users/{id}/contracts
+PUT     /users/{id}/contracts/{id}
+DELETE  /users/{id}/contracts/{id}
 
 # Providers
-GET		/providers 		(admin only)
-GET		/providers/{id}	(admin only)
-POST	/providers		(admin only)
-PUT		/providers/{id}	(admin only)
-DELETE	/providers/{id} (admin only)
+GET     /providers      (admin only)
+GET     /providers/{id} (admin only)
+POST    /providers      (admin only)
+PUT     /providers/{id} (admin only)
+DELETE  /providers/{id} (admin only)
 
 # Provider Services
-GET		/providers/{id}/services 		(admin only)
-GET		/providers/{id}/services/{id}	(admin only)
-POST	/providers/{id}/services		(admin only)
-PUT		/providers/{id}/services/{id}	(admin only)
-DELETE	/providers/{id}/services/{id} 	(admin only)
+GET     /providers/{id}/services        (admin only)
+GET     /providers/{id}/services/{id}   (admin only)
+POST    /providers/{id}/services        (admin only)
+PUT     /providers/{id}/services/{id}   (admin only)
+DELETE  /providers/{id}/services/{id}   (admin only)
 
 # Provider Time Slots
-GET		/providers/{id}/time_slots 			(admin only)
-GET		/providers/{id}/time_slots/{id}		(admin only)
-POST	/providers/{id}/time_slots			(admin only)
-PUT		/providers/{id}/time_slots/{id}		(admin only)
-DELETE	/providers/{id}/time_slots/{id} 	(admin only)
+GET     /providers/{id}/time_slots          (admin only)
+GET     /providers/{id}/time_slots/{id}     (admin only)
+POST    /providers/{id}/time_slots          (admin only)
+PUT     /providers/{id}/time_slots/{id}     (admin only)
+DELETE  /providers/{id}/time_slots/{id}     (admin only)
 
 # Provider Contracts
-GET		/providers/{id}/contracts 			(admin only)
-GET		/providers/{id}/contracts/{id}		(admin only)
-POST	/providers/{id}/contracts			(admin only)
-PUT		/providers/{id}/contracts/{id}		(admin only)
-DELETE	/providers/{id}/contracts/{id} 		(admin only)
+GET     /providers/{id}/contracts           (admin only)
+GET     /providers/{id}/contracts/{id}      (admin only)
+POST    /providers/{id}/contracts           (admin only)
+PUT     /providers/{id}/contracts/{id}      (admin only)
+DELETE  /providers/{id}/contracts/{id}      (admin only)
 
 # Tickets
-GET		/providers/{id}/tickets
-GET		/providers/{id}/tickets/{id}
-POST	/providers/{id}/tickets
-PUT		/providers/{id}/tickets/{id}
-DELETE	/providers/{id}/tickets/{id}
+GET     /providers/{id}/tickets
+GET     /providers/{id}/tickets/{id}
+POST    /providers/{id}/tickets
+PUT     /providers/{id}/tickets/{id}
+DELETE  /providers/{id}/tickets/{id}
 
 # Ticket Items
-GET		/providers/{id}/tickets/{id}/items
-GET		/providers/{id}/tickets/{id}/items/{id}
-POST	/providers/{id}/tickets/{id}/items/
-PUT		/providers/{id}/tickets/{id}/items/{id}
-DELETE	/providers/{id}/tickets/{id}/items/{id}
+GET     /providers/{id}/tickets/{id}/items
+GET     /providers/{id}/tickets/{id}/items/{id}
+POST    /providers/{id}/tickets/{id}/items/
+PUT     /providers/{id}/tickets/{id}/items/{id}
+DELETE  /providers/{id}/tickets/{id}/items/{id}
 
 # Comments
-GET		/providers/{id}/tickets/{id}/comments
-GET		/providers/{id}/tickets/{id}/comments/{id}
-POST	/providers/{id}/tickets/{id}/comments
-PUT		/providers/{id}/tickets/{id}/comments/{id}
-DELETE	/providers/{id}/tickets/{id}/comments/{id}
+GET     /providers/{id}/tickets/{id}/comments
+GET     /providers/{id}/tickets/{id}/comments/{id}
+POST    /providers/{id}/tickets/{id}/comments
+PUT     /providers/{id}/tickets/{id}/comments/{id}
+DELETE  /providers/{id}/tickets/{id}/comments/{id}
 
 # Ticket History
-GET		/providers/{id}/tickets/{id}/events
-GET		/providers/{id}/tickets/{id}/events/{id}
-POST	/providers/{id}/tickets/{id}/events
-PUT		/providers/{id}/tickets/{id}/events/{id}
-DELETE	/providers/{id}/tickets/{id}/events/{id}
+GET     /providers/{id}/tickets/{id}/events
+GET     /providers/{id}/tickets/{id}/events/{id}
+POST    /providers/{id}/tickets/{id}/events
+PUT     /providers/{id}/tickets/{id}/events/{id}
+DELETE  /providers/{id}/tickets/{id}/events/{id}
 
 # Appointments
-GET		/providers/{id}/appointments/{id}
-POST	/providers/{id}/appointments/{id}
-PUT		/providers/{id}/appointments/{id}
-DELETE	/providers/{id}/appointments/{id}
+GET     /providers/{id}/appointments/{id}
+POST    /providers/{id}/appointments/{id}
+PUT     /providers/{id}/appointments/{id}
+DELETE  /providers/{id}/appointments/{id}
 
 # Audit Events
-GET		/providers/{id}/audit_events
-GET		/providers/{id}/audit_events/{id}
-POST	/providers/{id}/audit_events
-PUT		/providers/{id}/audit_events/{id}
-DELETE	/providers/{id}/audit_events/{id}
+GET     /providers/{id}/audit_events
+GET     /providers/{id}/audit_events/{id}
+POST    /providers/{id}/audit_events
+PUT     /providers/{id}/audit_events/{id}
+DELETE  /providers/{id}/audit_events/{id}
 
 
