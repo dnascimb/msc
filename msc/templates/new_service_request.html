@@ -2,7 +2,11 @@
 {% block body %}
         <h2 class="sub-header">New Service Request</h2>
         <div class="container">
-        {% if error %}<div id="alert" class="alert alert-danger" role="alert">{{ error }}</div> {% endif %}
+        {% if error %}
+        <div id="alert" class="alert alert-danger" role="alert">{{ error }}</div> 
+        {% else %}
+        <div id="alert" class="alert alert-danger hidden" role="alert">{{ error }}</div>
+        {% endif %}
 
 
 
@@ -17,8 +21,8 @@
 				<div id="section1" class="col-md-12">
 					<div class="col-md-4">
 			          	<!-- Item Selection -->
-			          	<label class="control-label" for="item_type">What type of service do you need?</label>
-						<select id="item_type" class="col-md-6 form-control">
+			          	<label class="control-label" for="type">What type of service do you need?</label>
+						<select id="type" class="col-md-6 form-control">
 						    <option value="1">Elliptical Repair</option>
 						    <option value="2">Elliptical Preventative Maintenance</option>
 						    <option value="3">Cycle Repair</option>
@@ -197,7 +201,7 @@
 
 			function validate() { // validate all fields
 				msg = "Please fill in all fields";
-				if($('#item_type').val().trim() == null)
+				if($('#type').val().trim() == null)
 					$('#alert').text(msg);
 				if($('#quantity').val().trim() == null)
 					$('#alert').text(msg);
@@ -239,8 +243,7 @@
 			    step = 3;
 			}
 			function loadStep3Data() {
-				console.log(ticket);
-				$('#lbl_title').text($("#item_type option:selected").text());
+				$('#lbl_title').text($("#type option:selected").text());
 				$('#lbl_description').text(ticket.desc);
 				$('#lbl_quantity').text(ticket.quantity);
 			}
@@ -257,17 +260,18 @@
 			        	alert("Thanks!"); 
 			        },
 			        error: function () {
-			        	alert("There seems to be an issue at the moment");
+			        	$("#alert").text("There seems to be an issue at the moment");
+			        	$("#alert").removeClass('hidden');
 			        }
 			    })
 			}
 			function saveDataLocally() {
-				ticket.item_type = $("#item_type option:selected").text();
-				ticket.quantity = $('#quantity').val().trim();
-				ticket.pm = $('#pm').val().trim();
+				ticket.type = $("#type").val();
+				ticket.quantity = $('#quantity').val();
+				ticket.pm = $('#pm').val();
 				ticket.desc = $('#description').val().trim();
-				ticket.date_requested = $('#date_requested').val().trim();
-				ticket.timeframe = $('#timeframe').val().trim();
+				ticket.date_requested = $('#date_requested').val();
+				ticket.timeframe = $('#timeframe').val();
 			}
 
         </script>

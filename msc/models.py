@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, SmallInteger, String, DateTime, ForeignKey
-from sqlalchemy.orm import mapper
+from sqlalchemy.orm import mapper, relationship
 from msc.database import Base
 from werkzeug.security import generate_password_hash, \
      check_password_hash
@@ -18,6 +18,7 @@ class User(Base):
     state = Column(String(120), nullable=False)
     postal = Column(String(32), nullable=False)
     country = Column(String(120), nullable=False)
+    provider_id = Column(String(36), ForeignKey('providers.id'), nullable=True)
     updated_at = Column(DateTime, nullable=False)
 
     def __init__(self, uid=None, name=None, email=None, password=None, company=None, phone=None, address1=None, \
@@ -37,6 +38,7 @@ class User(Base):
         self.state = state
         self.postal = postal
         self.country = country
+        self.provider_id = "e034baea-b649-4a6d-895f-da47b3f62619" #hardcode to Advantage
         self.updated_at = updated_at      
         
     def __repr__(self):
@@ -104,4 +106,60 @@ class Customer(Base):
         self.updated_at = updated_at      
         
     def __repr__(self):
-        return 'Customer' + self.__dict__        
+        return 'Customer' + self.__dict__   
+
+class Provider(Base):
+    __tablename__ = 'providers'
+    id = Column(String(36), primary_key=True)
+    type = Column(Integer, nullable=False)
+    title = Column(String(200), nullable=False)
+    description = Column(String(1024), nullable=False)
+    members = relationship('User', backref='provider',
+                                lazy='dynamic')
+    created_at = Column(DateTime, nullable=False)
+    updated_at = Column(DateTime, nullable=False)
+
+    def __init__(self, uid=None, ttype=None, title=None, description=None, \
+        created_at=None, updated_at=None):
+        self.id = uid
+        self.type = ttype
+        self.title = title
+        self.description = description
+#        self.members = members
+        self.created_at = created_at
+        self.updated_at = updated_at      
+        
+    def __repr__(self):
+        return 'Provider' + self.__dict__
+     
+
+class Ticket(Base):
+    __tablename__ = 'tickets'
+    id = Column(String(36), primary_key=True)
+    type = Column(Integer, nullable=False)
+    quantity = Column(Integer, nullable=False)
+    pm_contract = Column(Integer, nullable=True)
+    description = Column(String(1024), nullable=False)
+    timeslot = Column(Integer, nullable=False)
+    appointment_at = Column(DateTime, nullable=False)
+    updated_at = Column(DateTime, nullable=False)
+
+    def __init__(self, uid=None, ttype=None, quantity=None, pm_contract=None, description=None, timeslot=None, \
+        appointment_at=None, updated_at=None):
+        self.id = uid
+        self.type = ttype
+        self.quantity = quantity
+
+        if pm_contract is not None and pm_contract == 'No':
+            self.pm_contract = None
+        else:
+            self.pm_contract = pm_contract
+
+        self.description = description
+        self.timeslot = timeslot
+        self.appointment_at = appointment_at
+        self.updated_at = updated_at      
+        
+    def __repr__(self):
+        return 'Ticket' + self.__dict__
+     
