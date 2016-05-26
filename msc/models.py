@@ -125,7 +125,6 @@ class Provider(Base):
         self.type = ttype
         self.title = title
         self.description = description
-#        self.members = members
         self.created_at = created_at
         self.updated_at = updated_at      
         
@@ -136,6 +135,8 @@ class Provider(Base):
 class Ticket(Base):
     __tablename__ = 'tickets'
     id = Column(String(36), primary_key=True)
+    reporter = Column(String(36), ForeignKey(User.id), onupdate="cascade")
+    provider = Column(String(36), ForeignKey(Provider.id), onupdate="cascade")
     type = Column(Integer, nullable=False)
     quantity = Column(Integer, nullable=False)
     pm_contract = Column(Integer, nullable=True)
@@ -144,9 +145,11 @@ class Ticket(Base):
     appointment_at = Column(DateTime, nullable=False)
     updated_at = Column(DateTime, nullable=False)
 
-    def __init__(self, uid=None, ttype=None, quantity=None, pm_contract=None, description=None, timeslot=None, \
+    def __init__(self, uid=None, reporter=None, ttype=None, quantity=None, pm_contract=None, description=None, timeslot=None, \
         appointment_at=None, updated_at=None):
         self.id = uid
+        self.reporter = reporter
+        self.provider = "e034baea-b649-4a6d-895f-da47b3f62619" #hardcode to Advantage
         self.type = ttype
         self.quantity = quantity
 

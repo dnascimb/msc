@@ -36,14 +36,16 @@ def validServiceRequest(request):
 
 def saveRequest(request):
     ticket = request.get_data().decode('utf-8');
+    reporter = session.get('user_id')
+    
+    if not reporter:
+        return None
     
     if not (ticket is None):
         i = str(uuid.uuid4())
         updated_at = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
-        provider = 'Advantage'
-
         jticket = json.loads(ticket);
-        t = Ticket(i, jticket['type'], jticket['quantity'], jticket['pm'], jticket['desc'], \
+        t = Ticket(i, reporter, jticket['type'], jticket['quantity'], jticket['pm'], jticket['desc'], \
         jticket['timeframe'], jticket['date_requested'], updated_at)
 
         db_session.add(t)
