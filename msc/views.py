@@ -5,19 +5,14 @@ from flask import request, session, redirect, url_for, abort, \
      render_template, flash
 from sqlalchemy import func
 
-#import views
 import msc.view_service_request
 import msc.view_user
 import msc.view_customer
 
-#import models
 from msc.models import User
 
 @app.route('/')
 def index():
-    #db = get_db()
-    #cur = db.execute('select title, text from entries order by id desc')
-    #entries = cur.fetchall()
     return render_template('index.html')
 
 
@@ -26,50 +21,37 @@ def login():
     error = None
     if request.method == 'POST':
         if checkUserExists(request):
-            if checkCredentials(request):
+            cc_result = checkCredentials(request)
+            if cc_result:
                 session['logged_in'] = True
+                session['user_id'] = cc_result
                 return redirect(url_for('home'))
-            else:
-                error = 'Invalid Login Credentials'
-        else:
-            error = 'Email address is not on file'
+        error = 'Invalid Login Credentials'
     
     return render_template('index.html', error=error)
 
 @app.route('/logout')
 def logout():
     session.pop('logged_in', None)
-    #flash('You were logged out')
     return redirect(url_for('index'))
-
 
 @app.route('/home')
 def home():
-#    db = get_db()
-#    cur = db.execute('select uuid, number, type, status, updated_at, provider from service_requests order by number desc')
-#    entries = cur.fetchall()
     return render_template('service_request_listing.html')
 
-
 def checkCredentials(request):
- 
     _inputEmail =  request.form['inputEmail']
-    
     result = User.query.filter(func.lower(User.email) == func.lower(_inputEmail)).first()
     if not result:
         return False
     else:
         if result.check_password(request.form['inputPassword']):
-            session['userid'] = result.id
-           # print('session ID in CHECK CREDENTIALS--', session['userid'])
-            return True
+            return result.id
         else:
-            return False
+            return 0
                 
 def checkUserExists(request):
-    
     _inputEmail = request.form['inputEmail']
-
     result = User.query.filter(func.lower(User.email) == func.lower(_inputEmail)).first()
 
     if not result:
@@ -81,9 +63,7 @@ def checkUserExists(request):
 # determines if a user with the specified email exists
 #
 def checkEmailAvailable(request):
-    
     _inputEmail = request.form['inputEmail']
-
     result = User.query.filter(func.lower(User.email) == func.lower(_inputEmail)).first()
 
     if not result:

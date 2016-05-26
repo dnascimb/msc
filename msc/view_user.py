@@ -41,7 +41,7 @@ def create_user_request():
     
     i = str(uuid.uuid4())
 
-    session['userid'] = i
+    session['user_id'] = i
     
     if password == password2:
         updated_at = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
@@ -70,7 +70,7 @@ def create_user_request():
 @app.route('/view_user_request', methods=['GET'])
 def view_user_request():
 
-    the_user =  session['userid']
+    the_user =  session['user_id']
     result = User.query.filter(func.lower(User.id) == func.lower(the_user)).first()
     
     if result: 
@@ -99,7 +99,7 @@ def update_user_request():
     country = request.form['inputCountry']
     postal = request.form['inputZip']
 
-    uid =  session['userid']
+    uid =  session['user_id']
     updated_at = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
 
     if len(password) != 0:

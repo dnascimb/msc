@@ -79,7 +79,7 @@ def create_customer_request():
 
     i = str(uuid.uuid4())
     updated_at = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
-    user_ID =  session['userid']
+    user_ID =  session['user_id']
 
     c = Customer(i, user_ID, customerType, companyName, customerLastName, customerFirstName, email, \
         phone1, phone2, fax, webAddy, streetAddress1, streetAddress2, city, state, postal, country, \
