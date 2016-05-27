@@ -22,7 +22,6 @@ def init_db():
     # Create required database data
     ####################################################
     from msc.models import Provider
-    p = Provider("e034baea-b649-4a6d-895f-da47b3f62619", 1, "Advantage", "Advantage Fitness Equipment", \
-    	"2016-05-25 00:00:00", "2016-05-25 00:00:00")
+    p = Provider("e034baea-b649-4a6d-895f-da47b3f62619", 1, "Advantage", "Advantage Fitness Equipment")
     db_session.add(p)
     db_session.commit()

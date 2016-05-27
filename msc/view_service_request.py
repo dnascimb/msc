@@ -43,10 +43,9 @@ def saveRequest(request):
     
     if not (ticket is None):
         i = str(uuid.uuid4())
-        updated_at = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
         jticket = json.loads(ticket);
         t = Ticket(i, reporter, jticket['type'], jticket['quantity'], jticket['pm'], jticket['desc'], \
-        jticket['timeframe'], jticket['date_requested'], updated_at)
+        jticket['timeframe'], jticket['date_requested'])
 
         db_session.add(t)
         db_session.commit()

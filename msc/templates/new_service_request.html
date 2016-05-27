@@ -257,7 +257,12 @@
 			        async: false,
 			        data: JSON.stringify(ticket),
 			        success: function () {
-			        	alert("Thanks!"); 
+			        	swal({
+			        		title: "Success!",
+			        		type: "success",
+			        		text: "Ticket created",
+			        		showConfirmButton: false });
+			        	window.location.href = "{{ url_for('home') }}";
 			        },
 			        error: function () {
 			        	$("#alert").text("There seems to be an issue at the moment");

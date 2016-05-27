@@ -1,8 +1,12 @@
 from sqlalchemy import Column, Integer, SmallInteger, String, DateTime, ForeignKey
 from sqlalchemy.orm import mapper, relationship
-from msc.database import Base
 from werkzeug.security import generate_password_hash, \
      check_password_hash
+from datetime import datetime
+from msc.database import Base
+
+def _get_date():
+    return datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
 
 class User(Base):
     __tablename__ = 'users'
@@ -19,10 +23,11 @@ class User(Base):
     postal = Column(String(32), nullable=False)
     country = Column(String(120), nullable=False)
     provider_id = Column(String(36), ForeignKey('providers.id'), nullable=True)
-    updated_at = Column(DateTime, nullable=False)
+    created_at = Column(DateTime, nullable=False, default=_get_date)
+    updated_at = Column(DateTime, nullable=False, default=_get_date, onupdate=_get_date)
 
     def __init__(self, uid=None, name=None, email=None, password=None, company=None, phone=None, address1=None, \
-        address2=None, city=None, state=None, postal=None, country=None, updated_at=None):
+        address2=None, city=None, state=None, postal=None, country=None):
         self.id = uid
         self.name = name
         self.email = email
@@ -38,8 +43,7 @@ class User(Base):
         self.state = state
         self.postal = postal
         self.country = country
-        self.provider_id = "e034baea-b649-4a6d-895f-da47b3f62619" #hardcode to Advantage
-        self.updated_at = updated_at      
+        self.provider_id = "e034baea-b649-4a6d-895f-da47b3f62619" #hardcode to Advantage     
         
     def __repr__(self):
         return 'User' + self.__dict__
@@ -73,13 +77,13 @@ class Customer(Base):
     bill_state = Column(String(120), nullable=False)
     bill_postal = Column(String(32), nullable=False)
     bill_country = Column(String(120), nullable=False)
-    updated_at = Column(DateTime, nullable=False)
+    created_at = Column(DateTime, nullable=False, default=_get_date)
+    updated_at = Column(DateTime, nullable=False, default=_get_date, onupdate=_get_date)
 
     def __init__(self, uid=None, user=None, customerType=None,  companyName=None, customerLastName=None, \
         customerFirstName=None, email=None, phone1=None, phone2=None, fax=None, website=None, \
         address1=None, address2=None, city=None, state=None, postal=None, country=None, \
-        billAddress1=None, billAddress2=None, billCity=None, billState=None, billPostal=None, billCountry=None, \
-        updated_at=None):
+        billAddress1=None, billAddress2=None, billCity=None, billState=None, billPostal=None, billCountry=None):
         self.id = uid
         self.user = user
         self.customer_type = customerType
@@ -102,8 +106,7 @@ class Customer(Base):
         self.bill_city = billCity
         self.bill_state = billState
         self.bill_postal = billPostal
-        self.bill_country = billCountry
-        self.updated_at = updated_at      
+        self.bill_country = billCountry     
         
     def __repr__(self):
         return 'Customer' + self.__dict__   
@@ -116,17 +119,14 @@ class Provider(Base):
     description = Column(String(1024), nullable=False)
     members = relationship('User', backref='provider',
                                 lazy='dynamic')
-    created_at = Column(DateTime, nullable=False)
-    updated_at = Column(DateTime, nullable=False)
+    created_at = Column(DateTime, nullable=False, default=_get_date)
+    updated_at = Column(DateTime, nullable=False, default=_get_date, onupdate=_get_date)
 
-    def __init__(self, uid=None, ttype=None, title=None, description=None, \
-        created_at=None, updated_at=None):
+    def __init__(self, uid=None, ttype=None, title=None, description=None):
         self.id = uid
         self.type = ttype
         self.title = title
-        self.description = description
-        self.created_at = created_at
-        self.updated_at = updated_at      
+        self.description = description     
         
     def __repr__(self):
         return 'Provider' + self.__dict__
@@ -143,10 +143,11 @@ class Ticket(Base):
     description = Column(String(1024), nullable=False)
     timeslot = Column(Integer, nullable=False)
     appointment_at = Column(DateTime, nullable=False)
-    updated_at = Column(DateTime, nullable=False)
+    created_at = Column(DateTime, nullable=False, default=_get_date)
+    updated_at = Column(DateTime, nullable=False, default=_get_date, onupdate=_get_date)
 
     def __init__(self, uid=None, reporter=None, ttype=None, quantity=None, pm_contract=None, description=None, timeslot=None, \
-        appointment_at=None, updated_at=None):
+        appointment_at=None):
         self.id = uid
         self.reporter = reporter
         self.provider = "e034baea-b649-4a6d-895f-da47b3f62619" #hardcode to Advantage
@@ -160,8 +161,7 @@ class Ticket(Base):
 
         self.description = description
         self.timeslot = timeslot
-        self.appointment_at = appointment_at
-        self.updated_at = updated_at      
+        self.appointment_at = appointment_at     
         
     def __repr__(self):
         return 'Ticket' + self.__dict__

@@ -44,9 +44,8 @@ def create_user_request():
     session['user_id'] = i
     
     if password == password2:
-        updated_at = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
         u = User(i, name, email, password, user_company, phone, streetAddress1, \
-            streetAddress2, city, state, postal, country, updated_at)
+            streetAddress2, city, state, postal, country)
 
         db_session.add(u)
         db_session.commit()
@@ -100,7 +99,6 @@ def update_user_request():
     postal = request.form['inputZip']
 
     uid =  session['user_id']
-    updated_at = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
 
     if len(password) != 0:
         if password != password2:
@@ -115,7 +113,6 @@ def update_user_request():
             result = User.query.filter(func.lower(User.id) == func.lower(uid)).first()
             if result:
                 result.password = hashedPassword
-                result.updated_at = updated_at
                 db_session.update(result)
                 db_session.commit()
             else:
@@ -137,8 +134,7 @@ def update_user_request():
         result.state = state
         result.postal = postal
         result.country = country
-        result.updated_at = updated_at
-        #db_session.update(result)
+        db_session.update(result)
         db_session.commit()
     else:
         error = 'no user record found'
