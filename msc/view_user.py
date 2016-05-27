@@ -113,8 +113,7 @@ def update_user_request():
             result = User.query.filter(func.lower(User.id) == func.lower(uid)).first()
             if result:
                 result.password = hashedPassword
-                db_session.update(result)
-                db_session.commit()
+                db_session.commit() #update
             else:
                 error = 'no user record found'
                 return render_template('customer_profile.html', fromProfile=fromProfile, retUserName=name, \
@@ -134,8 +133,7 @@ def update_user_request():
         result.state = state
         result.postal = postal
         result.country = country
-        db_session.update(result)
-        db_session.commit()
+        db_session.commit() #update
     else:
         error = 'no user record found'
         return render_template('customer_profile.html', fromProfile=fromProfile, retUserName=name, \
