@@ -1,71 +1,65 @@
 {% extends "homepage.html" %}
 {% block body %}
-        <h2 class="sub-header">Service Requests</h2>
-        <form class="form-signin" action="{{ url_for('new_service_request') }}" method="get">
-          <button class="btn btn-lg btn-primary btn-block" type="submit">+ New</button>
-        </form>
-          <div class="table-responsive">
-            <table class="table table-hover">
-              <thead>
-                <tr>
-                  <th>Number</th>
-                  <th>Type</th>
-                  <th>Status</th>
-                  <th>Updated</th>
-                  <th>Provider</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>8383298</td>
-                  <td>Service</td>
-                  <td>Open</td>
-                  <td>08/22/2015</td>
-                  <td>Advantage</td>
-                </tr>
-                <tr>
-                  <td>7938273</td>
-                  <td>Service</td>
-                  <td>Completed</td>
-                  <td>07/09/2015</td>
-                  <td>Advantage</td>
-                </tr>
-                <tr>
-                  <td>7842433</td>
-                  <td>Service</td>
-                  <td>Completed</td>
-                  <td>07/01/2015</td>
-                  <td>Advantage</td>
-                </tr>
-                <tr>
-                  <td>7278389</td>
-                  <td>Service</td>
-                  <td>Completed</td>
-                  <td>06/14/2015</td>
-                  <td>Advantage</td>
-                </tr>
-                <tr>
-                  <td>6832990</td>
-                  <td>Service</td>
-                  <td>Completed</td>
-                  <td>03/23/2015</td>
-                  <td>Advantage</td>
-                </tr>
-                <tr>
-                  <td>6832971</td>
-                  <td>Warranty</td>
-                  <td>Completed</td>
-                  <td>03/15/2015</td>
-                  <td>Advantage</td>
-                </tr>
-                <tr>
-                  <td>6783333</td>
-                  <td>Warranty</td>
-                  <td>Completed</td>
-                  <td>02/27/2015</td>
-                  <td>Advantage</td>
-                </tr>
-              </tbody>
-            </table>
+        <h2 class="sub-header">Activity Feed</h2>
+
+          <div id="section1" class="col-md-10">
+            <div class="col-md-2">
+              <image class="profile-sm" src="../static/images/profile-lg-218x220.png">
+            </div>
+
+            <div class="col-md-6">
+              <dl>
+                <dt id="lbl_title">###-######## + Title</dt>
+                <dd id="lbl_description">Description</dd>
+              </dl>
+              
+            </div>
+
+            <div class="col-md-2">
+              <span class="label label-pill label-info">Requested</span>
+              <!--
+              <span class="label label-pill label-default">Default</span>
+              <span class="label label-pill label-primary">Primary</span>
+              <span class="label label-pill label-success">Success</span>
+              <span class="label label-pill label-warning">Warning</span>
+              <span class="label label-pill label-danger">Danger</span>
+              -->
+            </div>
+          </div>
+
+          <div id="section1" class="col-md-10">
+            <div class="col-md-2">
+              <image class="profile-sm" src="../static/images/profile-lg-218x220.png">
+            </div>
+
+            <div class="col-md-6">
+              <dl>
+                <dt id="lbl_title">###-######## + Title</dt>
+                <dd id="lbl_description">Description</dd>
+              </dl>
+              
+            </div>
+
+            <div class="col-md-2">
+              <span class="label label-pill label-info">Requested</span>
+              <!--
+              <span class="label label-pill label-default">Default</span>
+              <span class="label label-pill label-primary">Primary</span>
+              <span class="label label-pill label-success">Success</span>
+              <span class="label label-pill label-warning">Warning</span>
+              <span class="label label-pill label-danger">Danger</span>
+              -->
+            </div>
+          </div>
+
+          <div id="section1" class="col-md-10">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-6">
+              <label>No More Updates</label>
+              
+            </div>
+            <div class="col-md-2">
+            </div>
           </div>
 {% endblock %}
