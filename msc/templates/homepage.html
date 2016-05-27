@@ -73,6 +73,7 @@
             {% if session.logged_in %}
           <!--  <li><a href="{{ url_for('new_customer_request') }}">New Customer</a></li> -->
           <!--  <li><a href="{{ url_for('list_customer_request') }}">Customers</a></li> -->
+            <li><button class="btn btn-md btn-success navbar-btn" type="button" onclick="location.href='{{ url_for('new_service_request') }}'">New Request</button></li>
             <li><a href="{{ url_for('view_user_request') }}">Profile</a></li>
             <li><a href="{{ url_for('logout') }}">Logout</a></li>
             {% endif %}
