@@ -1,6 +1,6 @@
 {% extends "homepage.html" %}
 {% block body %}
-        <h2 class="sub-header">Service Request: {{ ticket.id }} - {{ ticket.type }}</h2>
+        <h2 class="sub-header">Service Request: {{ ticket.id }} - {{ ticket_types[ticket.type-1].title }}</h2>
         <div class="container">
         {% if error %}
         <div id="alert" class="alert alert-danger" role="alert">{{ error }}</div> 
@@ -43,70 +43,68 @@
                     
                     <br>&nbsp;<br>
                     <br>&nbsp;<br>
-
-                    {% if not ticket.appointment_confirmed: %}
-                    <div class="col-md-12">
-                        <div id="alert" class="alert alert-success col-md-12" role="alert">
-                            
-                            <div class="col-md-12">
-                                <h4 class="text-center">Requested Service Date</h4>
-                            </div>
-
-                            <div class="col-md-2"></div>
-                            <div class="col-md-4 text-right vcenter">
-                                {{ ticket.appointment_at }}
-                            </div>
-                            <div class="col-md-4">
-                                <select id="timeframe" class="col-md-2 form-control">
-                                    {% if ticket.timeslot == 1 %}
-                                    <option value="1" selected>8 AM - noon</option>
-                                    <option value="2">10 AM - 2 PM</option>
-                                    <option value="3">noon - 5 PM</option>
-                                    {% elif ticket.timeslot == 2 %}
-                                    <option value="1">8 AM - noon</option>
-                                    <option value="2" selected>10 AM - 2 PM</option>
-                                    <option value="3">noon - 5 PM</option>
-                                    {% elif ticket.timeslot == 3 %}
-                                    <option value="1">8 AM - noon</option>
-                                    <option value="2">10 AM - 2 PM</option>
-                                    <option value="3" selected>noon - 5 PM</option>
-                                    {% endif %}
-                                </select>
-                            </div>
-                            <div class="col-md-2"></div>
-
-                            <div class="col-md-2"></div>
-                            <div class="col-md-4 text-right">
-                                <button class="btn btn-md btn-default" type="button" onclick="location.href='{{ url_for('new_service_request') }}'">Edit</button>
-                            </div>
-                            <div class="col-md-4">
-                                <button class="btn btn-md btn-success" type="button" onclick="location.href='{{ url_for('new_service_request') }}'">Confirm</button>
-                            </div>
-                            <div class="col-md-2"></div>
-                            
-                        </div>
-                    </div>
-                    {% endif %}
-
                 </div>
+                {% if not ticket.appointment_confirmed: %}
+                <div id="section2" class="col-md-12">
+                    <div id="alert" class="alert alert-success col-md-12" role="alert">
+                        
+                        <div class="col-md-12">
+                            <h4 class="text-center">Requested Service Date</h4>
+                        </div>
+                        <br>&nbsp;<br>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4 text-right vcenter">
+                            <label class="form-label">{{ ticket.appointment_at }}</label>
+                        </div>
+                        <div class="col-md-6">
+                            <select id="timeframe" class="col-md-2 form-control">
+                                {% if ticket.timeslot == 1 %}
+                                <option value="1" selected>8 AM - noon</option>
+                                <option value="2">10 AM - 2 PM</option>
+                                <option value="3">noon - 5 PM</option>
+                                {% elif ticket.timeslot == 2 %}
+                                <option value="1">8 AM - noon</option>
+                                <option value="2" selected>10 AM - 2 PM</option>
+                                <option value="3">noon - 5 PM</option>
+                                {% elif ticket.timeslot == 3 %}
+                                <option value="1">8 AM - noon</option>
+                                <option value="2">10 AM - 2 PM</option>
+                                <option value="3" selected>noon - 5 PM</option>
+                                {% endif %}
+                            </select>
+                        </div>
+                        <br>&nbsp;<br>
+                        <br>&nbsp;<br>
+                        <div class="col-md-2">&nbsp;</div>
+                        <div class="col-md-4 text-right">
+                            <button class="btn btn-md btn-default" type="button" onclick="location.href='{{ url_for('new_service_request') }}'">Edit</button>
+                        </div>
+                        <div class="col-md-4">
+                            <button class="btn btn-md btn-success" type="button" onclick="location.href='{{ url_for('new_service_request') }}'">Confirm</button>
+                        </div>
+                        <div class="col-md-2">&nbsp;</div>
+                        
+                    </div>
+                </div>
+                {% endif %}
+
+
+                <br>&nbsp;<br>
+                <br>&nbsp;<br>
 
                 
-
-                <br>&nbsp;<br>
-                <br>&nbsp;<br>
-
-                <div class="col-md-12">
+                <div id="section3" class="col-md-12">
                     <h3 class="sub-header">Items</h3>
                 </div>
 
 
-                <div class="col-md-12">
+                <div id="section4" class="col-md-12">
                     <div class="col-md-2">
                         <label id="counter" class="control-label">1</label>
                     </div>
                     <div class="col-md-6">
                         <dl>
-                          <dt id="lbl_title">{{ ticket.type }}</dt>
+                          <dt id="lbl_title">{{ ticket_types[ticket.type-1].title }}</dt>
                           <dd id="lbl_description">{{ ticket.description }}</dd>
                         </dl>
                     </div>

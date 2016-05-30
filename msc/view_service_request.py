@@ -2,7 +2,7 @@ from msc import app
 from datetime import datetime
 from flask import request, session, redirect, url_for, abort, \
      render_template, flash
-from msc.models import Ticket, TicketSchema
+from msc.models import Ticket, TicketType, TicketSchema
 from msc.database import db_session
 import uuid
 import json
@@ -12,7 +12,8 @@ import pprint
 def new_service_request():
     if not session.get('logged_in'):
         abort(401)
-    return render_template('new_service_request.html')
+    ticket_types = TicketType.query.all()
+    return render_template('new_service_request.html', ticket_types=ticket_types)
 
 
 @app.route('/tickets', methods=['POST'])
@@ -38,14 +39,14 @@ def home():
 
     #results = Ticket.query.filter_by(reporter=session.get('user_id')).all()
     results = Ticket.query.all()
-
+    ticket_types = TicketType.query.all()
 #   RETURN JSON
     #str_result = ""
     # for result in results:
     #     ticket_schema = TicketSchema()
     #     str_result+=ticket_schema.dumps(result).data
     # return str_result, 200
-    return render_template('service_request_listing.html', tickets=results)
+    return render_template('service_request_listing.html', tickets=results, ticket_types=ticket_types)
 
 @app.route('/user/<uid>/tickets/<ticket_id>', methods=['GET'])
 def view_user_ticket(uid=None, ticket_id=None):
@@ -53,17 +54,16 @@ def view_user_ticket(uid=None, ticket_id=None):
         abort(401)
 
     result = Ticket.query.filter_by(id=ticket_id).first()
-
     if not result:
         return(404) #no ticket
-
+    ticket_types = TicketType.query.all()
 #   RETURN JSON
     #str_result = ""
     # for result in results:
     #     ticket_schema = TicketSchema()
     #     str_result+=ticket_schema.dumps(result).data
     # return str_result, 200
-    return render_template('service_request.html', ticket=result)
+    return render_template('service_request.html', ticket=result, ticket_types=ticket_types)
 
 
 def validServiceRequest(request):

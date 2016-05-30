@@ -11,12 +11,12 @@
           {% for ticket in tickets: %}
           <div id="section1" class="col-md-10">
             <div class="col-md-2">
-              <image class="profile-sm" src="{{ url_for('static', filename='bootstrap-3.3.5-dist/images/profile-lg-218x220.png') }}">
+              <image class="profile-sm" src="{{ url_for('static', filename='images/profile-lg-218x220.png') }}">
             </div>
 
             <div class="col-md-6">
               <dl>
-                <dt id="lbl_title"><a href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}">{{ ticket.type }}</a></dt>
+                <dt id="lbl_title"><a href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}">{{ ticket_types[ticket.type-1].title }}</a></dt>
                 <dd id="lbl_description"><a href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}">{{ ticket.description }}</a></dd>
               </dl>
             </div>

@@ -6,6 +6,7 @@ from datetime import datetime
 from msc.database import Base
 from sqlalchemy.ext.declarative import DeclarativeMeta
 
+# used for date fields to keep consistent datetime format
 def _get_date():
     return datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
 
@@ -133,12 +134,25 @@ class Provider(Base):
         return 'Provider' + self.__dict__
      
 
+class TicketType(Base):
+    __tablename__ = 'ticket_types'
+    id = Column(Integer, primary_key=True)
+    title = Column(String(120), nullable=False)
+    created_at = Column(DateTime, nullable=False, default=_get_date)
+    updated_at = Column(DateTime, nullable=False, default=_get_date, onupdate=_get_date)
+
+    def __init__(self, title=None):
+        self.title = title
+        
+    def __repr__(self):
+        return 'TicketType' + self.__dict__
+
 class Ticket(Base):
     __tablename__ = 'tickets'
     id = Column(String(36), primary_key=True)
     reporter = Column(String(36), ForeignKey(User.id), onupdate="cascade")
     provider = Column(String(36), ForeignKey(Provider.id), onupdate="cascade")
-    type = Column(Integer, nullable=False)
+    type = Column(Integer, ForeignKey(TicketType.id), onupdate="cascade")
     quantity = Column(Integer, nullable=False)
     pm_contract = Column(Integer, nullable=True)
     description = Column(String(1024), nullable=False)
@@ -167,7 +181,6 @@ class Ticket(Base):
         
     def __repr__(self):
         return 'Ticket' + self.__dict__
-
 
 from marshmallow_sqlalchemy import ModelSchema
 

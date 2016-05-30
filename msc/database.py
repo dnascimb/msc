@@ -21,7 +21,21 @@ def init_db():
     ####################################################
     # Create required database data
     ####################################################
-    from msc.models import Provider
+    from msc.models import Provider, TicketType
     p = Provider("e034baea-b649-4a6d-895f-da47b3f62619", 1, "Advantage", "Advantage Fitness Equipment")
     db_session.add(p)
+    ticket_type1 = TicketType("Multiple Services")
+    ticket_type2 = TicketType("Elliptical Repair")
+    ticket_type3 = TicketType("Elliptical Preventative Maintenance")
+    ticket_type4 = TicketType("Cycle Repair")
+    ticket_type5 = TicketType("Treadmill Repair")
+    ticket_type6 = TicketType("Treadmill Preventative Maintenance")
+    db_session.add(ticket_type1)
+    db_session.add(ticket_type2)
+    db_session.add(ticket_type3)
+    db_session.add(ticket_type4)
+    db_session.add(ticket_type5)
+    db_session.add(ticket_type6)
+
     db_session.commit()
+

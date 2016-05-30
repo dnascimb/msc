@@ -22,12 +22,9 @@
 					<div class="col-md-4">
 			          	<label class="control-label" for="type">What type of service do you need?</label>
 						<select id="type" class="col-md-6 form-control">
-						    <option value="1">Elliptical Repair</option>
-						    <option value="2">Elliptical Preventative Maintenance</option>
-						    <option value="3">Cycle Repair</option>
-						    <option value="4">Cycle Preventative Maintenance</option>
-						    <option value="5">Treadmill Repair</option>
-						    <option value="6">Treadmill Preventative Maintenance</option>
+							{% for tt in ticket_types: %}
+						    <option value="{{ tt.id }}">{{ tt.title }}</option>
+						    {% endfor %}
 						</select>
 					</div>
 
