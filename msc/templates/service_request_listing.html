@@ -2,21 +2,27 @@
 {% block body %}
         <h2 class="sub-header">Activity Feed</h2>
 
+        {% if not tickets %}
+          <div id="section1" class="col-md-10">
+            <center><h4><i> No Activity At This Time </i></h4>
+
+          </div> 
+        {% else %}
+          {% for ticket in tickets: %}
           <div id="section1" class="col-md-10">
             <div class="col-md-2">
-              <image class="profile-sm" src="../static/images/profile-lg-218x220.png">
+              <image class="profile-sm" src="{{ url_for('static', filename='bootstrap-3.3.5-dist/images/profile-lg-218x220.png') }}">
             </div>
 
             <div class="col-md-6">
               <dl>
-                <dt id="lbl_title">###-######## + Title</dt>
-                <dd id="lbl_description">Description</dd>
+                <dt id="lbl_title"><a href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}">{{ ticket.type }}</a></dt>
+                <dd id="lbl_description"><a href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}">{{ ticket.description }}</a></dd>
               </dl>
-              
             </div>
 
             <div class="col-md-2">
-              <span class="label label-pill label-info">Requested</span>
+              <span class="label label-pill label-info"><a href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}">{{ ticket.created_at }}</a></span>
               <!--
               <span class="label label-pill label-default">Default</span>
               <span class="label label-pill label-primary">Primary</span>
@@ -27,39 +33,40 @@
             </div>
           </div>
 
-          <div id="section1" class="col-md-10">
-            <div class="col-md-2">
-              <image class="profile-sm" src="../static/images/profile-lg-218x220.png">
-            </div>
-
-            <div class="col-md-6">
-              <dl>
-                <dt id="lbl_title">###-######## + Title</dt>
-                <dd id="lbl_description">Description</dd>
-              </dl>
-              
-            </div>
-
-            <div class="col-md-2">
-              <span class="label label-pill label-info">Requested</span>
-              <!--
-              <span class="label label-pill label-default">Default</span>
-              <span class="label label-pill label-primary">Primary</span>
-              <span class="label label-pill label-success">Success</span>
-              <span class="label label-pill label-warning">Warning</span>
-              <span class="label label-pill label-danger">Danger</span>
-              -->
-            </div>
+          {% endfor %}
+          <div id="bar" class="col-md-10"><hr></div>
+          <div id="sectionLast" class="col-md-10">
+            <center><i><p>No More Updates</p></i></center>
           </div>
+          <div id="bar" class="col-md-10"></div>
+        {% endif %}
+        <script>  
+          // var ticket = new Object();
 
-          <div id="section1" class="col-md-10">
-            <div class="col-md-2">
-            </div>
-            <div class="col-md-6">
-              <label>No More Updates</label>
-              
-            </div>
-            <div class="col-md-2">
-            </div>
-          </div>
+          // $( document ).ready(function() {
+          //     getTickets(); // initialize page
+          // });
+
+
+          // function getTickets() {
+            // submit form
+          //   $.ajax
+          //     ({
+          //         type: "GET",
+          //         url: "/tickets",
+          //         dataType: 'json',
+          //         async: false,
+          //         success: function (data) {
+          //           var response = $(data);
+          //           var first = response.filter('#id').text();
+          //           console.log(response);
+          //         },
+          //         error: function () {
+          //           $("#alert").text("There seems to be an issue at the moment");
+          //           $("#alert").removeClass('hidden');
+          //         }
+          //     })
+          // }
+
+      </script>
 {% endblock %}

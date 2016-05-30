@@ -18,6 +18,7 @@ Mac
 * $ sudo pip3 install Flask (or for latest) pip install https://github.com/mitsuhiko/flask/tarball/master
 * $ sudo pip3 install sqlalchemy
 * $ sudo pip3 install PyMySQL
+* $ sudo pip3 install -U marshmallow-sqlalchemy
 * download and install mysql
 * create a database named msc
 * adjust the database username and password in msc/database.py

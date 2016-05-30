@@ -7,22 +7,22 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" href="{{ url_for('static', filename='bootstrap-3.3.5-dist/images/favicon.ico') }}">
 
     <title>MSC: Homepage</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../static/bootstrap-3.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='bootstrap-3.3.5-dist/css/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Bootstrap theme CSS -->
-    <link href="../static/bootstrap-3.3.5-dist/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='bootstrap-3.3.5-dist/css/bootstrap-theme.min.css') }}" rel="stylesheet">
 
 
     <!-- Custom styles for this template -->
-    <link href="../static/css/homepage.css" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/homepage.css') }}" rel="stylesheet">
 
     <!-- Styles for sweetalert -->
-    <link rel="stylesheet" type="text/css" href="../static/sweetalert-dist/sweetalert.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='sweetalert-dist/sweetalert.css') }}">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -33,10 +33,10 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="../static/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='bootstrap-3.3.5-dist/js/bootstrap.min.js') }}"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../static/js/ie10-viewport-bug-workaround.js"></script>
-    <script src="../static/sweetalert-dist/sweetalert.min.js"></script> 
+    <script src="{{ url_for('static', filename='js/ie10-viewport-bug-workaround.js') }}"></script>
+    <script src="{{ url_for('static', filename='sweetalert-dist/sweetalert.min.js') }}"></script> 
     
     <script>
          //On <select> elements, the Android stock browser will not display the side controls if there is a border-radius and/or border applied. Use the snippet of code below to remove the offending CSS and render the <select> as an unstyled element on the Android stock broswer. The useragent sniffing avoids interfernece with Chrome, Safari, and Mozilla browsers.
@@ -71,10 +71,8 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             {% if session.logged_in %}
-          <!--  <li><a href="{{ url_for('new_customer_request') }}">New Customer</a></li> -->
-          <!--  <li><a href="{{ url_for('list_customer_request') }}">Customers</a></li> -->
             <li><button class="btn btn-md btn-success navbar-btn" type="button" onclick="location.href='{{ url_for('new_service_request') }}'">New Request</button></li>
-            <li><a href="{{ url_for('view_user_request') }}">Profile</a></li>
+            <li><a href="{{ url_for('view_user_request') }}"><image class="profile-xsm" src="{{ url_for('static', filename='images/profile-sm-32x32_dark.png') }}"> Person Name</a></li>
             <li><a href="{{ url_for('logout') }}">Logout</a></li>
             {% endif %}
           </ul>
@@ -84,56 +82,10 @@
 
     <div class="container-fluid">
       <div class="row">
-        <!--<div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Reports</a></li>
-            <li><a href="#">Analytics</a></li>
-            <li><a href="#">Export</a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href="">Nav item</a></li>
-            <li><a href="">Nav item again</a></li>
-            <li><a href="">One more nav</a></li>
-            <li><a href="">Another nav item</a></li>
-            <li><a href="">More navigation</a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href="">Nav item again</a></li>
-            <li><a href="">One more nav</a></li>
-            <li><a href="">Another nav item</a></li>
-          </ul>
-        </div>
-      -->
         <div class="col-sm-12 col-md-10 main">
-         <!-- <h1 class="page-header">Welcome back, {{ username }}!</h1>
 
-          <div class="row placeholders">
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img data-src="holder.js/200x200/auto/sky" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-            <div class="col-xs-6 col-sm-3 placeholder">
-              <img data-src="holder.js/200x200/auto/vine" class="img-responsive" alt="Generic placeholder thumbnail">
-              <h4>Label</h4>
-              <span class="text-muted">Something else</span>
-            </div>
-          </div>
--->
           {% block body %}{% endblock %}
-          
-          
+                   
         </div>
       </div>
     </div>

@@ -1,9 +1,10 @@
-from sqlalchemy import Column, Integer, SmallInteger, String, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, SmallInteger, String, DateTime, ForeignKey, Boolean
 from sqlalchemy.orm import mapper, relationship
 from werkzeug.security import generate_password_hash, \
      check_password_hash
 from datetime import datetime
 from msc.database import Base
+from sqlalchemy.ext.declarative import DeclarativeMeta
 
 def _get_date():
     return datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
@@ -143,6 +144,7 @@ class Ticket(Base):
     description = Column(String(1024), nullable=False)
     timeslot = Column(Integer, nullable=False)
     appointment_at = Column(DateTime, nullable=False)
+    appointment_confirmed = Column(Boolean, nullable=False, default=False)
     created_at = Column(DateTime, nullable=False, default=_get_date)
     updated_at = Column(DateTime, nullable=False, default=_get_date, onupdate=_get_date)
 
@@ -165,4 +167,14 @@ class Ticket(Base):
         
     def __repr__(self):
         return 'Ticket' + self.__dict__
-     
+
+
+from marshmallow_sqlalchemy import ModelSchema
+
+class TicketSchema(ModelSchema):
+    class Meta:
+        model = Ticket
+        # optionally attach a Session
+        # to use for deserialization
+        #sqla_session = session
+

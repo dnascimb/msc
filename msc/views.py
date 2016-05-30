@@ -35,10 +35,6 @@ def logout():
     session.pop('logged_in', None)
     return redirect(url_for('index'))
 
-@app.route('/home')
-def home():
-    return render_template('service_request_listing.html')
-
 def checkCredentials(request):
     _inputEmail =  request.form['inputEmail']
     result = User.query.filter(func.lower(User.email) == func.lower(_inputEmail)).first()
