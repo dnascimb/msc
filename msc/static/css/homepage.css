@@ -104,11 +104,6 @@ body {
   border-radius: 50%;
 }
 
-.profile-sm {
-  height: 50px;
-  width: 50px;
-}
-.profile-xsm {
-  height: 25px;
-  width: 25px;
-}
+.profile-sm { height: 50px; width: 50px;}
+.profile-xsm { height: 25px; width: 25px;}
+.no-decoration { text-decoration: none !important}
