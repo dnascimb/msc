@@ -22,7 +22,7 @@
             </div>
 
             <div class="col-md-2">
-              <span class="label label-pill label-info"><a href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}">{{ ticket.created_at }}</a></span>
+              <span class="label label-pill label-info"><a href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}">{{ ticket_statuses[ticket.status-1].title }}</a></span>
               <!--
               <span class="label label-pill label-default">Default</span>
               <span class="label label-pill label-primary">Primary</span>

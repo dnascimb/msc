@@ -133,6 +133,18 @@ class Provider(Base):
     def __repr__(self):
         return 'Provider' + self.__dict__
      
+class TicketStatus(Base):
+    __tablename__ = 'ticket_statuses'
+    id = Column(Integer, primary_key=True)
+    title = Column(String(120), nullable=False)
+    created_at = Column(DateTime, nullable=False, default=_get_date)
+    updated_at = Column(DateTime, nullable=False, default=_get_date, onupdate=_get_date)
+
+    def __init__(self, title=None):
+        self.title = title
+        
+    def __repr__(self):
+        return 'TicketStatus' + self.__dict__
 
 class TicketType(Base):
     __tablename__ = 'ticket_types'
@@ -153,6 +165,7 @@ class Ticket(Base):
     reporter = Column(String(36), ForeignKey(User.id), onupdate="cascade")
     provider = Column(String(36), ForeignKey(Provider.id), onupdate="cascade")
     type = Column(Integer, ForeignKey(TicketType.id), onupdate="cascade")
+    status = Column(Integer, ForeignKey(TicketStatus.id), onupdate="cascade", nullable=False, default=1)
     quantity = Column(Integer, nullable=False)
     pm_contract = Column(Integer, nullable=True)
     description = Column(String(1024), nullable=False)
@@ -163,11 +176,12 @@ class Ticket(Base):
     updated_at = Column(DateTime, nullable=False, default=_get_date, onupdate=_get_date)
 
     def __init__(self, uid=None, reporter=None, ttype=None, quantity=None, pm_contract=None, description=None, timeslot=None, \
-        appointment_at=None):
+        appointment_at=None, status=None):
         self.id = uid
         self.reporter = reporter
         self.provider = "e034baea-b649-4a6d-895f-da47b3f62619" #hardcode to Advantage
         self.type = ttype
+        self.status = status
         self.quantity = quantity
 
         if pm_contract is not None and pm_contract == 'No':
