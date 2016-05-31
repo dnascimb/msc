@@ -2,7 +2,7 @@ from msc import app
 from datetime import datetime
 from flask import request, session, redirect, url_for, abort, \
      render_template, flash
-from msc.models import Ticket, TicketType, TicketSchema, TicketStatus
+from msc.models import Ticket, TicketType, TicketSchema, TicketStatus, TimeSlot
 from msc.database import db_session
 import uuid
 import json
@@ -13,7 +13,8 @@ def new_service_request():
     if not session.get('logged_in'):
         abort(401)
     ticket_types = TicketType.query.all()
-    return render_template('new_service_request.html', ticket_types=ticket_types)
+    time_slots = TimeSlot.query.all()
+    return render_template('new_service_request.html', ticket_types=ticket_types, time_slots=time_slots)
 
 
 @app.route('/tickets', methods=['POST'])
@@ -60,6 +61,7 @@ def view_user_ticket(uid=None, ticket_id=None):
         return(404) #no ticket
     ticket_types = TicketType.query.all()
     ticket_statuses = TicketStatus.query.all()
+    time_slots = TimeSlot.query.all()
 #   RETURN JSON
     #str_result = ""
     # for result in results:
@@ -67,7 +69,7 @@ def view_user_ticket(uid=None, ticket_id=None):
     #     str_result+=ticket_schema.dumps(result).data
     # return str_result, 200
     return render_template('service_request.html', ticket=result, ticket_types=ticket_types, \
-        ticket_statuses=ticket_statuses)
+        ticket_statuses=ticket_statuses, time_slots=time_slots)
 
 
 def validServiceRequest(request):

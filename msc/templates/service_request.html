@@ -58,19 +58,13 @@
                         </div>
                         <div class="col-md-6">
                             <select id="timeframe" class="col-md-2 form-control">
-                                {% if ticket.timeslot == 1 %}
-                                <option value="1" selected>8 AM - noon</option>
-                                <option value="2">10 AM - 2 PM</option>
-                                <option value="3">noon - 5 PM</option>
-                                {% elif ticket.timeslot == 2 %}
-                                <option value="1">8 AM - noon</option>
-                                <option value="2" selected>10 AM - 2 PM</option>
-                                <option value="3">noon - 5 PM</option>
-                                {% elif ticket.timeslot == 3 %}
-                                <option value="1">8 AM - noon</option>
-                                <option value="2">10 AM - 2 PM</option>
-                                <option value="3" selected>noon - 5 PM</option>
-                                {% endif %}
+                                {% for t in time_slots: %}
+                                    {% if ticket.timeslot == t.id %}
+                                    <option value="{{ t.id }}" selected>{{ t.title }}</option>
+                                    {% else: %}
+                                    <option value="{{ t.id }}">{{ t.title }}</option>
+                                    {% endif %}
+                                {% endfor %}
                             </select>
                         </div>
                         <br>&nbsp;<br>

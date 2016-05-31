@@ -79,9 +79,9 @@
 					<div class="col-md-4">
 			          	<label class="control-label" for="timeframe">What timeframe is better?</label>
 						<select id="timeframe" class="col-md-6 form-control">
-						    <option value="1" default>8 AM - noon</option>
-						    <option value="2">10 AM - 2 PM</option>
-						    <option value="3">noon - 5 PM</option>
+						    {% for ts in time_slots: %}
+						    <option value="{{ ts.id }}">{{ ts.title }}</option>
+						    {% endfor %}
 						</select>
 					</div>
 

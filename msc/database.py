@@ -21,7 +21,7 @@ def init_db():
     ####################################################
     # Create required database data
     ####################################################
-    from msc.models import Provider, TicketType, TicketStatus
+    from msc.models import Provider, TicketType, TicketStatus, TimeSlot
     p = Provider("e034baea-b649-4a6d-895f-da47b3f62619", 1, "Advantage", "Advantage Fitness Equipment")
     db_session.add(p)
     ticket_type1 = TicketType("Multiple Services")
@@ -46,6 +46,12 @@ def init_db():
     db_session.add(ticket_status3)
     db_session.add(ticket_status4)
     db_session.add(ticket_status5)
+    timeslot1 = TimeSlot("8 AM - noon")
+    timeslot2 = TimeSlot("10 AM - 2 PM")
+    timeslot3 = TimeSlot("noon - 5 PM")
+    db_session.add(timeslot1)
+    db_session.add(timeslot2)
+    db_session.add(timeslot3)
 
     db_session.commit()
 

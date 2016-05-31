@@ -132,7 +132,21 @@ class Provider(Base):
         
     def __repr__(self):
         return 'Provider' + self.__dict__
-     
+
+class TimeSlot(Base):
+    __tablename__ = 'time_slots'
+    id = Column(Integer, primary_key=True)
+    title = Column(String(120), nullable=False)
+    created_at = Column(DateTime, nullable=False, default=_get_date)
+    updated_at = Column(DateTime, nullable=False, default=_get_date, onupdate=_get_date)
+
+    def __init__(self, title=None):
+        self.title = title
+        
+    def __repr__(self):
+        return 'TimeSlot' + self.__dict__
+
+
 class TicketStatus(Base):
     __tablename__ = 'ticket_statuses'
     id = Column(Integer, primary_key=True)
@@ -169,7 +183,7 @@ class Ticket(Base):
     quantity = Column(Integer, nullable=False)
     pm_contract = Column(Integer, nullable=True)
     description = Column(String(1024), nullable=False)
-    timeslot = Column(Integer, nullable=False)
+    timeslot = Column(Integer, ForeignKey(TicketStatus.id), onupdate="cascade", nullable=False, default=1)
     appointment_at = Column(DateTime, nullable=False)
     appointment_confirmed = Column(Boolean, nullable=False, default=False)
     created_at = Column(DateTime, nullable=False, default=_get_date)
