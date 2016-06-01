@@ -19,7 +19,11 @@ def index():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
-    if request.method == 'POST':
+    if request.method == 'GET':
+        session['logged_in'] = False
+        session['user_id'] = None
+        return render_template('index_old.html')
+    elif request.method == 'POST':
         if checkUserExists(request):
             cc_result = checkCredentials(request)
             if cc_result:
