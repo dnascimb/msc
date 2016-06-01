@@ -1,6 +1,6 @@
 {% extends "homepage.html" %}
 {% block body %}
-        <h2 class="sub-header">Service Request: {{ ticket.id }} - {{ ticket_types[ticket.type-1].title }}</h2>
+        <h2 class="sub-header">#{{ ticket.id[-12:] }} - {{ ticket_types[ticket.type-1].title }} <a href="#"><image class="comment-img" src="{{ url_for('static', filename='images/comment-626x626.png') }}"></a></h2>
         <div class="container">
         {% if error %}
         <div id="alert" class="alert alert-danger" role="alert">{{ error }}</div> 
@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="col-md-2">
-                        <button class="btn btn-md btn-danger navbar-btn" type="button" onclick="location.href='{{ url_for('new_service_request') }}'">Cancel Request</button>
+                        <a href="#"><image class="cancel-img pull-right" src="{{ url_for('static', filename='images/x_mark_red_circle-550x550.png') }}"></a>
                     </div>
                     
                     <br>&nbsp;<br>
@@ -54,7 +54,7 @@
                         <br>&nbsp;<br>
                         <div class="col-md-2"></div>
                         <div class="col-md-4 text-right vcenter">
-                            <label class="form-label">{{ ticket.appointment_at }}</label>
+                            <h5 class="center-text">{{ ticket.appointment_at.strftime('%A, %B %d, %Y') }}</h5>
                         </div>
                         <div class="col-md-6">
                             <select id="timeframe" class="col-md-2 form-control">

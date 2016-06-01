@@ -107,3 +107,5 @@ body {
 .profile-sm { height: 50px; width: 50px;}
 .profile-xsm { height: 25px; width: 25px;}
 .no-decoration { text-decoration: none !important}
+.cancel-img { height: 25px; width: 25px;}
+.comment-img { height: 25px; width: 25px; margin-left: 10px;}
