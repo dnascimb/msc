@@ -1,6 +1,6 @@
 {% extends "homepage.html" %}
 {% block body %}
-        <h2 class="sub-header">#{{ ticket.id[-12:] }} - {{ ticket_types[ticket.type-1].title }} <a href="#"><image class="comment-img" src="{{ url_for('static', filename='images/comment-626x626.png') }}"></a></h2>
+        <h2 class="sub-header">#{{ ticket.id[-12:] }} - {{ ticket_types[ticket.type-1].title }} <a href="#"><image class="comment-img" src="{{ url_for('static', filename='images/comment_blue-626x626.png') }}"></a></h2>
         <div class="container">
         {% if error %}
         <div id="alert" class="alert alert-danger" role="alert">{{ error }}</div> 
@@ -116,29 +116,74 @@
                         <a href="#" class="no-decoration">Edit</a>
                     </div>
                 </div>          
-  
+                
+                <div id="section5" class="col-md-12">
+                    <h3 class="sub-header">Comments</h3>
+                </div>
+                
+                <div id="section6" class="col-md-12">
+
+                    <div class="col-md-2">
+                      <image class="profile-sm" src="{{ url_for('static', filename='images/profile-lg-218x220.png') }}"> <br>Commenter's Name
+                        <br> 00/00/0000 00:00 AM
+                    </div>
+                    <div class="col-md-8">
+                        <p>Phasellus quis lectus ante. Duis sodales massa eget augue euismod faucibus. Nunc imperdiet efficitur nibh in vulputate. Maecenas facilisis sollicitudin enim, at convallis est. Donec eu turpis purus. Donec quis suscipit dui. Aenean ut viverra velit. Vestibulum eu leo sed lorem vehicula pretium eu eget lectus. Vestibulum id pellentesque erat. Donec varius lobortis tellus a porta. Morbi vitae accumsan nisi, ac imperdiet est. Sed neque sapien, condimentum sit amet ultrices ornare, vulputate sed urna. Vestibulum sapien sapien, iaculis in augue vel, facilisis laoreet eros. Mauris vitae nisi auctor, vulputate mi aliquet, lobortis massa.</p>
+                        <span id="comment_datetime_value" class="label label-pill label-info">{{ date }}</span>
+                        <br>
+
+                        
+                    </div>
+
+                    <div class="col-md-2">
+                        <a href="#" class="no-decoration"><image class="" src="{{ url_for('static', filename='images/edit-25x20.png') }}"></a>&nbsp;&nbsp;<a href="#" class="no-decoration"><image class="" src="{{ url_for('static', filename='images/trash-22x25.png') }}"></a>
+                    </div>
+                    
+                    <br>&nbsp;<br>
+                    <br>&nbsp;<br>
+                </div>
+                <div id="section7" class="col-md-12">
+
+                    <div class="col-md-2">
+                      <image class="profile-sm" src="{{ url_for('static', filename='images/profile-lg-218x220.png') }}"> <br>Person's Name
+                    </div>
+                    <div class="col-md-8">
+                        <textarea id="description" rows="5" class="col-md-12 form-control"></textarea>             
+                    </div>
+
+                    <div class="col-md-2">
+                        <button class="btn btn-md btn-success navbar-btn" type="button" onclick="location.href='{{ url_for('new_service_request') }}'">OK</button>
+                    </div>
+                    
+                    <br>&nbsp;<br>
+                    <br>&nbsp;<br>
+                </div>
+
+
             </fieldset>
           </form>
          </div>
         </div>
 
         <script>
+            var ticket = new Object();
 
             $( document ).ready(function() {
+
              // initialize page
-                ticket.id = {{ ticket.id }};
-                ticket.reporter = {{ ticket.reporter }};
-                ticket.provider = {{ ticket.provider }};
-                ticket.type = {{ ticket.type }};
-                ticket.status = {{ ticket.status }};
-                ticket.quantity = {{ ticket.quantity }};
-                ticket.pm_contract = {{ ticket.pm_contract }};
-                ticket.description = {{ ticket.description }};
-                ticket.timeslot = {{ ticket.timeslot }};
-                ticket.appointment_at = {{ ticket.appointment_at }};
-                ticket.appointment_confirmed = {{ ticket.appointment_confirmed }};
-                ticket.created_at = {{ ticket.created_at }};
-                ticket.updated_at = {{ ticket.updated_at }};
+                ticket.id = "{{ ticket.id }}";
+                ticket.reporter = "{{ ticket.reporter }}";
+                ticket.provider = "{{ ticket.provider }}";
+                ticket.type = "{{ ticket.type }}";
+                ticket.status = "{{ ticket.status }}";
+                ticket.quantity = "{{ ticket.quantity }}";
+                ticket.pm_contract = "{{ ticket.pm_contract }}";
+                ticket.description = "{{ ticket.description }}";
+                ticket.timeslot = "{{ ticket.timeslot }}";
+                ticket.appointment_at = "{{ ticket.appointment_at }}";
+                ticket.appointment_confirmed = "{{ ticket.appointment_confirmed }}";
+                ticket.created_at = "{{ ticket.created_at }}";
+                ticket.updated_at = "{{ ticket.updated_at }}";
                 console.log(ticket);
             });
 
