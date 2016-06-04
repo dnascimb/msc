@@ -23,7 +23,7 @@
                     </div>
                     <div class="col-md-2">
                         <label class="control-label">Status: </label>
-                        <span class="label label-pill label-info">{{ ticket_statuses[ticket.status-1].title }}</span>
+                        <span id="status_value" class="label label-pill label-info">{{ ticket_statuses[ticket.status-1].title }}</span>
                         
                     </div>
 
@@ -34,7 +34,7 @@
 
                     <div class="col-md-3">
                         <label class="control-label">Updated: </label>
-                        {{ ticket.updated_at }}
+                        <span id="updated_at_value">{{ ticket.updated_at }}</span>
                     </div>
 
                     <div class="col-md-2">
@@ -74,7 +74,7 @@
                             <button class="btn btn-md btn-default" type="button" onclick="location.href='{{ url_for('new_service_request') }}'">Edit</button>
                         </div>
                         <div class="col-md-4">
-                            <button class="btn btn-md btn-success" type="button" onclick="location.href='{{ url_for('new_service_request') }}'">Confirm</button>
+                            <button class="btn btn-md btn-success" type="button" onclick="confirmAppointment()">Confirm</button>
                         </div>
                         <div class="col-md-2">&nbsp;</div>
                         
@@ -92,12 +92,21 @@
                     <div class="col-md-2">
                         <label id="counter" class="control-label">1</label>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <dl>
                           <dt id="lbl_title">{{ ticket_types[ticket.type-1].title }}</dt>
                           <dd id="lbl_description">{{ ticket.description }}</dd>
                         </dl>
                     </div>
+                    {% if ticket.appointment_confirmed: %}
+                    <div class="col-md-2">
+                        <span id="lbl_appointment_at">{{ ticket.appointment_at }}</span>
+                    </div>
+                    {% else: %}
+                    <div class="col-md-2">
+                        <span id="lbl_appointment_at"></span>
+                    </div>
+                    {% endif %}
                     <div class="col-md-2">
                         <label id="lbl_quantity" class="control-label">{{ ticket.quantity }}</label>
                     </div>
@@ -117,8 +126,53 @@
 
             $( document ).ready(function() {
              // initialize page
-             console.log("{{ ticket.id }}");
+                ticket.id = {{ ticket.id }};
+                ticket.reporter = {{ ticket.reporter }};
+                ticket.provider = {{ ticket.provider }};
+                ticket.type = {{ ticket.type }};
+                ticket.status = {{ ticket.status }};
+                ticket.quantity = {{ ticket.quantity }};
+                ticket.pm_contract = {{ ticket.pm_contract }};
+                ticket.description = {{ ticket.description }};
+                ticket.timeslot = {{ ticket.timeslot }};
+                ticket.appointment_at = {{ ticket.appointment_at }};
+                ticket.appointment_confirmed = {{ ticket.appointment_confirmed }};
+                ticket.created_at = {{ ticket.created_at }};
+                ticket.updated_at = {{ ticket.updated_at }};
+                console.log(ticket);
             });
+
+            function loadPageDataFromJSON(json) {
+                ticket = JSON.parse(json);
+                console.log(ticket);
+                $("#status_value").text(ticket.status);
+                $("#updated_at_value").text(ticket.updated_at);
+                $("#lbl_appointment_at").text(moment(ticket.appointment_at).format("(ddd) MMM DD, YYYY"));
+            }
+            function confirmAppointment() {
+                $.ajax
+                ({
+                    type: "PUT",
+                    url: "{{ url_for('confirm_appointment_request', uid=session.get('user_id'), ticket_id=ticket.id) }}",
+                    dataType: 'json',
+                    async: false,
+                    data: JSON.stringify("{ confirmed: true }"),
+                    success: function (s) {
+                        swal({
+                            title: "Success!",
+                            type: "success",
+                            text: "Ticket updated",
+                            timer: 1000,
+                            showConfirmButton: false });
+                        $("#section2").toggle();
+                        loadPageDataFromJSON(s);
+                    },
+                    error: function () {
+                        $("#alert").text("There seems to be an issue at the moment");
+                        $("#alert").removeClass('hidden');
+                    }
+                });
+            }
 
         </script>
      

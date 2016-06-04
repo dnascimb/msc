@@ -71,6 +71,42 @@ def view_user_ticket(uid=None, ticket_id=None):
     return render_template('service_request.html', ticket=result, ticket_types=ticket_types, \
         ticket_statuses=ticket_statuses, time_slots=time_slots)
 
+@app.route('/user/<uid>/tickets/<ticket_id>', methods=['PUT'])
+def confirm_appointment_request(uid=None, ticket_id=None):
+    if not session.get('logged_in'):
+        abort(401)
+
+    error = None
+    if not validServiceRequest(request):
+        error = 'Invalid data entered'
+        return render_template('new_service_request.html', error=error)
+
+    data = request.get_data().decode('utf-8');
+    ticket = Ticket.query.filter_by(id=ticket_id).first()
+    db_session.flush()
+    
+    if(ticket is None):
+        abort(500)
+    else:
+        ticket.appointment_confirmed = True
+        ticket.status += 1; #how to do this better?
+        db_session.commit()
+        result = "{ \"id\": \"" + ticket.id + "\", "
+        result += " \"reporter\": \"" + ticket.reporter + "\", "
+        result += " \"provider\": \"" + ticket.provider + "\", "
+        result += " \"type\": \"" + str(ticket.type) + "\", "
+        result += " \"status\": \"" + str(ticket.status) + "\", "
+        result += " \"quantity\": \"" + str(ticket.quantity) + "\", "
+        result += " \"pm_contract\": \"" + str(ticket.pm_contract) + "\", "
+        result += " \"description\": \"" + str(ticket.description) + "\", "
+        result += " \"timeslot\": \"" + str(ticket.timeslot) + "\", "
+        result += " \"appointment_at\": \"" + str(ticket.appointment_at) + "\", "
+        result += " \"appointment_confirmed\": \"" + str(ticket.appointment_confirmed) + "\", "
+        result += " \"created_at\": \"" + str(ticket.created_at) + "\", "
+        result += " \"updated_at\": \"" + str(ticket.updated_at) + "\" }"
+        return json.dumps(result), 200
+
+
 
 def validServiceRequest(request):
     # TODO

@@ -11,6 +11,7 @@ DigitalOcean - CentOS 7.2
 * get setup.sh to the machine via scp
 * SSH into the machine as root
 * run the setup.sh script
+* run deploy.sh script if database has changes needed
 * go to http://machine:80 and check for the login screen
 * if issues check console or /var/log/httpd/error_log
 
