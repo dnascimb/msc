@@ -81,16 +81,25 @@ def confirm_appointment_request(uid=None, ticket_id=None):
         error = 'Invalid data entered'
         return render_template('new_service_request.html', error=error)
 
-    data = request.get_data().decode('utf-8');
+    #get data to update
+    jdata = json.loads(request.get_data().decode('utf-8'))
+    new_appointment_date = jdata['appointment_date']
+    new_appointment_timeslot = jdata['appointment_timeslot']
+
     ticket = Ticket.query.filter_by(id=ticket_id).first()
-    db_session.flush()
     
     if(ticket is None):
         abort(500)
     else:
         ticket.appointment_confirmed = True
-        ticket.status += 1; #how to do this better?
-        db_session.commit()
+        ticket.status += 1 #how to increment status better?
+        ticket.appointment_at = new_appointment_date
+        ticket.timeslot = new_appointment_timeslot
+
+        db_session.commit() #save new data
+
+        ticket = Ticket.query.filter_by(id=ticket_id).first()
+
         result = "{ \"id\": \"" + ticket.id + "\", "
         result += " \"reporter\": \"" + ticket.reporter + "\", "
         result += " \"provider\": \"" + ticket.provider + "\", "
@@ -113,7 +122,7 @@ def validServiceRequest(request):
     return True
 
 def saveRequest(request):
-    ticket = request.get_data().decode('utf-8');
+    ticket = request.get_data().decode('utf-8')
     reporter = session.get('user_id')
     
     if not reporter:
@@ -121,12 +130,12 @@ def saveRequest(request):
     
     if not (ticket is None):
         i = str(uuid.uuid4())
-        jticket = json.loads(ticket);
+        jticket = json.loads(ticket)
         t = Ticket(i, reporter, jticket['type'], jticket['quantity'], jticket['pm'], jticket['desc'], \
         jticket['timeframe'], jticket['date_requested'], 1)
 
         db_session.add(t)
         db_session.commit()
 
-    return t;
+    return t
 

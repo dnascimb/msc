@@ -100,7 +100,7 @@
                     </div>
                     {% if ticket.appointment_confirmed: %}
                     <div class="col-md-2">
-                        <span id="lbl_appointment_at">{{ ticket.appointment_at }}</span>
+                        <span id="lbl_appointment_at">{{ ticket.appointment_at.strftime('%a %B %d, %Y') }} <br> {{ time_slots[ticket.timeslot-1].title }}</span>
                     </div>
                     {% else: %}
                     <div class="col-md-2">
@@ -167,6 +167,8 @@
 
         <script>
             var ticket = new Object();
+            var statuses = new Object();
+            var timeslots = new Object();
 
             $( document ).ready(function() {
 
@@ -185,23 +187,38 @@
                 ticket.created_at = "{{ ticket.created_at }}";
                 ticket.updated_at = "{{ ticket.updated_at }}";
                 console.log(ticket);
+
+                {% for status in ticket_statuses: %}
+                statuses[{{ status.id-1 }}] = "{{ status.title }}";
+                {% endfor %}
+
+                {% for slot in time_slots: %}
+                timeslots[{{ slot.id-1 }}] = "{{ slot.title }}";
+                {% endfor %}
             });
 
             function loadPageDataFromJSON(json) {
-                ticket = JSON.parse(json);
-                console.log(ticket);
-                $("#status_value").text(ticket.status);
-                $("#updated_at_value").text(ticket.updated_at);
-                $("#lbl_appointment_at").text(moment(ticket.appointment_at).format("(ddd) MMM DD, YYYY"));
+                ticket1 = JSON.parse(json);
+                $("#status_value").text(statuses[ticket1.status-1]);
+                $("#updated_at_value").text(ticket1.updated_at);
+                apt_val = moment(ticket1.appointment_at).format("ddd MMMM DD, YYYY");
+                apt_timeslot_val = timeslots[ticket1.timeslot-1];
+                $("#lbl_appointment_at").html(apt_val + " <br> " + apt_timeslot_val);
             }
             function confirmAppointment() {
+                var appointment_date = "{{ ticket.appointment_at }}";
+                var appointment_timeslot = parseInt($("#timeframe").val());
+                var dataToSend = new Object();
+                dataToSend.confirmed = true;
+                dataToSend.appointment_date = appointment_date;
+                dataToSend.appointment_timeslot = appointment_timeslot;
                 $.ajax
                 ({
                     type: "PUT",
                     url: "{{ url_for('confirm_appointment_request', uid=session.get('user_id'), ticket_id=ticket.id) }}",
                     dataType: 'json',
                     async: false,
-                    data: JSON.stringify("{ confirmed: true }"),
+                    data: JSON.stringify(dataToSend),
                     success: function (s) {
                         swal({
                             title: "Success!",
