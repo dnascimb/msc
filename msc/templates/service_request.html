@@ -54,9 +54,9 @@
                         <br>&nbsp;<br>
                         <div class="col-md-2"></div>
                         <div class="col-md-4 text-right vcenter">
-                            <h5 class="center-text">{{ ticket.appointment_at.strftime('%A, %B %d, %Y') }}</h5>
+                            <input id="appt_date" name="appt_date" type="date" placeholder="" class="form-control input-md" value="{{ ticket.appointment_at.strftime('%Y-%m-%d') }}" required>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <select id="timeframe" class="col-md-2 form-control">
                                 {% for t in time_slots: %}
                                     {% if ticket.timeslot == t.id %}
@@ -67,17 +67,9 @@
                                 {% endfor %}
                             </select>
                         </div>
-                        <br>&nbsp;<br>
-                        <br>&nbsp;<br>
-                        <div class="col-md-2">&nbsp;</div>
-                        <div class="col-md-4 text-right">
-                            <button class="btn btn-md btn-default" type="button" onclick="location.href='{{ url_for('new_service_request') }}'">Edit</button>
-                        </div>
-                        <div class="col-md-4">
+                        <div class="col-md-2">
                             <button class="btn btn-md btn-success" type="button" onclick="confirmAppointment()">Confirm</button>
                         </div>
-                        <div class="col-md-2">&nbsp;</div>
-                        
                     </div>
                 </div>
                 {% endif %}
@@ -206,7 +198,7 @@
                 $("#lbl_appointment_at").html(apt_val + " <br> " + apt_timeslot_val);
             }
             function confirmAppointment() {
-                var appointment_date = "{{ ticket.appointment_at }}";
+                var appointment_date = $("#appt_date").val();
                 var appointment_timeslot = parseInt($("#timeframe").val());
                 var dataToSend = new Object();
                 dataToSend.confirmed = true;
