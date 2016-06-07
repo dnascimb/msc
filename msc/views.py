@@ -22,6 +22,7 @@ def login():
     if request.method == 'GET':
         session['logged_in'] = False
         session['user_id'] = None
+        session['user_name'] = None
         return render_template('index_old.html')
     elif request.method == 'POST':
         if checkUserExists(request):
@@ -29,6 +30,7 @@ def login():
             if cc_result:
                 session['logged_in'] = True
                 session['user_id'] = cc_result
+                session['user_name'] = User.query.filter_by(id=cc_result).first().name
                 return redirect(url_for('home'))
         error = 'Invalid Login Credentials'
     

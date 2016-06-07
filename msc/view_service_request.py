@@ -2,7 +2,7 @@ from msc import app
 from datetime import datetime
 from flask import request, session, redirect, url_for, abort, \
      render_template, flash
-from msc.models import Ticket, TicketType, TicketSchema, TicketStatus, TimeSlot
+from msc.models import Ticket, TicketType, TicketSchema, TicketStatus, TimeSlot, User
 from msc.database import db_session
 import uuid
 import json
@@ -62,6 +62,8 @@ def view_user_ticket(uid=None, ticket_id=None):
     ticket_types = TicketType.query.all()
     ticket_statuses = TicketStatus.query.all()
     time_slots = TimeSlot.query.all()
+    reporter = User.query.filter_by(id=result.reporter).first()
+    current_user = User.query.filter_by(id=session.get('user_id')).first()
 #   RETURN JSON
     #str_result = ""
     # for result in results:
@@ -69,7 +71,7 @@ def view_user_ticket(uid=None, ticket_id=None):
     #     str_result+=ticket_schema.dumps(result).data
     # return str_result, 200
     return render_template('service_request.html', ticket=result, ticket_types=ticket_types, \
-        ticket_statuses=ticket_statuses, time_slots=time_slots)
+        ticket_statuses=ticket_statuses, time_slots=time_slots, reporter=reporter, current_user=current_user)
 
 @app.route('/user/<uid>/tickets/<ticket_id>', methods=['PUT'])
 def confirm_appointment_request(uid=None, ticket_id=None):

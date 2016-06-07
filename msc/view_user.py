@@ -39,12 +39,10 @@ def create_user_request():
             retEmail=email, retPhone=phone, retStreet1=streetAddress1, retStreet2=streetAddress2, \
             retCity=city, retState=state, retZip=postal, retCountry=country, error=error)
     
-    i = str(uuid.uuid4())
-
-    session['user_id'] = i
+    uid = str(uuid.uuid4())
     
     if password == password2:
-        u = User(i, name, email, password, user_company, phone, streetAddress1, \
+        u = User(uid, name, email, password, user_company, phone, streetAddress1, \
             streetAddress2, city, state, postal, country)
 
         db_session.add(u)
@@ -58,6 +56,8 @@ def create_user_request():
             print("error when sending email: " + result)
         else:
             session['logged_in'] = True
+            session['user_id'] = uid
+            session['user_name'] = User.query.filter_by(id=uid).first().name
             return redirect(url_for('new_service_request'))
     else:
         #print('unsuccessful add')

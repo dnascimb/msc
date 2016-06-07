@@ -72,7 +72,7 @@
           <ul class="nav navbar-nav navbar-right">
             {% if session.logged_in %}
             <li><button class="btn btn-md btn-success navbar-btn" type="button" onclick="location.href='{{ url_for('new_service_request') }}'">New Request</button></li>
-            <li><a href="{{ url_for('view_user_request') }}"><image class="profile-xsm" src="{{ url_for('static', filename='images/profile-sm-32x32_dark.png') }}"> Person Name</a></li>
+            <li><a href="{{ url_for('view_user_request') }}"><image class="profile-xsm" src="{{ url_for('static', filename='images/profile-sm-32x32_dark.png') }}"> {{ session.get('user_name') }}</a></li>
             <li><a href="{{ url_for('logout') }}">Logout</a></li>
             {% endif %}
           </ul>
