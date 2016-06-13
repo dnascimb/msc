@@ -187,16 +187,38 @@
                 {% for slot in time_slots: %}
                 timeslots[{{ slot.id-1 }}] = "{{ slot.title }}";
                 {% endfor %}
-            });
 
+                setStatusColor(ticket.status);
+            });
+            
+            /** set the background color of the status area **/
+            function setStatusColor(status) {
+                if(status == 1)
+                    $("#status_value").css("background-color", "#F8E71C"); //yellow = requested
+                else if(status == 2)
+                    $("#status_value").css("background-color", "#F5A623"); //orange = scheduled
+                else if(status == 3)
+                    $("#status_value").css("background-color", "#4A90E2"); //blue = in-progress
+                else if(status == 4)
+                    $("#status_value").css("background-color", "#7ED321"); //green = completed
+                else if(status == 5)
+                    $("#status_value").css("background-color", "#D0021B"); //red = closed
+                else
+                    $("#status_value").css("background-color", "#F8E71C"); //yellow = default
+            }
+
+            /** loads data into page from JSON string **/
             function loadPageDataFromJSON(json) {
                 ticket1 = JSON.parse(json);
                 $("#status_value").text(statuses[ticket1.status-1]);
+                setStatusColor(ticket1.status-1);
                 $("#updated_at_value").text(ticket1.updated_at);
                 apt_val = moment(ticket1.appointment_at).format("ddd MMMM DD, YYYY");
                 apt_timeslot_val = timeslots[ticket1.timeslot-1];
                 $("#lbl_appointment_at").html(apt_val + " <br> " + apt_timeslot_val);
             }
+
+            /** updates appointment timeslot and datetime **/
             function confirmAppointment() {
                 var appointment_date = $("#appt_date").val();
                 var appointment_timeslot = parseInt($("#timeframe").val());
@@ -211,6 +233,33 @@
                     dataType: 'json',
                     async: false,
                     data: JSON.stringify(dataToSend),
+                    success: function (s) {
+                        swal({
+                            title: "Success!",
+                            type: "success",
+                            text: "Ticket updated",
+                            timer: 1000,
+                            showConfirmButton: false });
+                        $("#section2").toggle();
+                        loadPageDataFromJSON(s);
+                    },
+                    error: function () {
+                        $("#alert").text("There seems to be an issue at the moment");
+                        $("#alert").removeClass('hidden');
+                    }
+                });
+            }
+
+            function changeStatus(new_status) {
+                ticket = new Object();
+                ticket.status = 5;
+                $.ajax
+                ({
+                    type: "PATCH",
+                    url: "{{ url_for('change_status', uid=session.get('user_id'), ticket_id=ticket.id) }}",
+                    dataType: 'json',
+                    async: false,
+                    data: JSON.stringify(ticket),
                     success: function (s) {
                         swal({
                             title: "Success!",

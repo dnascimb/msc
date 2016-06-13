@@ -193,8 +193,7 @@
 				        	showStep2();
 				        break;
 				    case 2:
-				    	//if(validate())
-				    		showStep3();
+				    	if(validateData()) { showStep3(); }
 				        break;
 					case 3:
 						createTicket(); //approve
@@ -204,10 +203,10 @@
 			$('#cancelButton').click(function() {
 				switch(step) {
 				    case 1:
-				        window.location.href = '/home'; //cancel
+				        window.location.href = "{{ url_for('home') }}"; //cancel
 				        break;
 				    case 2:
-				    	showStep1();
+				    	if(validateData()) { showStep1(); }
 				        break;
 				    case 3:
 				    	showStep2();
@@ -248,14 +247,16 @@
 			    step = 2;
 			}
 			function showStep3() {
-				saveDataLocally();
-				loadStep3Data();
-				$('#section1').hide();
-			    $('#section2').hide();
-			    $('#section3').show();
-			    $('#cancelButton').text("<< Back");
-			    $('#nextButton').text("Approve");
-			    step = 3;
+				if(validateData()) {
+					saveDataLocally();
+					loadStep3Data();
+					$('#section1').hide();
+				    $('#section2').hide();
+				    $('#section3').show();
+				    $('#cancelButton').text("<< Back");
+				    $('#nextButton').text("Approve");
+				    step = 3;
+				}
 			}
 			function loadStep3Data() {
 				$('#lbl_title').text($("#type option:selected").text());
@@ -285,6 +286,17 @@
 			        	$("#alert").removeClass('hidden');
 			        }
 			    })
+			}
+			function validateData() {
+				$("#alert").text("");
+				$("#alert").addClass('hidden');
+				if($('#date_requested').val().trim() === null || 
+					$('#date_requested').val().trim() == "") {
+					$("#alert").text("Please select an appointment date");
+					$("#alert").removeClass('hidden');
+					return false;
+				} else { return true; }
+
 			}
 			function saveDataLocally() {
 				ticket.type = $("#type").val();

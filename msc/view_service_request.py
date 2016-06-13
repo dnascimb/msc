@@ -118,6 +118,44 @@ def confirm_appointment_request(uid=None, ticket_id=None):
         return json.dumps(result), 200
 
 
+@app.route('/user/<uid>/tickets/<ticket_id>', methods=['PATCH'])
+def change_status(uid=None, ticket_id=None):
+    if not session.get('logged_in'):
+        abort(401)
+
+    error = None
+    if not validServiceRequest(request):
+        error = 'Invalid data entered'
+        return render_template('service_request.html', error=error)
+
+    #get data to update
+    jdata = json.loads(request.get_data().decode('utf-8'))
+    print(repr(jdata))
+    new_status = jdata['status']
+
+    ticket = Ticket.query.filter_by(id=ticket_id).first()
+    
+    if(ticket is None):
+        abort(500)
+    else:
+        ticket.status = new_status
+        db_session.commit() #save new data
+        ticket = Ticket.query.filter_by(id=ticket_id).first()
+        result = "{ \"id\": \"" + ticket.id + "\", "
+        result += " \"reporter\": \"" + ticket.reporter + "\", "
+        result += " \"provider\": \"" + ticket.provider + "\", "
+        result += " \"type\": \"" + str(ticket.type) + "\", "
+        result += " \"status\": \"" + str(ticket.status) + "\", "
+        result += " \"quantity\": \"" + str(ticket.quantity) + "\", "
+        result += " \"pm_contract\": \"" + str(ticket.pm_contract) + "\", "
+        result += " \"description\": \"" + str(ticket.description) + "\", "
+        result += " \"timeslot\": \"" + str(ticket.timeslot) + "\", "
+        result += " \"appointment_at\": \"" + str(ticket.appointment_at) + "\", "
+        result += " \"appointment_confirmed\": \"" + str(ticket.appointment_confirmed) + "\", "
+        result += " \"created_at\": \"" + str(ticket.created_at) + "\", "
+        result += " \"updated_at\": \"" + str(ticket.updated_at) + "\" }"
+        return json.dumps(result), 200
+
 
 def validServiceRequest(request):
     # TODO

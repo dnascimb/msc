@@ -183,7 +183,7 @@ class Ticket(Base):
     quantity = Column(Integer, nullable=False)
     pm_contract = Column(Integer, nullable=True)
     description = Column(String(1024), nullable=False)
-    timeslot = Column(Integer, ForeignKey(TicketStatus.id), nullable=False, default=1)
+    timeslot = Column(Integer, ForeignKey(TimeSlot.id), nullable=False)
     appointment_at = Column(DateTime, nullable=False)
     appointment_confirmed = Column(Boolean, nullable=False, default=False)
     created_at = Column(DateTime, nullable=False, default=_get_date)
