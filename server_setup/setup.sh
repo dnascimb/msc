@@ -44,9 +44,13 @@ virtualenv venv
 . venv/bin/activate
 #make python3 the active version for this environment
 virtualenv -p python3 venv -y
-sudo pip install https://github.com/mitsuhiko/flask/tarball/master
-sudo pip install sqlalchemy
-sudo pip install PyMySQL
+pip3 install Flask
+pip3 install sqlalchemy
+pip3 install PyMySQL
+pip3 install -U marshmallow-sqlalchemy
+sudo pip install Flask
+sudo pip3 install sqlalchemy
+pip install
 
 #change configuration info for database
 sed -i -e 's/username/webapp/' msc/database.py
@@ -62,6 +66,8 @@ python /repos/msc/init_db.py
 #cp -R ../msc /var/www
 mkdir /var/www/msc
 chown apache:apache -R /var/www/msc
+chown apache:apache -R /repos/msc
+chmod 777 -R /repos/msc
 cp msc/msc.wsgi /var/www/msc/
 cp msc/msc.conf /etc/httpd/conf.d/
 apachectl restart
