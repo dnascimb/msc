@@ -1,4 +1,4 @@
-{% extends "homepage.html" %}
+{% extends "homepage_gsdt.html" %}
 {% block body %}
         <h2 class="sub-header">New Service Request</h2>
         <div class="container">
@@ -175,7 +175,8 @@
           </form>
          </div>
         </div>
-
+        
+<script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
 <script>
 
   var step = 1; // holds page state; 1=type,2=datetime,3=approve

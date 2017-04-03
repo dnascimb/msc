@@ -1,125 +1,143 @@
-{% extends "homepage.html" %}
+{% extends "homepage_gsdt.html" %}
 {% block body %}
-        <h2 class="sub-header">Sign Up</h2>
-        <div class="container">
-        {% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div> {% endif %}
 
-        <div class="form-group">
-          <form class="form-horizontal" action="{{ url_for('create_user_request') }}" method="post">
-          	<fieldset>
 
-	
-			<!-- Text input-->
-			<div class="form-group">
-			  <label class="col-md-4 control-label" for="inputName">Name</label>  
-			  <div class="col-md-4">
-			  <input id="inputName" name="inputName" type="text" placeholder="John Doe" class="form-control input-md" required value="{{ retUserName }}">
-			  <!--<span class="help-block">help</span>  -->
-			  </div>
-			</div>			
-			    
-			<!-- Password input-->
-			<div class="form-group">
-			  <label class="col-md-4 control-label" for="inputPassword">Password</label>  
-			  <div class="col-md-4">
-			  <input id="inputPassword" name="inputPassword" type="password" placeholder="Password" class="form-control input-md" required>
-			  <!--<span class="help-block">help</span>  -->
-			  </div>
-			</div>	
+  		{% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div> {% endif %}
 
-			<!-- Password input-->
-			<div class="form-group">
-			  <label class="col-md-4 control-label" for="inputPassword2">Repeat Password</label>  
-			  <div class="col-md-4">
-			  <input id="inputPassword2" name="inputPassword2" type="password" placeholder="Repeat Password" class="form-control input-md" required>
-			  <!--<span class="help-block">help</span>  -->
-			  </div>
-			</div>	
+      <div class="form-group">
+        <form class="form-horizontal" action="{{ url_for('create_user_request') }}" method="post">
+        	<fieldset>
+						<div class="form-group">
+								<div class="col-md-4 tim-title">
+		          	<h2></h2>
+		      		</div>
+							<div class="col-md-4 tim-title">
+		          	<h2>Sign Up</h2>
+		      		</div>
+		      	</div>
+		      	<br>&nbsp;<br>
+						<!-- Text input-->
+						<div class="form-group">
+						  <label class="col-md-4 control-label" for="inputName">Name</label>  
+						  <div class="col-md-4">
+						  <input id="inputName" name="inputName" type="text" placeholder="John Doe" class="form-control input-md" required value="{{ retUserName }}">
+						  <!--<span class="help-block">help</span>  -->
+						  </div>
+						</div>			
+						    
+						<!-- Password input-->
+						<div class="form-group">
+						  <label class="col-md-4 control-label" for="inputPassword">Password</label>  
+						  <div class="col-md-4">
+						  <input id="inputPassword" name="inputPassword" type="password" placeholder="Password" class="form-control input-md" required>
+						  <!--<span class="help-block">help</span>  -->
+						  </div>
+						</div>	
 
-			<!-- Text input-->
-			<div class="form-group">
-			  <label class="col-md-4 control-label" for="inputCompanyName">Company Name</label>  
-			  <div class="col-md-4">
-			  <input id="inputCompanyName" name="inputCompanyName" type="text" placeholder="Company Name" class="form-control input-md" value="{{ retCompany }}">
-			  <!--<span class="help-block">help</span>  -->
-			  </div>
-			</div>
+						<!-- Password input-->
+						<div class="form-group">
+						  <label class="col-md-4 control-label" for="inputPassword2">Repeat Password</label>  
+						  <div class="col-md-4">
+						  <input id="inputPassword2" name="inputPassword2" type="password" placeholder="Repeat Password" class="form-control input-md" required>
+						  <!--<span class="help-block">help</span>  -->
+						  </div>
+						</div>	
 
-			<!-- Text input-->
-			<div class="form-group">
-			  <label class="col-md-4 control-label" for="inputEmail">Email</label>  
-			  <div class="col-md-4">
-			  <input id="inputEmail" name="inputEmail" type="email" placeholder="john@gym.com" class="form-control input-md" required value="{{ retEmail }}">
-			  <!--<span class="help-block">help</span>  -->
-			  </div>
-			</div>
+						<!-- Text input-->
+						<div class="form-group">
+						  <label class="col-md-4 control-label" for="inputCompanyName">Company Name</label>  
+						  <div class="col-md-4">
+						  <input id="inputCompanyName" name="inputCompanyName" type="text" placeholder="Company Name" class="form-control input-md" value="{{ retCompany }}">
+						  <!--<span class="help-block">help</span>  -->
+						  </div>
+						</div>
 
-			<!-- Text input-->
-			<div class="form-group">
-			  <label class="col-md-4 control-label" for="inputPhone">Phone</label>  
-			  <div class="col-md-4">
-			  <input id="inputPhone" name="inputPhone" type="tel" placeholder="555-555-5555" class="form-control input-md" required value="{{ retPhone }}">
-			  <!--<span class="help-block">help</span>  -->
-			  </div>
-			</div>
+						<!-- Text input-->
+						<div class="form-group">
+						  <label class="col-md-4 control-label" for="inputEmail">Email</label>  
+						  <div class="col-md-4">
+						  <input id="inputEmail" name="inputEmail" type="email" placeholder="john@gym.com" class="form-control input-md" required value="{{ retEmail }}">
+						  <!--<span class="help-block">help</span>  -->
+						  </div>
+						</div>
 
-			<!-- Text input-->
-			<div class="form-group">
-			  <label class="col-md-4 control-label" for="inputStreetAddress1">Street Address 1</label>  
-			  <div class="col-md-4">
-			  <input id="inputStreetAddress1" name="inputStreetAddress1" type="text" placeholder="Street Address 1" class="form-control input-md" required value="{{ retStreet1 }}">
-			  <!--<span class="help-block">help</span>  -->
-			  </div>
-			</div>			
-			
-			<!-- Text input-->
-			<div class="form-group">
-			  <label class="col-md-4 control-label" for="inputStreetAddress2">Street Address 2</label>  
-			  <div class="col-md-4">
-			  <input id="inputStreetAddress2" name="inputStreetAddress2" type="text" placeholder="Street Address 2" class="form-control input-md" value="{{ retStreet2 }}">
-			  <!--<span class="help-block">help</span>  -->
-			  </div>
-			</div>			
-			
-			<!-- Text input-->
-			<div class="form-group">
-			  <label class="col-md-4 control-label" for="inputCity">City</label>  
-			  <div class="col-md-4">
-			  <input id="inputCity" name="inputCity" type="text" placeholder="City" class="form-control input-md" required value="{{ retCity }}">
-			  <!--<span class="help-block">help</span>  -->
-			  </div>
-			</div>
+						<!-- Text input-->
+						<div class="form-group">
+						  <label class="col-md-4 control-label" for="inputPhone">Phone</label>  
+						  <div class="col-md-4">
+						  <input id="inputPhone" name="inputPhone" type="tel" placeholder="555-555-5555" class="form-control input-md" required value="{{ retPhone }}">
+						  <!--<span class="help-block">help</span>  -->
+						  </div>
+						</div>
 
-			<!-- Text input-->
-			<div class="form-group">
-			  <label class="col-md-4 control-label" for="inputState">State/Prefecture/Province</label>  
-			  <div class="col-md-4">
-			  <input id="inputState" name="inputState" type="text" placeholder="state" class="form-control input-md" required value="{{ retState }}">
-			  <!--<span class="help-block">help</span>  -->
-			  </div>
-			</div>
-			
-			<!-- Text input-->
-			<div class="form-group">
-			  <label class="col-md-4 control-label" for="inputZip">Zip/Postal Code</label>  
-			  <div class="col-md-4">
-			  <input id="inputZip" name="inputZip" type="text" placeholder="zip" class="form-control input-md" required value="{{ retZip }}">
-			  <!--<span class="help-block">help</span>  -->
-			  </div>
-			</div>
-			
-			<!-- Text input-->
-			<div class="form-group">
-			  <label class="col-md-4 control-label" for="inputCountry">Country</label>  
-			  <div class="col-md-4">
-			  <input id="inputCountry" name="inputCountry" type="text" placeholder="country" class="form-control input-md" required value="{{ retCountry }}">
-			  <!--<span class="help-block">help</span>  -->
-			  </div>
-			</div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit" method="post">Submit</button>
-			</fieldset>
-          </form>
-         </div>
-        </div>
+						<!-- Text input-->
+						<div class="form-group">
+						  <label class="col-md-4 control-label" for="inputStreetAddress1">Street Address 1</label>  
+						  <div class="col-md-4">
+						  <input id="inputStreetAddress1" name="inputStreetAddress1" type="text" placeholder="Street Address 1" class="form-control input-md" required value="{{ retStreet1 }}">
+						  <!--<span class="help-block">help</span>  -->
+						  </div>
+						</div>			
+						
+						<!-- Text input-->
+						<div class="form-group">
+						  <label class="col-md-4 control-label" for="inputStreetAddress2">Street Address 2</label>  
+						  <div class="col-md-4">
+						  <input id="inputStreetAddress2" name="inputStreetAddress2" type="text" placeholder="Street Address 2" class="form-control input-md" value="{{ retStreet2 }}">
+						  <!--<span class="help-block">help</span>  -->
+						  </div>
+						</div>			
+						
+						<!-- Text input-->
+						<div class="form-group">
+						  <label class="col-md-4 control-label" for="inputCity">City</label>  
+						  <div class="col-md-4">
+						  <input id="inputCity" name="inputCity" type="text" placeholder="City" class="form-control input-md" required value="{{ retCity }}">
+						  <!--<span class="help-block">help</span>  -->
+						  </div>
+						</div>
+
+						<!-- Text input-->
+						<div class="form-group">
+						  <label class="col-md-4 control-label" for="inputState">State</label>  
+						  <div class="col-md-4">
+						  <input id="inputState" name="inputState" type="text" placeholder="State" class="form-control input-md" required value="{{ retState }}">
+						  <!--<span class="help-block">help</span>  -->
+						  </div>
+						</div>
+						
+						<!-- Text input-->
+						<div class="form-group">
+						  <label class="col-md-4 control-label" for="inputZip">Postal Code</label>  
+						  <div class="col-md-4">
+						  <input id="inputZip" name="inputZip" type="text" placeholder="Postal Code" class="form-control input-md" required value="{{ retZip }}">
+						  <!--<span class="help-block">help</span>  -->
+						  </div>
+						</div>
+						
+						<!-- Text input-->
+						<!--
+						<div class="form-group">
+						  <label class="col-md-4 control-label" for="inputCountry">Country</label>  
+						  <div class="col-md-4">
+						  <input id="inputCountry" name="inputCountry" type="text" placeholder="country" class="form-control input-md" required value="{{ retCountry }}">
+						  </div>
+						</div>
+						-->
+						<input type="hidden" id="inputCountry" name="inputCountry" value="USA">
+
+						<br>&nbsp;<br>
+						<div class="col-md-4"> </div>
+						<div class="col-md-4">
+							<button class="btn btn-lg btn-primary btn-block btn-fill btn-round" type="submit" method="post">Join</button> 
+					  </div>
+						<div class="col-md-4"> </div>
+          	
+          	
+					
+					</fieldset>
+        </form>
+       </div>
+
      
 {% endblock %}
