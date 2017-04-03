@@ -176,137 +176,147 @@
          </div>
         </div>
 
-        <script>
+<script>
 
-        	var step = 1; // holds page state; 1=type,2=datetime,3=approve
-        	var ticket = new Object();
+  var step = 1; // holds page state; 1=type,2=datetime,3=approve
+  var ticket = new Object();
 
-			$( document ).ready(function() {
-			    showStep1(); // initialize page
-			});
+	$( document ).ready(function() {
+	    showStep1(); // initialize page
+	});
 
-			// button transitions
-			$('#nextButton').click(function() {
-				switch(step) {
-				    case 1:
-				       //if(validate())
-				        	showStep2();
-				        break;
-				    case 2:
-				    	if(validateData()) { showStep3(); }
-				        break;
-					case 3:
-						createTicket(); //approve
-				}
-				
-			});
-			$('#cancelButton').click(function() {
-				switch(step) {
-				    case 1:
-				        window.location.href = "{{ url_for('home') }}"; //cancel
-				        break;
-				    case 2:
-				    	if(validateData()) { showStep1(); }
-				        break;
-				    case 3:
-				    	showStep2();
-				}
-			});
+	// button transitions
+	$('#nextButton').click(function() {
+		
+		//remove any messages
+		if($("#alert").text().length > 0)
+			$("#alert").empty();
+		
+		switch(step) {
+		    case 1:
+		       //if(validate())
+		        	showStep2();
+		        break;
+		    case 2:
+		    	if(validateData()) { showStep3(); }
+		        break;
+			case 3:
+				createTicket(); //approve
+		}
+		
+	});
+	$('#cancelButton').click(function() {
 
-			function validate() { // validate all fields
-				msg = "Please fill in all fields";
-				if($('#type').val().trim() == null)
-					$('#alert').text(msg);
-				if($('#quantity').val().trim() == null)
-					$('#alert').text(msg);
-				if($('#pm').val().trim() == null)
-					$('#alert').text(msg);
-				if($('#description').val().trim() === '')
-					$('#alert').text(msg);
-				if($('#date_requested').val().trim() == null)
-					$('#alert').text(msg);
-				if($('#timeframe').val().trim() == null)
-					$('#alert').text(msg);
-			}
-			function showStep1() {
-				saveDataLocally();
-				$('#section1').show();
-			    $('#section2').hide();
-			    $('#section3').hide();
-			    $('#cancelButton').text("Cancel");
-			    $('#nextButton').text("Next >>");
-			    step = 1;
-			}
-			function showStep2() {
-				saveDataLocally();
-				$('#section1').hide();
-			    $('#section2').show();
-			    $('#section3').hide();
-			    $('#cancelButton').text("<< Back");
-			    $('#nextButton').text("Next >>");
-			    step = 2;
-			}
-			function showStep3() {
-				if(validateData()) {
-					saveDataLocally();
-					loadStep3Data();
-					$('#section1').hide();
-				    $('#section2').hide();
-				    $('#section3').show();
-				    $('#cancelButton').text("<< Back");
-				    $('#nextButton').text("Approve");
-				    step = 3;
-				}
-			}
-			function loadStep3Data() {
-				$('#lbl_title').text($("#type option:selected").text());
-				$('#lbl_description').text(ticket.desc);
-				$('#lbl_quantity').text(ticket.quantity);
-			}
-			function createTicket() {
-				// submit form
-				$.ajax
-			    ({
-			        type: "POST",
-			        url: "{{ url_for('create_service_request') }}",
-			        dataType: 'json',
-			        async: false,
-			        data: JSON.stringify(ticket),
-			        success: function () {
-			        	swal({
-			        		title: "Success!",
-			        		type: "success",
-			        		text: "Ticket created",
-			        		timer: 1000,
-			        		showConfirmButton: false });
-			        	window.location.href = "{{ url_for('home') }}";
-			        },
-			        error: function () {
-			        	$("#alert").text("There seems to be an issue at the moment");
-			        	$("#alert").removeClass('hidden');
-			        }
-			    })
-			}
-			function validateData() {
-				$("#alert").text("");
-				$("#alert").addClass('hidden');
-				if($('#date_requested').val().trim() === null || 
-					$('#date_requested').val().trim() == "") {
-					$("#alert").text("Please select an appointment date");
-					$("#alert").removeClass('hidden');
-					return false;
-				} else { return true; }
+		//remove any messages
+		if($("#alert").text().length > 0)
+			$("#alert").empty();
 
-			}
-			function saveDataLocally() {
-				ticket.type = $("#type").val();
-				ticket.quantity = $('#quantity').val();
-				ticket.pm = $('#pm').val();
-				ticket.desc = $('#description').val().trim();
-				ticket.date_requested = $('#date_requested').val();
-				ticket.timeframe = $('#timeframe').val();
-			}
+		switch(step) {
+		    case 1:
+		        window.location.href = "{{ url_for('home') }}"; //cancel
+		        break;
+		    case 2:
+		    	if(validateData()) { showStep1(); }
+		        break;
+		    case 3:
+		    	showStep2();
+		}
+	});
 
-        </script>
+	function validate() { // validate all fields
+		msg = "Please fill in all fields";
+		if($('#type').val().trim() == null)
+			$('#alert').text(msg);
+		if($('#quantity').val().trim() == null)
+			$('#alert').text(msg);
+		if($('#pm').val().trim() == null)
+			$('#alert').text(msg);
+		if($('#description').val().trim() === '')
+			$('#alert').text(msg);
+		if($('#date_requested').val().trim() == null)
+			$('#alert').text(msg);
+		if($('#timeframe').val().trim() == null)
+			$('#alert').text(msg);
+	}
+	function showStep1() {
+		saveDataLocally();
+		$('#section1').show();
+	    $('#section2').hide();
+	    $('#section3').hide();
+	    $('#cancelButton').text("Cancel");
+	    $('#nextButton').text("Next >>");
+	    step = 1;
+	}
+	function showStep2() {
+		saveDataLocally();
+		$('#section1').hide();
+	    $('#section2').show();
+	    $('#section3').hide();
+	    $('#cancelButton').text("<< Back");
+	    $('#nextButton').text("Next >>");
+	    step = 2;
+	}
+	function showStep3() {
+		if(validateData()) {
+			saveDataLocally();
+			loadStep3Data();
+			$('#section1').hide();
+		    $('#section2').hide();
+		    $('#section3').show();
+		    $('#cancelButton').text("<< Back");
+		    $('#nextButton').text("Approve");
+		    step = 3;
+		}
+	}
+	function loadStep3Data() {
+		$('#lbl_title').text($("#type option:selected").text());
+		$('#lbl_description').text(ticket.desc);
+		$('#lbl_quantity').text(ticket.quantity);
+	}
+	function createTicket() {
+		// submit form
+		$.ajax
+	    ({
+	        type: "POST",
+	        url: "{{ url_for('create_service_request') }}",
+	        dataType: 'json',
+	        async: false,
+	        data: JSON.stringify(ticket),
+	        success: function () {
+	        	swal({
+	        		title: "Success!",
+	        		type: "success",
+	        		text: "Ticket created",
+	        		timer: 1000,
+	        		showConfirmButton: false });
+	        	window.location.href = "{{ url_for('home') }}";
+	        },
+	        error: function () {
+	        	$("#alert").text("There seems to be an issue at the moment");
+	        	$("#alert").removeClass('hidden');
+	        }
+	    })
+	}
+	function validateData() {
+		$("#alert").text("");
+		$("#alert").addClass('hidden');
+		if($('#date_requested').val().trim() === null || 
+			$('#date_requested').val().trim() == "") {
+			$("#alert").text("Please select an appointment date");
+			$("#alert").removeClass('hidden');
+			return false;
+		} else { return true; }
+
+	}
+	function saveDataLocally() {
+		ticket.type = $("#type").val();
+		ticket.quantity = $('#quantity').val();
+		ticket.pm = $('#pm').val();
+		ticket.desc = $('#description').val().trim();
+		ticket.date_requested = $('#date_requested').val();
+		ticket.timeframe = $('#timeframe').val();
+	}
+
+</script>
      
 {% endblock %}
