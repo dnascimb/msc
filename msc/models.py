@@ -28,6 +28,8 @@ class User(Base):
     created_at = Column(DateTime, nullable=False, default=_get_date)
     updated_at = Column(DateTime, nullable=False, default=_get_date, onupdate=_get_date)
 
+    Tickets = relationship("Ticket")
+
     def __init__(self, uid=None, name=None, email=None, password=None, company=None, phone=None, address1=None, \
         address2=None, city=None, state=None, postal=None, country=None):
         self.id = uid
@@ -188,6 +190,8 @@ class Ticket(Base):
     appointment_confirmed = Column(Boolean, nullable=False, default=False)
     created_at = Column(DateTime, nullable=False, default=_get_date)
     updated_at = Column(DateTime, nullable=False, default=_get_date, onupdate=_get_date)
+
+    Reporter = relationship("User")
 
     def __init__(self, uid=None, reporter=None, ttype=None, quantity=None, pm_contract=None, description=None, timeslot=None, \
         appointment_at=None, status=None):
