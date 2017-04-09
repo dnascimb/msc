@@ -171,7 +171,9 @@ def saveRequest(request):
     if not (ticket is None):
         i = str(uuid.uuid4())
         jticket = json.loads(ticket)
-        t = Ticket(i, reporter, jticket['type'], jticket['quantity'], jticket['pm'], jticket['desc'], \
+
+        contract = 1 if (jticket['pm'] == 'on') else 0
+        t = Ticket(i, reporter, jticket['type'], jticket['quantity'], contract, jticket['desc'], \
         jticket['timeframe'], jticket['date_requested'], 1)
 
         db_session.add(t)

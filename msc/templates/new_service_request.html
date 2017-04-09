@@ -20,8 +20,8 @@
 
 				<div id="section1" class="col-md-12">
 					<div class="col-md-4">
-			          	<label class="control-label" for="type">What type of service do you need?</label>
-						<select id="type" class="col-md-6 form-control">
+			      <label class="control-label btn-block" for="type">What type of service do you need?</label>
+						<select id="type" class="selectpicker" data-style="form-control btn-block">
 							{% for tt in ticket_types: %}
 						    <option value="{{ tt.id }}">{{ tt.title }}</option>
 						    {% endfor %}
@@ -29,8 +29,8 @@
 					</div>
 
 					<div class="col-md-4">
-			          	<label class="control-label" for="quantity">How many?</label>
-						<select id="quantity" class="col-md-6 form-control">
+			      <label class="control-label btn-block" for="quantity">How many?</label>
+						<select id="quantity" class="selectpicker" data-style="form-control btn-block">
 						    <option value="1" default>1</option>
 						    <option value="2">2</option>
 						    <option value="3">3</option>
@@ -85,16 +85,14 @@
 					</div>
 
 					<div class="col-md-4">
-			          	<label class="control-label" for="pm">Applies to PM Contract?</label>
-						<select id="pm" class="col-md-6 form-control">
-						    <option value="No" default>No</option>
-						</select>
+			      <label class="control-label btn-block" for="pm">Applies to PM Contract?</label>
+						<input id="pm" type="checkbox" data-toggle="switch" />
 					</div>
 					
 					<br>&nbsp;<br>
 					
 					<div class="col-md-12">
-			          	<label class="control-label" for="description">What seems to be the issue?</label>
+			          	<label class="control-label btn-block" for="description">What seems to be the issue?</label>
 						<textarea id="description" rows="3" class="col-md-12 form-control"></textarea>
 					</div>
 
@@ -102,13 +100,13 @@
 
 				<div id="section2" class="col-md-12" style="display:none">
 					<div class="col-md-4">
-			          	<label class="control-label" for="date_requested">When would you like the service?</label>
-						<input id="date_requested" name="date_requested" type="date" placeholder="" class="form-control input-md" required>
+			      <label class="control-label btn-block" for="date_requested">When would you like the service?</label>
+						<input id="date_requested" name="date_requested" type="date" placeholder="" class="form-control btn-block" required>
 					</div>
 
 					<div class="col-md-4">
-			          	<label class="control-label" for="timeframe">What timeframe is better?</label>
-						<select id="timeframe" class="col-md-6 form-control">
+			          	<label class="control-label btn-block" for="timeframe">What timeframe is better?</label>
+						<select id="timeframe" class="selectpicker" data-style="form-control btn-block">
 						    {% for ts in time_slots: %}
 						    <option value="{{ ts.id }}">{{ ts.title }}</option>
 						    {% endfor %}
@@ -121,36 +119,54 @@
 					
 				</div>
 
-				<div id="section3" class="col-md-12" style="display:none">
-					<div class="col-md-12">
-			          	<h3 class="sub-header">Items</h3>
-					</div>
-
-
-					<div class="col-md-12">
-			          	<div class="col-md-2">
-			          		<label id="counter" class="control-label">1</label>
-						</div>
-						<div class="col-md-6">
-							<dl>
-							  <dt id="lbl_title"></dt>
-							  <dd id="lbl_description"></dd>
-							</dl>
-						</div>
-						<div class="col-md-2">
-			          		<label id="lbl_quantity" class="control-label"></label>
-						</div>
-						<div class="col-md-2">
-			          		<label id="price" class="control-label">$175.00</label>
-						</div>
-					</div>
-
-				
-					
-					<br>&nbsp;<br>
-					
-				</div>
-
+				<div id="section3" class="table-responsive" style="display:none">
+				    <table class="table table-shopping">
+				        <thead>
+				            <tr>
+				                <th>Product</th>
+				                <th class="th-description">Description</th>
+				                <th class="text-right">Price</th>
+				                <th class="text-right">Qty</th>
+				                <th class="text-right">Amount</th>
+				                <th></th>
+				            </tr>
+				        </thead>
+				        <tbody>
+				            <tr>
+				                <td class="td-name"><span id="lbl_title"></span>
+				                </td>
+				                <td><span id="lbl_description"></span>
+				                </td>
+				                <td class="td-number">
+				                    <small>&#36;</small><span id="price">175</span>
+				                </td>
+				                <td class="td-number">
+				                    <small>x</small><span id="lbl_quantity">1</span>
+				                </td>
+				                <td class="td-number">
+				                    <small>&#36;</small><span id="amount">175</span>
+				                </td>
+				                <td class="td-actions">
+				                    <button type="button" rel="tooltip" data-placement="left" title="Remove item" class="btn btn-danger btn-simple btn-icon ">
+				                        <i class="fa fa-times"></i>
+				                    </button>
+				                </td>
+				            </tr>
+				            <tr>
+				            		<td></td>
+				                <td></td>
+				                <td></td>
+				                <td class="td-total">
+				                   Total
+				                </td>
+				                <td class="td-price">
+				                    <small>&#36;</small>175
+				                </td>
+				                <td></td>
+				            </tr>
+				        </tbody>
+				    </table>
+		        </div>
 				<br>&nbsp;<br>
 				<br>&nbsp;<br>
 
@@ -159,10 +175,10 @@
 					<div class="col-md-4">
 					</div>
 					<div class="col-md-2">
-						<button id="cancelButton" class="btn btn-default btn-block" type="button">Cancel</button>
+						<button id="cancelButton" class="btn btn-default btn-block btn-round btn-fill" type="button">Cancel</button>
 					</div>
 					<div class="col-md-2">
-						<button id="nextButton" class="btn btn-primary btn-block" type="button">Next</button>
+						<button id="nextButton" class="btn btn-primary btn-block btn-round btn-fill" type="button">Next</button>
 					</div>
 
 				</div>
