@@ -38,11 +38,11 @@
                     </a>
                     <a class="card-link" href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}">{{ ticket.description }}</a>
                     </a>
-                     <div class="footer">
+                     <div class="footer" style="padding-top:10px">
                         <div class="author">
                             <a class="card-link" href="#">
-                               <img src="{{ url_for('static', filename='x_gsdk_pro_html_v1.4.3/HTML/assets/img/new_logo.png') }}" alt="..." class="avatar">
-                                 <span>{{ ticket.reporter }}</span>
+                               <img src="{{ url_for('static', filename='x_gsdk_pro_html_v1.4.3/HTML/assets/img/placeholder.png') }}" alt="..." class="avatar">
+                                 <span>{{ ticket.Reporter.name }}</span>
                             </a>
                         </div>
                         <div class="stats pull-right">
