@@ -1,10 +1,8 @@
-{% extends "homepage.html" %}
+{% extends "homepage_gsdt.html" %}
 {% block body %}
-		{% if fromProfile %}
-		   <h2 class="sub-header">Manage My Profile</h2>
-		{% else %}
-		   <h2 class="sub-header">Sign Up</h2>
-		{% endif %}
+
+		   <h4 class="">Manage My Profile</h4>
+
 
         <div class="container">
         {% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div> {% endif %}
@@ -126,7 +124,13 @@
 			  <!--<span class="help-block">help</span>  -->
 			  </div>
 			</div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit" formmethod="post">Submit</button>
+
+			<br>&nbsp;<br>
+			<div class="col-md-4"> </div>
+			<div class="col-md-4">
+        <button class="btn btn-lg btn-primary btn-block btn-fill btn-round" type="submit" formmethod="post">Save</button>
+      </div>
+      <div class="col-md-4"> </div>
 			</fieldset>
           </form>
          </div>
