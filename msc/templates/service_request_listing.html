@@ -9,36 +9,53 @@
           </div> 
         {% else %}
           {% for ticket in tickets: %}
-          <div id="section1" class="col-md-10" style="padding-bottom:25px;padding-top:10px">
-           <div class="row">
-            <div class="col-md-4">
-              <a href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}" class="text-muted"><h6>{{ ticket.updated_at.strftime("%m/%d/%Y %I:%M %p") }}</h6></a>
+          <div class="row">
+              <div id="feed" class="col-md-6">
+                <div class="card">
+                  <div class="content">
+                    <h6 class="category">
+                        <a href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}" class="card-link">{{ ticket_types[ticket.type-1].title }}</a>
+                    </h6>
+                    <div class="pull-right">
+                         <a class="card-link" href="#">
+                          {% if ticket.status-1 == 0: %}
+                          <span class="label label-danger">{{ ticket_statuses[ticket.status-1].title }}</span>
+                          {% elif ticket.status-1 == 1: %}
+                          <span class="label label-primary">{{ ticket_statuses[ticket.status-1].title }}</span>
+                          {% elif ticket.status-1 == 2: %}
+                          <span class="label label-info">{{ ticket_statuses[ticket.status-1].title }}</span>
+                          {% elif ticket.status-1 == 3: %}
+                          <span class="label label-success">{{ ticket_statuses[ticket.status-1].title }}</span>
+                          {% elif ticket.status-1 == 4: %}
+                          <span class="label label-default">{{ ticket_statuses[ticket.status-1].title }}</span>
+                          {% else: %}
+                          <span class="label label-default">{{ ticket_statuses[ticket.status-1].title }}</span>
+                          {% endif %}
+                         </a>
+                    </div>
+                    <a class="card-link" href="#">
+                        <h4 class="title"></h4>
+                    </a>
+                    <a class="card-link" href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}">{{ ticket.description }}</a>
+                    </a>
+                     <div class="footer">
+                        <div class="author">
+                            <a class="card-link" href="#">
+                               <img src="{{ url_for('static', filename='x_gsdk_pro_html_v1.4.3/HTML/assets/img/new_logo.png') }}" alt="..." class="avatar">
+                                 <span>{{ ticket.reporter }}</span>
+                            </a>
+                        </div>
+                        <div class="stats pull-right">
+                             <a class="card-link" href="#">
+                                {{ ticket.updated_at.strftime("%m/%d/%Y %I:%M %p") }}
+                             </a>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="col-md-4">
-              <dl>
-                <dt id="lbl_title"><a href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}" class="text-muted">{{ ticket_types[ticket.type-1].title }}</a></dt>
-                <dd id="lbl_description"><a href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}" class="text-muted">{{ ticket.description }}</a></dd>
-              </dl>
-            </div>
-
-            <div class="col-md-2">
-              {% if ticket.status-1 == 0: %}
-              <span class="label label-danger">{{ ticket_statuses[ticket.status-1].title }}</span>
-              {% elif ticket.status-1 == 1: %}
-              <span class="label label-primary">{{ ticket_statuses[ticket.status-1].title }}</span>
-              {% elif ticket.status-1 == 2: %}
-              <span class="label label-info">{{ ticket_statuses[ticket.status-1].title }}</span>
-              {% elif ticket.status-1 == 3: %}
-              <span class="label label-success">{{ ticket_statuses[ticket.status-1].title }}</span>
-              {% elif ticket.status-1 == 4: %}
-              <span class="label label-default">{{ ticket_statuses[ticket.status-1].title }}</span>
-              {% else: %}
-              <span class="label label-default">{{ ticket_statuses[ticket.status-1].title }}</span>
-              {% endif %}
-            </div>
-           </div>
-          </div>
-
+     
           {% endfor %}
           <div id="bar" class="col-md-10"><hr></div>
           <div id="sectionLast" class="col-md-10">
