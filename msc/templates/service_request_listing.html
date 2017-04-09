@@ -1,6 +1,6 @@
-{% extends "homepage.html" %}
+{% extends "homepage_gsdt.html" %}
 {% block body %}
-        <h2 class="sub-header">Activity Feed</h2>
+        <h4 class="sub-header">Activity Feed</h4>
 
         {% if not tickets %}
           <div id="section1" class="col-md-10">
@@ -9,28 +9,34 @@
           </div> 
         {% else %}
           {% for ticket in tickets: %}
-          <div id="section1" class="col-md-10">
-            <div class="col-md-2">
-              <image class="profile-sm" src="{{ url_for('static', filename='images/profile-lg-218x220.png') }}">
+          <div id="section1" class="col-md-10" style="padding-bottom:25px;padding-top:10px">
+           <div class="row">
+            <div class="col-md-4">
+              <a href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}" class="text-muted"><h6>{{ ticket.updated_at.strftime("%m/%d/%Y %I:%M %p") }}</h6></a>
             </div>
-
-            <div class="col-md-6">
+            <div class="col-md-4">
               <dl>
-                <dt id="lbl_title"><a href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}" class="no-decoration">{{ ticket_types[ticket.type-1].title }}</a></dt>
-                <dd id="lbl_description"><a href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}" class="no-decoration">{{ ticket.description }}</a></dd>
+                <dt id="lbl_title"><a href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}" class="text-muted">{{ ticket_types[ticket.type-1].title }}</a></dt>
+                <dd id="lbl_description"><a href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}" class="text-muted">{{ ticket.description }}</a></dd>
               </dl>
             </div>
 
             <div class="col-md-2">
-              <span class="label label-pill label-info"><a href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}" class="no-decoration">{{ ticket_statuses[ticket.status-1].title }}</a></span>
-              <!--
-              <span class="label label-pill label-default">Default</span>
-              <span class="label label-pill label-primary">Primary</span>
-              <span class="label label-pill label-success">Success</span>
-              <span class="label label-pill label-warning">Warning</span>
-              <span class="label label-pill label-danger">Danger</span>
-              -->
+              {% if ticket.status-1 == 0: %}
+              <span class="label label-danger">{{ ticket_statuses[ticket.status-1].title }}</span>
+              {% elif ticket.status-1 == 1: %}
+              <span class="label label-primary">{{ ticket_statuses[ticket.status-1].title }}</span>
+              {% elif ticket.status-1 == 2: %}
+              <span class="label label-info">{{ ticket_statuses[ticket.status-1].title }}</span>
+              {% elif ticket.status-1 == 3: %}
+              <span class="label label-success">{{ ticket_statuses[ticket.status-1].title }}</span>
+              {% elif ticket.status-1 == 4: %}
+              <span class="label label-default">{{ ticket_statuses[ticket.status-1].title }}</span>
+              {% else: %}
+              <span class="label label-default">{{ ticket_statuses[ticket.status-1].title }}</span>
+              {% endif %}
             </div>
+           </div>
           </div>
 
           {% endfor %}
