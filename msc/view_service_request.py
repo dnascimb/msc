@@ -4,6 +4,7 @@ from flask import request, session, redirect, url_for, abort, \
      render_template, flash
 from msc.models import Ticket, TicketType, TicketSchema, TicketStatus, TimeSlot, User
 from msc.database import db_session
+from sqlalchemy import desc, asc
 import uuid
 import json
 import pprint
@@ -39,7 +40,7 @@ def home():
         abort(401)
 
     #results = Ticket.query.filter_by(reporter=session.get('user_id')).all()
-    results = Ticket.query.all()
+    results = Ticket.query.order_by(asc(Ticket.status),desc(Ticket.updated_at)).limit(5).all()
     ticket_types = TicketType.query.all()
     ticket_statuses = TicketStatus.query.all()
 #   RETURN JSON

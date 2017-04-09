@@ -1,0 +1,28 @@
+{% extends "homepage_gsdt.html" %}
+{% block body %}
+
+      {% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div> {% endif %}
+
+<div class="col-md-4"></div>
+<div class="col-md-4">
+  <form action="{{ url_for('login') }}" method="post">
+    <div class="row">
+      <h4>Please sign in</h4>
+    </div>
+    <div class="row" style="padding-bottom:10px">
+      <input type="text" id="inputEmail" name="inputEmail" class="form-control" placeholder="Username" required autofocus>
+    </div>
+    <div class="row" style="padding-bottom:10px"> 
+      <input type="password" id="inputPassword" name="inputPassword" class="form-control" placeholder="Password" required>
+    </div>
+    <div class="row" style="padding-bottom:10px">
+      <label class="checkbox checkbox-azure" for="remember">
+        <input id="remember" type="checkbox" data-toggle="checkbox">Remember me
+      </label>
+    </div>
+    <button class="btn btn-lg btn-info btn-fill btn-round btn-block" type="submit">Sign in</button>
+  </form>
+</div>
+<div class="col-md-4"></div>
+
+{% endblock %}

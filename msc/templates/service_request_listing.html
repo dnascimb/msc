@@ -1,6 +1,6 @@
 {% extends "homepage_gsdt.html" %}
 {% block body %}
-        <h4 class="sub-header">Activity Feed</h4>
+        <h4 class="sub-header">Latest Updates</h4>
 
         {% if not tickets %}
           <div id="section1" class="col-md-10">
@@ -17,7 +17,7 @@
                         <a href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}" class="card-link">{{ ticket_types[ticket.type-1].title }}</a>
                     </h6>
                     <div class="pull-right">
-                         <a class="card-link" href="#">
+                         <a class="card-link" href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}">
                           {% if ticket.status-1 == 0: %}
                           <span class="label label-danger">{{ ticket_statuses[ticket.status-1].title }}</span>
                           {% elif ticket.status-1 == 1: %}
@@ -46,7 +46,7 @@
                             </a>
                         </div>
                         <div class="stats pull-right">
-                             <a class="card-link" href="#">
+                             <a class="card-link" href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}">
                                 {{ ticket.updated_at.strftime("%m/%d/%Y %I:%M %p") }}
                              </a>
                         </div>

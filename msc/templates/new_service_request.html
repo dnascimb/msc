@@ -1,6 +1,6 @@
 {% extends "homepage_gsdt.html" %}
 {% block body %}
-        <h2 class="sub-header">New Service Request</h2>
+        <h4 class="sub-header">New Service Request</h4>
         <div class="container">
         {% if error %}
         <div id="alert" class="alert alert-danger" role="alert">{{ error }}</div> 
@@ -91,8 +91,8 @@
 					
 					<br>&nbsp;<br>
 					
-					<div class="col-md-12">
-			          	<label class="control-label btn-block" for="description">What seems to be the issue?</label>
+					<div class="col-md-12" style="padding-top:10px">
+			      <label class="control-label btn-block" for="description">What seems to be the issue?</label>
 						<textarea id="description" rows="3" class="col-md-12 form-control"></textarea>
 					</div>
 
@@ -178,7 +178,7 @@
 						<button id="cancelButton" class="btn btn-default btn-block btn-round btn-fill" type="button">Cancel</button>
 					</div>
 					<div class="col-md-2">
-						<button id="nextButton" class="btn btn-primary btn-block btn-round btn-fill" type="button">Next</button>
+						<button id="nextButton" class="btn btn-info btn-block btn-round btn-fill" type="button">Next</button>
 					</div>
 
 				</div>

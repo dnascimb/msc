@@ -23,7 +23,7 @@ def login():
         session['logged_in'] = False
         session['user_id'] = None
         session['user_name'] = None
-        return render_template('index_old.html')
+        return render_template('login.html')
     elif request.method == 'POST':
         if checkUserExists(request):
             cc_result = checkCredentials(request)
@@ -38,7 +38,9 @@ def login():
 
 @app.route('/logout')
 def logout():
-    session.pop('logged_in', None)
+    session['logged_in'] = None
+    session['user_id'] = None
+    session['user_name'] = None
     return redirect(url_for('index'))
 
 def checkCredentials(request):
