@@ -59,21 +59,34 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
 
     <div class="collapse navbar-collapse">
-     <!--
       <ul class="nav navbar-nav">
-            <li class="active">
-                <a href="#">
-                     Discover Left
-                </a>
-            </li>
-            <li>
-                <a href="#">
-                     Welcome {{ session.get('user_name') }} 
-                </a>
-            </li>
+        <!-- <li class="active"><a href="#">Link</a></li> -->
+        <!-- <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                Dropdown
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something</a></li>
+                <li class="divider"></li>
+                <li><a href="#">Separated link</a></li>
+              </ul>
+        </li>
+        -->
+        <li class="active">
+            <a href="javascript:void(0);" data-toggle="search" class="hidden-xs"><i class="fa fa-search"></i></a>
+        </li>
       </ul>
-    -->
-    
+      <form class="navbar-form navbar-left navbar-search-form" role="search" style="display: block;">
+         <div class="form-group">
+              <input type="text" value="" class="form-control" placeholder="Search...">
+         </div>
+      </form>
+
       <ul class="nav navbar-nav navbar-right">
         {% if session.logged_in %}
             <li>

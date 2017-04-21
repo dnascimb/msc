@@ -1,95 +1,115 @@
 {% extends "homepage_gsdt.html" %}
 {% block body %}
-        <h4 class="sub-header">Latest Updates</h4>
-
-        {% if not tickets %}
-          <div id="section1" class="col-md-10">
-            <center><h4><i> No Activity At This Time </i></h4>
-
-          </div> 
-        {% else %}
+      <div class="row">
+        <div id="feed" class="col-md-6">
+          <h4 class="sub-header">Latest Updates</h4>
+          {% if not tickets %}
+            <div id="section1" class="col-md-6">
+              <center><h4><i> No Activity At This Time </i></h4>
+            </div> 
+          {% else %}
           {% for ticket in tickets: %}
-          <div class="row">
-              <div id="feed" class="col-md-6">
-                <div class="card">
-                  <div class="content">
-                    <h6 class="category">
-                        <a href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}" class="card-link">{{ ticket_types[ticket.type-1].title }}</a>
-                    </h6>
-                    <div class="pull-right">
+            <div class="card">
+              <div class="content">
+                <h6 class="category">
+                    <a href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}" class="card-link">{{ ticket_types[ticket.type-1].title }}</a>
+                </h6>
+                <div class="pull-right">
+                     <a class="card-link" href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}">
+                      {% if ticket.status-1 == 0: %}
+                      <span class="label label-danger">{{ ticket_statuses[ticket.status-1].title }}</span>
+                      {% elif ticket.status-1 == 1: %}
+                      <span class="label label-primary">{{ ticket_statuses[ticket.status-1].title }}</span>
+                      {% elif ticket.status-1 == 2: %}
+                      <span class="label label-info">{{ ticket_statuses[ticket.status-1].title }}</span>
+                      {% elif ticket.status-1 == 3: %}
+                      <span class="label label-success">{{ ticket_statuses[ticket.status-1].title }}</span>
+                      {% elif ticket.status-1 == 4: %}
+                      <span class="label label-default">{{ ticket_statuses[ticket.status-1].title }}</span>
+                      {% else: %}
+                      <span class="label label-default">{{ ticket_statuses[ticket.status-1].title }}</span>
+                      {% endif %}
+                     </a>
+                </div>
+                <a class="card-link" href="#">
+                    <h4 class="title"></h4>
+                </a>
+                <a class="card-link" href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}">{{ ticket.description }}</a>
+                </a>
+                 <div class="footer" style="padding-top:10px">
+                    <div class="author">
+                        <a class="card-link" href="#">
+                           <img src="{{ url_for('static', filename='x_gsdk_pro_html_v1.4.3/HTML/assets/img/placeholder.png') }}" alt="..." class="avatar">
+                             <span>{{ ticket.Reporter.name }}</span>
+                        </a>
+                    </div>
+                    <div class="stats pull-right">
                          <a class="card-link" href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}">
-                          {% if ticket.status-1 == 0: %}
-                          <span class="label label-danger">{{ ticket_statuses[ticket.status-1].title }}</span>
-                          {% elif ticket.status-1 == 1: %}
-                          <span class="label label-primary">{{ ticket_statuses[ticket.status-1].title }}</span>
-                          {% elif ticket.status-1 == 2: %}
-                          <span class="label label-info">{{ ticket_statuses[ticket.status-1].title }}</span>
-                          {% elif ticket.status-1 == 3: %}
-                          <span class="label label-success">{{ ticket_statuses[ticket.status-1].title }}</span>
-                          {% elif ticket.status-1 == 4: %}
-                          <span class="label label-default">{{ ticket_statuses[ticket.status-1].title }}</span>
-                          {% else: %}
-                          <span class="label label-default">{{ ticket_statuses[ticket.status-1].title }}</span>
-                          {% endif %}
+                            {{ ticket.updated_at.strftime("%m/%d/%Y %I:%M %p") }}
                          </a>
                     </div>
-                    <a class="card-link" href="#">
-                        <h4 class="title"></h4>
-                    </a>
-                    <a class="card-link" href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}">{{ ticket.description }}</a>
-                    </a>
-                     <div class="footer" style="padding-top:10px">
-                        <div class="author">
-                            <a class="card-link" href="#">
-                               <img src="{{ url_for('static', filename='x_gsdk_pro_html_v1.4.3/HTML/assets/img/placeholder.png') }}" alt="..." class="avatar">
-                                 <span>{{ ticket.Reporter.name }}</span>
-                            </a>
-                        </div>
-                        <div class="stats pull-right">
-                             <a class="card-link" href="/user/{{ session.get('user_id')}}/tickets/{{ ticket.id }}">
-                                {{ ticket.updated_at.strftime("%m/%d/%Y %I:%M %p") }}
-                             </a>
-                        </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
-     
           {% endfor %}
-          <div id="bar" class="col-md-10"><hr></div>
-          <div id="sectionLast" class="col-md-10">
+          <div id="bar"><hr></div>
+          <div id="sectionLast">
             <center><i><p>No More Updates</p></i></center>
           </div>
-          <div id="bar" class="col-md-10"></div>
+          <div id="bar"></div>
         {% endif %}
-        <script>  
-          // var ticket = new Object();
-
-          // $( document ).ready(function() {
-          //     getTickets(); // initialize page
-          // });
+        </div>
 
 
-          // function getTickets() {
-            // submit form
-          //   $.ajax
-          //     ({
-          //         type: "GET",
-          //         url: "/tickets",
-          //         dataType: 'json',
-          //         async: false,
-          //         success: function (data) {
-          //           var response = $(data);
-          //           var first = response.filter('#id').text();
-          //           console.log(response);
-          //         },
-          //         error: function () {
-          //           $("#alert").text("There seems to be an issue at the moment");
-          //           $("#alert").removeClass('hidden');
-          //         }
-          //     })
-          // }
 
-      </script>
+        <div class="col-md-6">
+           <h4>Requests Status<br><small>Pie Chart</small></h4>
+           <div class="row margin-top">
+               <div class="col-md-offset-1">
+                   <div id="chartPreferences" class="ct-chart ct-perfect-fourth"><svg xmlns:ct="http://gionkunz.github.com/chartist-js/ct" width="100%" height="100%" class="ct-chart-pie" style="width: 100%; height: 100%;"><g class="ct-series ct-series-d"><path d="M229,5A166.5,166.5,0,0,0,122.422,43.581L229,171.5Z" class="ct-slice-pie" value="11"></path></g><g class="ct-series ct-series-c"><path d="M122.869,43.21A166.5,166.5,0,0,0,62.866,182.535L229,171.5Z" class="ct-slice-pie" value="15"></path></g><g class="ct-series ct-series-b"><path d="M62.829,181.955A166.5,166.5,0,0,0,270.97,332.624L229,171.5Z" class="ct-slice-pie" value="28"></path></g><g class="ct-series ct-series-a"><path d="M270.407,332.769A166.5,166.5,0,0,0,229,5L229,171.5Z" class="ct-slice-pie" value="46"></path></g><g><text dx="311.5935488844303" dy="161.06600830577167" text-anchor="middle" class="ct-label">46%</text><text dx="180.0668777466516" dy="238.85066478171439" text-anchor="middle" class="ct-label">28%</text><text dx="152.59692741180857" dy="138.43743810465452" text-anchor="middle" class="ct-label">15%</text><text dx="200.80006813957942" dy="93.17167598456076" text-anchor="middle" class="ct-label">11%</text></g></svg></div>
+               </div>
+           </div>
+           <div class="row">
+               <div class="col-md-offset-1">
+                   <h6>Legend</h6>
+                   <i class="fa fa-circle text-info"></i> Scheduled
+                   <i class="fa fa-circle text-success"></i> Done
+                   <i class="fa fa-circle text-warning"></i> In-Progress
+                   <i class="fa fa-circle text-danger"></i> Open
+               </div>
+           </div>
+        </div>
+
+
+      </div> <!-- end container row -->
+
+<script>  
+  // var ticket = new Object();
+
+  // $( document ).ready(function() {
+  //     getTickets(); // initialize page
+  // });
+
+
+  // function getTickets() {
+    // submit form
+  //   $.ajax
+  //     ({
+  //         type: "GET",
+  //         url: "/tickets",
+  //         dataType: 'json',
+  //         async: false,
+  //         success: function (data) {
+  //           var response = $(data);
+  //           var first = response.filter('#id').text();
+  //           console.log(response);
+  //         },
+  //         error: function () {
+  //           $("#alert").text("There seems to be an issue at the moment");
+  //           $("#alert").removeClass('hidden');
+  //         }
+  //     })
+  // }
+
+</script>
 {% endblock %}
